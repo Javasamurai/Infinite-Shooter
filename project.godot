@@ -15,13 +15,15 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Platformer"
+config/name="TopDownShooter"
 run/main_scene="res://Root.tscn"
 boot_splash/bg_color=Color( 1, 1, 1, 1 )
-config/icon="res://icon.png"
+config/icon="res://Images/NPC.png"
 
 [display]
 
+window/size/width=1080
+window/size/height=1920
 window/size/test_width=1024
 window/size/test_height=600
 
