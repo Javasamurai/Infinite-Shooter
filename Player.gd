@@ -17,7 +17,6 @@ func _ready():
 
 func _process(delta):
 	time_elapsed+=delta
-	print(time_elapsed)
 	if time_elapsed > fire_delay:
 		canFire = true
 		time_elapsed = 0
@@ -32,10 +31,10 @@ func _process(delta):
 	elif Input.is_key_pressed(KEY_SPACE):
 		fire()
 	
-	if bullets.size() > 0:
-		for single_bullet in bullets:
-			single_bullet.position = Vector2(single_bullet.position.x, single_bullet.position.y - fire_speed)
-		pass
+	#if bullets.size() > 0:
+	#	for single_bullet in bullets:
+	#		 single_bullet.position = Vector2(single_bullet.position.x, single_bullet.position.y - fire_speed)
+	#	pass
 	pass
 
 func fire():
@@ -43,7 +42,9 @@ func fire():
 		canFire = false
 		var bullet_clone = bullet.instance()
 		bullet_clone.position = Vector2(self.position.x, self.position.y)
+		bullet_clone.name = "player_bullet"
 		# Firreeee!!!!
+		bullet_clone.fire("UP", fire_speed)
 		get_parent().add_child(bullet_clone)
-		bullets.insert(bullets.size(), bullet_clone)
+		#bullets.insert(bullets.size(), bullet_clone)
 	pass
