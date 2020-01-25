@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sfx_exp_long4.wav-71774617d2a7ec49ef9bb930e97c9efc.sample"
+
+[deps]
+
+source_file="res://SFX/Explosions/Long/sfx_exp_long4.wav"
+dest_files=[ "res://.import/sfx_exp_long4.wav-71774617d2a7ec49ef9bb930e97c9efc.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -18,16 +18,26 @@ _global_script_class_icons={
 config/name="TopDownShooter"
 run/main_scene="res://Root.tscn"
 boot_splash/bg_color=Color( 1, 1, 1, 1 )
-config/icon="res://Images/NPC.png"
+config/icon="res://Images/Idle_01.png"
+
+[debug]
+
+settings/fps/force_fps=60
+settings/stdout/print_fps=true
 
 [display]
 
-window/size/width=1080
-window/size/height=1920
+window/size/always_on_top=true
 window/size/test_width=1024
 window/size/test_height=600
+window/handheld/orientation="sensor_portrait"
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
-quality/driver/driver_name="GLES2"
 environment/default_environment="res://default_env.tres"

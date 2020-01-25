@@ -1,8 +1,7 @@
 extends Sprite
 
-export var speed = 5
-export var fire_speed = 0.3
-export var fireDelay = 3.5
+export var fire_speed = 3
+export var fireDelay = 1
 export var canFire = true
 var bullet 
 var bullets

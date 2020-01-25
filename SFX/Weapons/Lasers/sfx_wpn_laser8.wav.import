@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sfx_wpn_laser8.wav-d2a4b6df73530191303b2801e697d514.sample"
+
+[deps]
+
+source_file="res://SFX/Weapons/Lasers/sfx_wpn_laser8.wav"
+dest_files=[ "res://.import/sfx_wpn_laser8.wav-d2a4b6df73530191303b2801e697d514.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sfx_deathscream_alien2.wav-ce8c68b3df8825ab0aa2c73c982b0d95.sample"
+
+[deps]
+
+source_file="res://SFX/Death Screams/Alien/sfx_deathscream_alien2.wav"
+dest_files=[ "res://.import/sfx_deathscream_alien2.wav-ce8c68b3df8825ab0aa2c73c982b0d95.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

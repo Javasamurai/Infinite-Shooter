@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sfx_menu_move4.wav-795ac24a3830474c9a3de0a6d4dff04d.sample"
+
+[deps]
+
+source_file="res://SFX/General Sounds/Menu Sounds/sfx_menu_move4.wav"
+dest_files=[ "res://.import/sfx_menu_move4.wav-795ac24a3830474c9a3de0a6d4dff04d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
