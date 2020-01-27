@@ -28,16 +28,25 @@ func _process(delta):
 
 func _input(event):
 	if event is InputEventScreenDrag:
-		print("Dragging")
-		last_position = event.get("position")
-		print(event.get("position"))
+		temp_position = event.get("position")
+		if $Player != null:
+			if temp_position.x > last_position.x:
+				$Player.movement($Player.DIRECTION.RIGHT)
+			elif temp_position.x < last_position.x:
+				$Player.movement($Player.DIRECTION.LEFT)
+			elif temp_position.y < last_position.y:
+				$Player.movement($Player.DIRECTION.UP)
+			elif temp_position.y > last_position.y:
+				$Player.movement($Player.DIRECTION.DOWN)
+			last_position = temp_position
 	pass
 
 func spawnEnemies():
 	# check current enemies
 	if enemy_list.size() < max_enemies && canSpawn:
 		var enemy_clone = enemy.instance()
-		enemy_clone.position = Vector2(rand_range(100, screenBounds.x - 100) / 2, 0)
+		print(screenBounds.x)
+		enemy_clone.position = Vector2(rand_range(0, screenBounds.x), -100)
 		self.add_child(enemy_clone)
 		enemy_list.insert(enemy_list.size(), enemy_clone)
 	pass

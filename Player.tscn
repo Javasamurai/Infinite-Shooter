@@ -4,7 +4,7 @@
 [ext_resource path="res://Images/Idle_02.png" type="Texture" id=2]
 [ext_resource path="res://Player.gd" type="Script" id=3]
 
-[sub_resource type="AnimatedTexture" id=3]
+[sub_resource type="AnimatedTexture" id=1]
 flags = 4
 frames = 2
 fps = 30.0
@@ -17,7 +17,7 @@ extents = Vector2( 13.3643, 16.2326 )
 
 [node name="Player" type="Sprite"]
 position = Vector2( 144, 27 )
-texture = SubResource( 3 )
+texture = SubResource( 1 )
 script = ExtResource( 3 )
 
 [node name="player_area" type="Area2D" parent="."]

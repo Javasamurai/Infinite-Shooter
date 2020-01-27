@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Images/Layers/Layer_0010_1.png" type="Texture" id=3]
-[ext_resource path="res://Images/Layers/Layer_0009_2.png" type="Texture" id=4]
-[ext_resource path="res://Scripts/Parallax.gd" type="Script" id=5]
-[ext_resource path="res://Images/stars_bg.png" type="Texture" id=6]
-[ext_resource path="res://SFX/Movement/Portals and Transitions/sfx_movement_portal3.wav" type="AudioStream" id=7]
+[ext_resource path="res://SFX/Weapons/Single Shot Sounds/sfx_weapon_singleshot1.wav" type="AudioStream" id=3]
+[ext_resource path="res://SFX/Weapons/Single Shot Sounds/sfx_weapon_singleshot10.wav" type="AudioStream" id=4]
+[ext_resource path="res://Images/Layers/Layer_0010_1.png" type="Texture" id=5]
+[ext_resource path="res://Images/Layers/Layer_0009_2.png" type="Texture" id=6]
+[ext_resource path="res://Scripts/Parallax.gd" type="Script" id=7]
+[ext_resource path="res://Images/stars_bg.png" type="Texture" id=8]
+[ext_resource path="res://SFX/Movement/Portals and Transitions/sfx_movement_portal3.wav" type="AudioStream" id=9]
 
 [node name="Root" type="Control"]
 
@@ -15,7 +17,15 @@ current = true
 script = ExtResource( 1 )
 
 [node name="Player" parent="Camera2D" instance=ExtResource( 2 )]
-position = Vector2( 100, 100 )
+position = Vector2( 0, 100 )
+
+[node name="movement" type="AudioStreamPlayer" parent="Camera2D/Player"]
+stream = ExtResource( 3 )
+mix_target = 2
+
+[node name="shot" type="AudioStreamPlayer" parent="Camera2D/Player"]
+stream = ExtResource( 4 )
+mix_target = 2
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Camera2D"]
 
@@ -28,7 +38,7 @@ motion_mirroring = Vector2( 1024, 1 )
 [node name="Sprite" type="Sprite" parent="Camera2D/ParallaxBackground/ParallaxLayer4"]
 position = Vector2( 7.59375, -182.25 )
 z_as_relative = false
-texture = ExtResource( 3 )
+texture = ExtResource( 5 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 0, 0, 1024, 793 )
@@ -42,17 +52,18 @@ motion_mirroring = Vector2( 1024, 1 )
 [node name="Sprite" type="Sprite" parent="Camera2D/ParallaxBackground/ParallaxLayer2"]
 position = Vector2( 7.59375, -182.25 )
 z_as_relative = false
-texture = ExtResource( 4 )
+texture = ExtResource( 6 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 0, 0, 1024, 793 )
 
 [node name="NightSky" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
 motion_mirroring = Vector2( 1024, 1024 )
-script = ExtResource( 5 )
+script = ExtResource( 7 )
 
 [node name="Space" type="Sprite" parent="Camera2D/ParallaxBackground/NightSky"]
-texture = ExtResource( 6 )
+position = Vector2( 0, 0.711426 )
+texture = ExtResource( 8 )
 centered = false
 
 [node name="heading" type="Label" parent="Camera2D"]
@@ -64,4 +75,4 @@ margin_bottom = 55.3519
 text = "Game Over"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
+stream = ExtResource( 9 )

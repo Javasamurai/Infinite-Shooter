@@ -1,6 +1,6 @@
 extends Sprite
 
-var speed = 5
+var speed = 1
 var fire_speed = 3
 var fire_delay = 0.5
 var canFire
@@ -30,21 +30,24 @@ func _process(delta):
 	if time_elapsed > fire_delay:
 		canFire = true
 		time_elapsed = 0
-
 	movement()
 	pass
 
 func movement(_direction = null):
 	if Input.is_key_pressed(KEY_LEFT) || _direction == DIRECTION.LEFT:
+		$player_audio.play()
 		if self.position.x > -window_size.x:
 			self.position = Vector2(self.position.x - speed, self.position.y)
 	elif Input.is_key_pressed(KEY_RIGHT) || _direction == DIRECTION.RIGHT:
+		$player_audio.play()
 		if self.position.x < window_size.x:
 			self.position = Vector2(self.position.x + speed, self.position.y)		
 	elif Input.is_key_pressed(KEY_UP) || _direction == DIRECTION.UP:
+		$player_audio.play()
 		if self.position.y > -window_size.y:
 			self.position = Vector2(self.position.x, self.position.y - speed)		
 	elif Input.is_key_pressed(KEY_DOWN) || _direction == DIRECTION.DOWN:
+		$player_audio.play()
 		if self.position.y < window_size.y:
 			self.position = Vector2(self.position.x, self.position.y + speed)		
 	elif Input.is_key_pressed(KEY_SPACE):
@@ -52,6 +55,7 @@ func movement(_direction = null):
 
 func fire():
 	if canFire:
+		$shot.play()
 		canFire = false
 		var bullet_clone = bullet.instance()
 		bullet_clone.position = Vector2(self.position.x, self.position.y)
