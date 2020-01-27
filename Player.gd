@@ -1,6 +1,6 @@
 extends Sprite
 
-var speed = 1
+var speed = 1.25
 var fire_speed = 3
 var fire_delay = 0.5
 var canFire
@@ -31,36 +31,44 @@ func _process(delta):
 		canFire = true
 		time_elapsed = 0
 	movement()
+	if Input.get_accelerometer().x < 0:
+		movement(DIRECTION.LEFT)
+	elif Input.get_accelerometer().x > 0:
+		movement(DIRECTION.RIGHT)
+	elif Input.get_accelerometer().y < 0:
+		movement(DIRECTION.DOWN)
+	elif Input.get_accelerometer().y > 0:
+		movement(DIRECTION.UP)
 	pass
 
 func movement(_direction = null):
 	if Input.is_key_pressed(KEY_LEFT) || _direction == DIRECTION.LEFT:
-		$player_audio.play()
 		if self.position.x > -window_size.x:
 			self.position = Vector2(self.position.x - speed, self.position.y)
+			return
 	elif Input.is_key_pressed(KEY_RIGHT) || _direction == DIRECTION.RIGHT:
-		$player_audio.play()
 		if self.position.x < window_size.x:
-			self.position = Vector2(self.position.x + speed, self.position.y)		
+			self.position = Vector2(self.position.x + speed, self.position.y)
+			return
 	elif Input.is_key_pressed(KEY_UP) || _direction == DIRECTION.UP:
-		$player_audio.play()
 		if self.position.y > -window_size.y:
-			self.position = Vector2(self.position.x, self.position.y - speed)		
+			self.position = Vector2(self.position.x, self.position.y - speed)
+			return
 	elif Input.is_key_pressed(KEY_DOWN) || _direction == DIRECTION.DOWN:
-		$player_audio.play()
 		if self.position.y < window_size.y:
-			self.position = Vector2(self.position.x, self.position.y + speed)		
+			self.position = Vector2(self.position.x, self.position.y + speed)
+			return
 	elif Input.is_key_pressed(KEY_SPACE):
 		fire()
 
 func fire():
 	if canFire:
-		$shot.play()
 		canFire = false
 		var bullet_clone = bullet.instance()
 		bullet_clone.position = Vector2(self.position.x, self.position.y)
 		bullet_clone.name = "player_bullet"
 		# Firreeee!!!!
+		$shot.play()
 		bullet_clone.fire("UP", fire_speed)
 		get_parent().add_child(bullet_clone)
 	pass

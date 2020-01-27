@@ -17,7 +17,9 @@ func _ready():
 	enemy_list = []
 	enemy = preload("res://Enemy.tscn")
 	player = preload("res://Player.tscn")
-	
+func fire():
+	$Player.fire()
+
 func _process(delta):
 	time_elapsed+=delta
 	if time_elapsed > spawnDelay:
@@ -28,6 +30,7 @@ func _process(delta):
 
 func _input(event):
 	if event is InputEventScreenDrag:
+		return
 		temp_position = event.get("position")
 		if $Player != null:
 			if temp_position.x > last_position.x:
@@ -45,8 +48,8 @@ func spawnEnemies():
 	# check current enemies
 	if enemy_list.size() < max_enemies && canSpawn:
 		var enemy_clone = enemy.instance()
-		print(screenBounds.x)
-		enemy_clone.position = Vector2(rand_range(0, screenBounds.x), -100)
+
+		enemy_clone.position = Vector2(rand_range(0, screenBounds.x), -(screenBounds.y / 2) + enemy_clone.texture.get_size().y / 2)
 		self.add_child(enemy_clone)
 		enemy_list.insert(enemy_list.size(), enemy_clone)
 	pass

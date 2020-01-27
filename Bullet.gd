@@ -9,7 +9,7 @@ var fire_speed = 0
 
 func _ready():
 	set_physics_process(true)
-	area_2d = get_child(0)
+	area_2d = $Area2D
 	area_2d.connect("area_entered",self,"_on_bullet_hit")	
 	Bullets = get_parent().get("Bullets")
 	pass
@@ -44,7 +44,8 @@ func _on_bullet_hit(areas):
 		#print(bullets)
 		#bullets.remove(bullets.size())
 		areas.get_parent().queue_free()
-		self.queue_free()
+		$death.play()
+		#self.queue_free()
 	pass
 
 func _on_Visibility_screen_exited():
