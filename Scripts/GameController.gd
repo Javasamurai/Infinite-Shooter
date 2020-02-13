@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 var player
 var enemy
@@ -13,7 +13,7 @@ var temp_position = Vector2.ZERO
 
 func _ready():
 	set_process(true)
-	screenBounds = Vector2(get_viewport().size.x, get_viewport().size.y)
+	screenBounds = get_viewport_rect().size
 	enemy_list = []
 	enemy = preload("res://Enemy.tscn")
 	player = preload("res://Player.tscn")
@@ -46,10 +46,13 @@ func _input(event):
 
 func spawnEnemies():
 	# check current enemies
-	if enemy_list.size() < max_enemies && canSpawn:
-		var enemy_clone = enemy.instance()
+	var enemy_counter = 0
 
-		enemy_clone.position = Vector2(rand_range(0, screenBounds.x), -(screenBounds.y / 2) + enemy_clone.texture.get_size().y / 2)
-		self.add_child(enemy_clone)
-		enemy_list.insert(enemy_list.size(), enemy_clone)
+	if $enemy_container.get_child_count() <= max_enemies && canSpawn:
+
+		enemy_counter = enemy_counter + 1
+		var enemy_clone = enemy.instance()
+		
+		enemy_clone.position = Vector2(rand_range(-screenBounds.x / 2 + enemy_clone.texture.get_size().x / 2, screenBounds.x / 2- enemy_clone.texture.get_size().x / 2), -(screenBounds.y / 2) + enemy_clone.texture.get_size().y)
+		$enemy_container.add_child(enemy_clone)
 	pass

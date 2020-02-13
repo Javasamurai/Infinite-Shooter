@@ -5,7 +5,6 @@
 [ext_resource path="res://Player.gd" type="Script" id=3]
 
 [sub_resource type="AnimatedTexture" id=1]
-flags = 4
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 1 )

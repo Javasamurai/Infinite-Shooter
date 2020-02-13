@@ -35,15 +35,15 @@ func fire(_direction, _fire_speed):
 func _on_bullet_hit(areas):
 	var node_name = self.name
 	var area_name = areas.name
-	var isPlayer_bullet = (node_name.find("enemy_bullet") != -1 && area_name.find("enemy_area") != -1)
-	var isEnemy_bullet = (node_name.find("player_bullet") != -1 && area_name.find("player_area") != -1)
+	var isPlayer_bullet = area_name.find("enemy_area") != -1
+	var isEnemy_bullet = area_name.find("player_area") != -1
+	var hitPlayer_bullet = (node_name.find("enemy_bullet") != -1 && isPlayer_bullet)
+	var hitEnemy_bullet = (node_name.find("player_bullet") != -1 && isEnemy_bullet)
 	# some flashy animation of destroying
-	if !isPlayer_bullet && !isEnemy_bullet:
-		#if isEnemy_bullet:
-		#var bullets = areas.get_parent().get("bullets")
-		#print(bullets)
-		#bullets.remove(bullets.size())
+	
+	if !hitPlayer_bullet && !hitEnemy_bullet && (isPlayer_bullet or isEnemy_bullet):
 		areas.get_parent().queue_free()
+
 		$death.play()
 		#self.queue_free()
 	pass
