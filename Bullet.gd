@@ -44,7 +44,7 @@ func _on_bullet_hit(areas):
 	if !hitPlayer_bullet && !hitEnemy_bullet && (isPlayer_bullet or isEnemy_bullet):
 		areas.get_parent().queue_free()
 
-		$death.play()
+		# $death.play()
 		#self.queue_free()
 	pass
 

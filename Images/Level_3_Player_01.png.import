@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pixelated_earth.png-31e643399e419bb82039e0ea51d3a6ec.stex"
+path="res://.import/Level_3_Player_01.png-5e4147b3d48ef203faf0d67e96416f10.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/pixelated_earth.png"
-dest_files=[ "res://.import/pixelated_earth.png-31e643399e419bb82039e0ea51d3a6ec.stex" ]
+source_file="res://Images/Level_3_Player_01.png"
+dest_files=[ "res://.import/Level_3_Player_01.png-5e4147b3d48ef203faf0d67e96416f10.stex" ]
 
 [params]
 
@@ -20,8 +20,8 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
-flags/mipmaps=true
+flags/filter=true
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

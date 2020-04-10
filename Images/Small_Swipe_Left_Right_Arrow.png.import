@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pixelated_earth.png-31e643399e419bb82039e0ea51d3a6ec.stex"
+path="res://.import/Small_Swipe_Left_Right_Arrow.png-4842b9e562233f84653ace62f0fbf3ca.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/pixelated_earth.png"
-dest_files=[ "res://.import/pixelated_earth.png-31e643399e419bb82039e0ea51d3a6ec.stex" ]
+source_file="res://Images/Small_Swipe_Left_Right_Arrow.png"
+dest_files=[ "res://.import/Small_Swipe_Left_Right_Arrow.png-4842b9e562233f84653ace62f0fbf3ca.stex" ]
 
 [params]
 
@@ -20,8 +20,8 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
-flags/mipmaps=true
+flags/filter=true
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

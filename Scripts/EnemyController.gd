@@ -1,7 +1,7 @@
 extends Sprite
 
 export var fire_speed = 3
-export var fireDelay = 10
+export var fireDelay = 2.5
 export var canFire = true
 var bullet 
 var bullets
@@ -9,7 +9,7 @@ var time_elapsed = 0
 
 func _ready():
 	set_process_input(true)
-	bullet = preload("res://Bullet.tscn")
+	bullet = preload("res://Nodes/Bullet.tscn")
 	bullets = []
 	pass
 
@@ -23,6 +23,7 @@ func _process(delta):
 
 func fire():
 	var bullet_clone = bullet.instance()
+
 	bullet_clone.position = Vector2(self.position.x, self.position.y)
 	bullet_clone.name = "enemy_bullet"
 	get_parent().get_parent().add_child(bullet_clone)

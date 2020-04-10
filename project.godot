@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="TopDownShooter"
-run/main_scene="res://MainMenu.tscn"
+run/main_scene="res://Nodes/MainMenu.tscn"
 boot_splash/bg_color=Color( 1, 1, 1, 1 )
 config/icon="res://Images/Idle_01.png"
 

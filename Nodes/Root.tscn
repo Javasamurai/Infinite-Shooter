@@ -1,17 +1,14 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Images/fire_btn.png" type="Texture" id=2]
 [ext_resource path="res://Images/arrow.png" type="Texture" id=3]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://SFX/Weapons/Single Shot Sounds/sfx_weapon_singleshot1.wav" type="AudioStream" id=5]
-[ext_resource path="res://SFX/Weapons/Single Shot Sounds/sfx_weapon_singleshot10.wav" type="AudioStream" id=6]
 [ext_resource path="res://Images/Layers/Layer_0010_1.png" type="Texture" id=7]
 [ext_resource path="res://Images/Layers/Layer_0009_2.png" type="Texture" id=8]
 [ext_resource path="res://Scripts/Parallax.gd" type="Script" id=9]
 [ext_resource path="res://Images/stars_bg.png" type="Texture" id=10]
 [ext_resource path="res://SFX/bgm.wav" type="AudioStream" id=11]
-[ext_resource path="res://Images/pixelated_earth.png" type="Texture" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 154.391, 1000 )
@@ -92,11 +89,9 @@ clip_text = true
 position = Vector2( 0, 100 )
 
 [node name="movement" type="AudioStreamPlayer" parent="Camera2D/Player"]
-stream = ExtResource( 5 )
 mix_target = 2
 
 [node name="shot" type="AudioStreamPlayer" parent="Camera2D/Player"]
-stream = ExtResource( 6 )
 mix_target = 2
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Camera2D"]
@@ -162,36 +157,9 @@ shape = SubResource( 1 )
 
 [node name="bgm" type="AudioStreamPlayer2D" parent="Camera2D"]
 stream = ExtResource( 11 )
-volume_db = -80.0
-pitch_scale = 0.01
+autoplay = true
 
 [node name="enemy_container" type="Node2D" parent="Camera2D"]
-
-[node name="UI" type="Control" parent="."]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -128.0
-margin_top = -240.0
-margin_right = 128.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer"]
-margin_right = 256.0
-margin_bottom = 240.0
-texture = ExtResource( 12 )
-stretch_mode = 6
 [connection signal="button_down" from="Camera2D/Fire_button" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/left" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/right" to="Camera2D/Player" method="fire"]

@@ -15,8 +15,8 @@ func _ready():
 	set_process(true)
 	screenBounds = get_viewport_rect().size
 	enemy_list = []
-	enemy = preload("res://Enemy.tscn")
-	player = preload("res://Player.tscn")
+	enemy = preload("res://Nodes/Enemy.tscn")
+	player = preload("res://Nodes/Player.tscn")
 func fire():
 	$Player.fire()
 
