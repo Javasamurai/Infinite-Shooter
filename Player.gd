@@ -19,7 +19,13 @@ enum DIRECTION {
 	DOWN
 }
 
+var global
+
 func _ready():
+	global = get_node("/root/Globals")
+	var tex = load("res://Images/Players/Level_" + str(global.selected_plane) + "_Player.png")
+	set_texture(tex)
+
 	canFire = false
 	bullet = preload("res://Nodes/Bullet.tscn")
 	set_process_input(true)

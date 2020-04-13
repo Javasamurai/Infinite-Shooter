@@ -1,11 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Images/fire_btn.png" type="Texture" id=2]
 [ext_resource path="res://Images/arrow.png" type="Texture" id=3]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://SFX/Weapons/Single Shot Sounds/sfx_weapon_singleshot1.wav" type="AudioStream" id=5]
-[ext_resource path="res://SFX/Weapons/Single Shot Sounds/sfx_weapon_singleshot10.wav" type="AudioStream" id=6]
 [ext_resource path="res://Images/Layers/Layer_0010_1.png" type="Texture" id=7]
 [ext_resource path="res://Images/Layers/Layer_0009_2.png" type="Texture" id=8]
 [ext_resource path="res://Scripts/Parallax.gd" type="Script" id=9]
@@ -92,11 +90,9 @@ clip_text = true
 position = Vector2( 0, 100 )
 
 [node name="movement" type="AudioStreamPlayer" parent="Camera2D/Player"]
-stream = ExtResource( 5 )
 mix_target = 2
 
 [node name="shot" type="AudioStreamPlayer" parent="Camera2D/Player"]
-stream = ExtResource( 6 )
 mix_target = 2
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Camera2D"]

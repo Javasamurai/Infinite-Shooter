@@ -17,8 +17,13 @@ _global_script_class_icons={
 
 config/name="TopDownShooter"
 run/main_scene="res://Nodes/MainMenu.tscn"
+boot_splash/image="res://Images/empty_sky.png"
 boot_splash/bg_color=Color( 1, 1, 1, 1 )
-config/icon="res://Images/Idle_01.png"
+config/icon="res://Images/Players/Level_1_Player_1.png"
+
+[autoload]
+
+Globals="*res://Scripts/Globals.gd"
 
 [debug]
 
@@ -28,10 +33,9 @@ settings/fps/force_fps=60
 
 window/size/width=243
 window/size/height=405
-window/size/resizable=false
 window/size/always_on_top=true
-window/size/test_width=243
-window/size/test_height=405
+window/size/test_width=320
+window/size/test_height=480
 window/handheld/orientation="sensor_portrait"
 window/stretch/mode="2d"
 window/stretch/aspect="expand"

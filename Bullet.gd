@@ -6,9 +6,11 @@ var Bullets
 var DIRECTION = "DOWN"
 var is_firing = false
 var fire_speed = 0
+var global
 
 func _ready():
 	set_physics_process(true)
+	global = get_node("/root/Globals")
 	area_2d = $Area2D
 	area_2d.connect("area_entered",self,"_on_bullet_hit")	
 	Bullets = get_parent().get("Bullets")
@@ -43,9 +45,12 @@ func _on_bullet_hit(areas):
 	
 	if !hitPlayer_bullet && !hitEnemy_bullet && (isPlayer_bullet or isEnemy_bullet):
 		areas.get_parent().queue_free()
+		$death.play()
 
-		# $death.play()
-		#self.queue_free()
+		if isEnemy_bullet:
+			global.over = true
+			get_tree().change_scene("res://Nodes/MainMenu.tscn")
+			print("You are doomed: Game over")
 	pass
 
 func _on_Visibility_screen_exited():

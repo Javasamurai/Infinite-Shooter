@@ -1,28 +1,30 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
-[ext_resource path="res://Images/Idle_01.png" type="Texture" id=2]
-[ext_resource path="res://Images/Idle_02.png" type="Texture" id=3]
-[ext_resource path="res://Images/Play_btn_pressed.png" type="Texture" id=5]
+[ext_resource path="res://Images/Players/Level_0_Player.png" type="Texture" id=2]
+[ext_resource path="res://Images/Players/Level_1_Player_1.png" type="Texture" id=3]
+[ext_resource path="res://SFX/Death Screams/Robot/sfx_deathscream_robot1.wav" type="AudioStream" id=4]
+[ext_resource path="res://Images/UI/Play_btn_pressed.png" type="Texture" id=5]
 [ext_resource path="res://Scripts/UIManager.gd" type="Script" id=6]
 [ext_resource path="res://Images/left_arrow.png" type="Texture" id=7]
-[ext_resource path="res://Images/Play_Button.png" type="Texture" id=8]
+[ext_resource path="res://Images/UI/Play_Button.png" type="Texture" id=8]
 [ext_resource path="res://Images/right_arrow.png" type="Texture" id=9]
 [ext_resource path="res://fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=10]
 [ext_resource path="res://SFX/General Sounds/Buttons/sfx_sounds_button3.wav" type="AudioStream" id=11]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=1]
 size = 30
 font_data = ExtResource( 10 )
 
-[sub_resource type="AnimatedTexture" id=1]
+[sub_resource type="AnimatedTexture" id=2]
+flags = 4
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 2 )
 frame_1/texture = ExtResource( 3 )
 frame_1/delay_sec = 0.0
 
-[sub_resource type="ParticlesMaterial" id=2]
+[sub_resource type="ParticlesMaterial" id=3]
 emission_shape = 2
 emission_box_extents = Vector3( 100, 100, 100 )
 flag_disable_z = true
@@ -37,23 +39,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="AudioManager" type="Node" parent="."]
+
+[node name="ButtonClick" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource( 11 )
+
+[node name="death" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource( 4 )
+
 [node name="MarginContainer2" type="MarginContainer" parent="."]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -128.0
-margin_top = -405.0
-margin_right = 128.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Earth2" type="TextureRect" parent="MarginContainer2"]
-margin_right = 256.0
+margin_right = 243.0
 margin_bottom = 405.0
 size_flags_stretch_ratio = 0.0
 texture = ExtResource( 1 )
+expand = true
+stretch_mode = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -72,7 +79,7 @@ __meta__ = {
 margin_top = 4.0
 margin_right = 191.0
 margin_bottom = 35.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 text = "Shooter game"
 align = 1
 valign = 1
@@ -116,13 +123,15 @@ action_mode = 0
 icon = ExtResource( 7 )
 flat = true
 script = ExtResource( 6 )
-button_click = NodePath("../../../../GUI/AudioManager/ButtonClick")
+button_click = NodePath("../../../../AudioManager/ButtonClick")
+plane = NodePath("../Selected_ship")
+title = NodePath("../../../../MarginContainer3/title")
 
 [node name="Selected_ship" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 margin_left = 103.0
 margin_right = 154.0
 margin_bottom = 51.0
-texture = SubResource( 1 )
+texture = SubResource( 2 )
 stretch_mode = 4
 __meta__ = {
 "_edit_use_anchors_": false
@@ -136,7 +145,9 @@ icon = ExtResource( 9 )
 flat = true
 script = ExtResource( 6 )
 dir = 1
-button_click = NodePath("../../../../GUI/AudioManager/ButtonClick")
+button_click = NodePath("../../../../AudioManager/ButtonClick")
+plane = NodePath("../Selected_ship")
+title = NodePath("../../../../MarginContainer3/title")
 
 [node name="VerticalContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
 margin_top = 230.0
@@ -177,25 +188,32 @@ margin_right = 243.0
 margin_bottom = 33.0
 alignment = 1
 
-[node name="Play" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
+[node name="credits" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 89.0
+margin_right = 119.0
+margin_bottom = 33.0
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 5 )
+script = ExtResource( 6 )
+title = NodePath("../../../../MarginContainer3/title")
+
+[node name="Play2" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
 margin_left = 106.0
 margin_right = 136.0
 margin_bottom = 33.0
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 5 )
 script = ExtResource( 6 )
-
-[node name="AudioManager" type="Node" parent="GUI"]
-
-[node name="ButtonClick" type="AudioStreamPlayer" parent="GUI/AudioManager"]
-stream = ExtResource( 11 )
+title = NodePath("../../../../MarginContainer3/title")
 
 [node name="Particles2D" type="Particles2D" parent="."]
 position = Vector2( 133.9, 187.65 )
 amount = 30
 fixed_fps = 60
 visibility_rect = Rect2( -0.95943, -0.982609, 1.8818, 1.87371 )
-process_material = SubResource( 2 )
+process_material = SubResource( 3 )
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" to="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" method="_on_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" method="_on_arrow_pressed"]
-[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Play" to="GUI/VBoxContainer/HBoxContainer/Play" method="switch_scene"]
+[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/credits" to="GUI/VBoxContainer/HBoxContainer/credits" method="switch_scene"]
+[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Play2" to="GUI/VBoxContainer/HBoxContainer/Play2" method="switch_scene"]
