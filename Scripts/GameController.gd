@@ -10,6 +10,9 @@ var spawnDelay = 1
 var screenBounds = Vector2.ZERO
 var last_position = Vector2.ZERO
 var temp_position = Vector2.ZERO
+export(NodePath) var health_label
+
+signal hit
 
 func _ready():
 	set_process(true)
@@ -17,8 +20,7 @@ func _ready():
 	enemy_list = []
 	enemy = preload("res://Nodes/Enemy.tscn")
 	player = preload("res://Nodes/Player.tscn")
-func fire():
-	$Player.fire()
+	$Player.connect("hit",self, "on_player_hit")
 
 func _process(delta):
 	time_elapsed+=delta
@@ -44,6 +46,9 @@ func _input(event):
 			last_position = temp_position
 	pass
 
+func on_player_hit():
+	get_node(health_label).set_text(str($Player.health))
+	pass
 func spawnEnemies():
 	# check current enemies
 	var enemy_counter = 0
@@ -55,4 +60,8 @@ func spawnEnemies():
 		
 		enemy_clone.position = Vector2(rand_range(-screenBounds.x / 2 + enemy_clone.texture.get_size().x / 2, screenBounds.x / 2- enemy_clone.texture.get_size().x / 2), -(screenBounds.y / 2) + enemy_clone.texture.get_size().y)
 		$enemy_container.add_child(enemy_clone)
+	pass
+
+
+func _on_speed_changed():
 	pass

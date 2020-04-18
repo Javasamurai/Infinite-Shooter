@@ -12,8 +12,16 @@ func _ready():
 	set_physics_process(true)
 	global = get_node("/root/Globals")
 	area_2d = $Area2D
-	area_2d.connect("area_entered",self,"_on_bullet_hit")	
+	area_2d.connect("area_entered",self,"_on_bullet_hit")
 	Bullets = get_parent().get("Bullets")
+
+	var tex = load("res://Images/Level_01_Bullet.png")
+	set_texture(tex)
+
+	pass
+
+func set_bullet_texture(path):
+	set_texture(load(str(path)))
 	pass
 
 func _process(delta):
@@ -44,14 +52,19 @@ func _on_bullet_hit(areas):
 	# some flashy animation of destroying
 	
 	if !hitPlayer_bullet && !hitEnemy_bullet && (isPlayer_bullet or isEnemy_bullet):
-		areas.get_parent().queue_free()
+		if isPlayer_bullet:
+			areas.get_node("../").hit()
+		$Area2D.hide()
 		$death.play()
-
+		
 		if isEnemy_bullet:
-			global.over = true
-			get_tree().change_scene("res://Nodes/MainMenu.tscn")
-			print("You are doomed: Game over")
+			areas.get_node("../").hit()
 	pass
 
-func _on_Visibility_screen_exited():
+func _on_music_finished():
 	queue_free()
+	pass
+
+func _on_VisibilityNotifier2D_screen_exited():
+	queue_free()
+	pass

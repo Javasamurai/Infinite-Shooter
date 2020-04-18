@@ -12,7 +12,9 @@ texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="enemy_area" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_area"]
 shape = SubResource( 1 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="on_enemy_invisible"]
