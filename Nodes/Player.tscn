@@ -5,11 +5,10 @@
 [ext_resource path="res://Images/Flame_01.png" type="Texture" id=4]
 [ext_resource path="res://Images/Flame_02.png" type="Texture" id=5]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 13.3643, 16.2326 )
 
-[sub_resource type="AnimatedTexture" id=3]
-flags = 4
+[sub_resource type="AnimatedTexture" id=2]
 frames = 2
 frame_0/texture = ExtResource( 4 )
 frame_1/texture = ExtResource( 5 )
@@ -23,10 +22,10 @@ script = ExtResource( 3 )
 [node name="player_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_area"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="bottom_ignite" type="Sprite" parent="."]
-texture = SubResource( 3 )
+texture = SubResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]
 [connection signal="area_entered" from="player_area" to="." method="_on_player_hit"]

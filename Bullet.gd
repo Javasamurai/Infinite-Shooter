@@ -15,8 +15,8 @@ func _ready():
 	area_2d.connect("area_entered",self,"_on_bullet_hit")
 	Bullets = get_parent().get("Bullets")
 
-	var tex = load("res://Images/Level_01_Bullet.png")
-	set_texture(tex)
+	#var tex = load("res://Images/Level_01_Bullet.png")
+	#set_texture(tex)
 
 	pass
 

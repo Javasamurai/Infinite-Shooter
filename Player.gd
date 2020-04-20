@@ -2,7 +2,7 @@ extends Sprite
 
 var speed = 3
 var fire_speed = 3
-var fire_delay = 0.5
+var fire_delay = 0.1
 var canMoveUp = false
 var canFire
 var bullet 
@@ -26,6 +26,7 @@ signal hit
 
 func _ready():
 	global = get_node("/root/Globals")
+	print(global.selected_plane)
 	var tex = load("res://Images/Players/Level_" + str(global.selected_plane) + "_Player.png")
 	set_texture(tex)
 	tween = get_node("Tween")
@@ -34,10 +35,6 @@ func _ready():
 	set_process_input(true)
 	window_size = get_viewport_rect().size / 2
 	pass
-
-#func _input(event):
-#	if event.
-#	pass
 
 func _process(delta):
 	time_elapsed+=delta
@@ -59,12 +56,16 @@ func _process(delta):
 
 func movement(_direction = null):
 	if Input.is_key_pressed(KEY_ESCAPE):
-			get_tree().change_scene("./MainMenu.tscn")
+		get_tree().change_scene("./MainMenu.tscn")
 	if Input.is_key_pressed(KEY_LEFT) || _direction == DIRECTION.LEFT:
 		if self.position.x > -window_size.x:
+			tween.interpolate_property(get_node("."), "rotation_degrees", 0,-5,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+			tween.start()
 			self.position = Vector2(self.position.x - speed, self.position.y)
 	if Input.is_key_pressed(KEY_RIGHT) || _direction == DIRECTION.RIGHT:
 		if self.position.x < window_size.x:
+			tween.interpolate_property(get_node("."), "rotation_degrees", 0,5,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+			tween.start()
 			self.position = Vector2(self.position.x + speed, self.position.y)
 	if Input.is_key_pressed(KEY_UP) || _direction == DIRECTION.UP:
 		if self.position.y > -window_size.y:
@@ -78,13 +79,20 @@ func movement(_direction = null):
 func fire():
 	if canFire:
 		canFire = false
-		var bullet_clone = bullet.instance()
-		bullet_clone.position = Vector2(self.position.x, self.position.y)
-		bullet_clone.name = "player_bullet"
+		var bullet_clone_1 = bullet.instance()
+		bullet_clone_1.position = Vector2(self.position.x - 10, self.position.y)
+		bullet_clone_1.name = "player_bullet"
+
+		var bullet_clone_2 = bullet.instance()
+		bullet_clone_2.position = Vector2(self.position.x + 10, self.position.y)
+		bullet_clone_2.name = "player_bullet"
+
 		# Firreeee!!!!
 		$shot.play()
-		bullet_clone.fire("UP", fire_speed)
-		get_parent().add_child(bullet_clone)
+		bullet_clone_1.fire("UP", fire_speed)
+		get_parent().add_child(bullet_clone_1)
+		bullet_clone_2.fire("UP", fire_speed)
+		get_parent().add_child(bullet_clone_2)
 	pass
 
 func hit():
@@ -95,7 +103,6 @@ func hit():
 	if health <= 0:
 		global.over = true
 		get_tree().change_scene("res://Nodes/MainMenu.tscn")
-		print("You are doomed: Game over")
 
 func _on_Fire(viewport, _event, _shape_idx):
 	fire()
@@ -111,6 +118,7 @@ func _on_Accelerate(_viewport, event, shape_idx):
 
 func hit_complete(object, key):
 	get_node(".").modulate = Color.white
+	rotation_degrees = 0
 	#tween.interpolate_property(get_node("."), "modulate", Color.transparent,Color.white,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	#tween.start()
 	pass

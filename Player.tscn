@@ -1,43 +1,31 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Images/Players/Level_0_Player.png" type="Texture" id=1]
-[ext_resource path="res://Images/Players/Level_1_Player_1.png" type="Texture" id=2]
+[ext_resource path="res://Images/Players/Level_3_Player_04.png" type="Texture" id=1]
+[ext_resource path="res://Images/Players/Flame_01.png" type="Texture" id=2]
 [ext_resource path="res://Player.gd" type="Script" id=3]
-[ext_resource path="res://Images/Flame_01.png" type="Texture" id=4]
-[ext_resource path="res://Images/Flame_02.png" type="Texture" id=5]
-
-[sub_resource type="AnimatedTexture" id=1]
-flags = 4
-frames = 2
-fps = 30.0
-frame_0/texture = ExtResource( 1 )
-frame_1/texture = ExtResource( 2 )
-frame_1/delay_sec = 0.0
+[ext_resource path="res://Images/Players/Flame_02.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 13.3643, 16.2326 )
 
 [sub_resource type="AnimatedTexture" id=3]
-flags = 4
 frames = 2
-fps = 12.0
-frame_0/texture = ExtResource( 4 )
-frame_1/texture = ExtResource( 5 )
+fps = 30.0
+frame_0/texture = ExtResource( 2 )
+frame_1/texture = ExtResource( 4 )
 frame_1/delay_sec = 0.0
 
 [node name="Player" type="Sprite"]
-position = Vector2( 144, 27 )
-texture = SubResource( 1 )
+texture = ExtResource( 1 )
 script = ExtResource( 3 )
 
 [node name="player_area" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_area"]
 shape = SubResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1, 9 )
+[node name="flame" type="Sprite" parent="."]
+position = Vector2( 0, 22 )
 texture = SubResource( 3 )
 
 [node name="Tween" type="Tween" parent="."]

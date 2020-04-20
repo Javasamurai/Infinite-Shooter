@@ -1,8 +1,8 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
-[ext_resource path="res://Images/Players/Level_0_Player.png" type="Texture" id=2]
-[ext_resource path="res://Images/Players/Level_1_Player_1.png" type="Texture" id=3]
+[ext_resource path="res://Images/UI_Level_1_Plane.png" type="Texture" id=2]
+[ext_resource path="res://Images/Side_Flame_01.png" type="Texture" id=3]
 [ext_resource path="res://SFX/Death Screams/Robot/sfx_deathscream_robot1.wav" type="AudioStream" id=4]
 [ext_resource path="res://Images/UI/Play_btn_pressed.png" type="Texture" id=5]
 [ext_resource path="res://Scripts/UIManager.gd" type="Script" id=6]
@@ -13,28 +13,57 @@
 [ext_resource path="res://SFX/General Sounds/Buttons/sfx_sounds_button3.wav" type="AudioStream" id=11]
 [ext_resource path="res://Images/Flame_02.png" type="Texture" id=12]
 [ext_resource path="res://Images/Flame_01.png" type="Texture" id=13]
+[ext_resource path="res://Images/Earth/Earth_01.png" type="Texture" id=14]
+[ext_resource path="res://Images/Earth/Earth_02.png" type="Texture" id=15]
+[ext_resource path="res://Images/Earth/Earth_03.png" type="Texture" id=16]
+[ext_resource path="res://Images/Earth/Earth_04.png" type="Texture" id=17]
+[ext_resource path="res://Images/black_bg.png" type="Texture" id=18]
+[ext_resource path="res://Images/Side_Flame_02.png" type="Texture" id=19]
+[ext_resource path="res://Images/Blue_overlay.png" type="Texture" id=20]
+[ext_resource path="res://Images/Pink_Gradient.png" type="Texture" id=21]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="AnimatedTexture" id=1]
+frames = 4
+frame_0/texture = ExtResource( 14 )
+frame_1/texture = ExtResource( 15 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 16 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 17 )
+frame_3/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=2]
+frames = 4
+frame_0/texture = ExtResource( 14 )
+frame_1/texture = ExtResource( 15 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 16 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 17 )
+frame_3/delay_sec = 0.0
+
+[sub_resource type="CanvasItemMaterial" id=7]
+blend_mode = 1
+
+[sub_resource type="DynamicFont" id=3]
 size = 15
 font_data = ExtResource( 10 )
 
-[sub_resource type="AnimatedTexture" id=2]
-flags = 4
-frames = 2
-fps = 30.0
-frame_0/texture = ExtResource( 2 )
-frame_1/texture = ExtResource( 3 )
-frame_1/delay_sec = 0.0
-
 [sub_resource type="AnimatedTexture" id=4]
-flags = 4
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 13 )
 frame_1/texture = ExtResource( 12 )
 frame_1/delay_sec = 0.0
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="AnimatedTexture" id=5]
+frames = 2
+fps = 30.0
+frame_0/texture = ExtResource( 3 )
+frame_1/texture = ExtResource( 19 )
+frame_1/delay_sec = 0.0
+
+[sub_resource type="ParticlesMaterial" id=6]
 emission_shape = 2
 emission_box_extents = Vector3( 100, 100, 100 )
 flag_disable_z = true
@@ -49,6 +78,7 @@ script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+earth = NodePath("MarginContainer2/rotating_earth2")
 
 [node name="AudioManager" type="Node" parent="."]
 
@@ -58,14 +88,8 @@ stream = ExtResource( 11 )
 [node name="death" type="AudioStreamPlayer" parent="AudioManager"]
 stream = ExtResource( 4 )
 
-[node name="MarginContainer2" type="MarginContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Earth2" type="TextureRect" parent="MarginContainer2"]
+[node name="Earth2" type="TextureRect" parent="AudioManager"]
+visible = false
 margin_right = 243.0
 margin_bottom = 405.0
 size_flags_stretch_ratio = 0.0
@@ -75,6 +99,66 @@ stretch_mode = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="MarginContainer4" type="MarginContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -121.5
+margin_top = -202.5
+margin_right = 121.5
+margin_bottom = 202.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bg" type="Sprite" parent="MarginContainer4"]
+position = Vector2( -49.1871, -74.5739 )
+scale = Vector2( 1.49625, 1.41528 )
+texture = ExtResource( 18 )
+centered = false
+
+[node name="overlay_1" type="Sprite" parent="MarginContainer4"]
+position = Vector2( -49.1871, -74.5739 )
+scale = Vector2( 1.49625, 1.41528 )
+texture = ExtResource( 21 )
+centered = false
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -85.5
+margin_top = 74.5
+margin_right = 76.5
+margin_bottom = 200.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="rotating_earth_1" type="TextureRect" parent="MarginContainer2"]
+visible = false
+margin_right = 162.0
+margin_bottom = 288.0
+rect_pivot_offset = Vector2( 81, 144 )
+texture = SubResource( 1 )
+
+[node name="rotating_earth2" type="Sprite" parent="MarginContainer2"]
+position = Vector2( 85, 173 )
+scale = Vector2( 1.5, 1.5 )
+texture = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="MarginContainer2/rotating_earth2"]
+
+[node name="overlay_2" type="Sprite" parent="MarginContainer2"]
+modulate = Color( 1, 1, 1, 0.482353 )
+material = SubResource( 7 )
+position = Vector2( -85.1871, -351.574 )
+scale = Vector2( 1.49625, 1.41528 )
+texture = ExtResource( 20 )
+centered = false
 
 [node name="MarginContainer3" type="MarginContainer" parent="."]
 anchor_left = 0.5
@@ -90,7 +174,7 @@ __meta__ = {
 margin_top = 11.0
 margin_right = 240.0
 margin_bottom = 29.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 text = "Galaxy Gladiator"
 align = 1
 valign = 1
@@ -120,40 +204,70 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 175.0
+margin_top = 168.0
 margin_right = 257.0
-margin_bottom = 226.0
+margin_bottom = 232.0
 mouse_filter = 2
 alignment = 1
 
 [node name="left_arrow" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
-margin_left = 61.0
-margin_right = 99.0
-margin_bottom = 51.0
+margin_left = 54.0
+margin_right = 92.0
+margin_bottom = 64.0
 action_mode = 0
 icon = ExtResource( 7 )
 flat = true
 
 [node name="Selected_ship" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
-margin_left = 103.0
-margin_right = 154.0
-margin_bottom = 51.0
-texture = SubResource( 2 )
+margin_left = 96.0
+margin_right = 160.0
+margin_bottom = 64.0
+texture = ExtResource( 2 )
 stretch_mode = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship"]
+[node name="flames" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -31.0
-margin_top = -55.0
-margin_right = 33.0
-margin_bottom = 9.0
+margin_left = -39.0
+margin_top = -57.0
+margin_right = 39.0
+margin_bottom = 21.0
 texture = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="flames_lvl_3_left" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship"]
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -71.0
+margin_top = -46.0
+margin_right = 18.0
+margin_bottom = 32.0
+texture = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="flames_lvl_3_right" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship"]
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -7.0
+margin_top = -46.0
+margin_right = 82.0
+margin_bottom = 32.0
+texture = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -161,16 +275,16 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship"]
 
 [node name="right_arrow" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
-margin_left = 158.0
-margin_right = 196.0
-margin_bottom = 51.0
+margin_left = 164.0
+margin_right = 202.0
+margin_bottom = 64.0
 icon = ExtResource( 9 )
 flat = true
 
 [node name="VerticalContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 230.0
+margin_top = 236.0
 margin_right = 257.0
-margin_bottom = 230.0
+margin_bottom = 236.0
 alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -191,7 +305,8 @@ text = "Watch Ad"
 anchor_top = 0.958
 anchor_right = 1.0
 anchor_bottom = 1.012
-margin_top = -37.0
+margin_top = -100.0
+margin_bottom = -35.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -199,7 +314,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
 margin_right = 243.0
-margin_bottom = 58.0
+margin_bottom = 86.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI/VBoxContainer"]
 margin_right = 243.0
@@ -213,7 +328,6 @@ margin_right = 119.0
 margin_bottom = 33.0
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 5 )
-script = ExtResource( 6 )
 
 [node name="Play2" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
 margin_left = 106.0
@@ -225,9 +339,10 @@ texture_pressed = ExtResource( 5 )
 [node name="Particles2D" type="Particles2D" parent="."]
 position = Vector2( 133.9, 187.65 )
 amount = 30
+randomness = 0.43
 fixed_fps = 60
-visibility_rect = Rect2( -0.95943, -0.982609, 1.8818, 1.87371 )
-process_material = SubResource( 3 )
+visibility_rect = Rect2( 0, 0, 5, 5 )
+process_material = SubResource( 6 )
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" to="." method="_on_left_arrow_pressed"]
 [connection signal="tween_completed" from="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship/Tween" to="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" method="switching_finished"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]
