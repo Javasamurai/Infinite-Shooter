@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
 [ext_resource path="res://Images/UI_Level_1_Plane.png" type="Texture" id=2]
@@ -17,20 +17,14 @@
 [ext_resource path="res://Images/Earth/Earth_02.png" type="Texture" id=15]
 [ext_resource path="res://Images/Earth/Earth_03.png" type="Texture" id=16]
 [ext_resource path="res://Images/Earth/Earth_04.png" type="Texture" id=17]
-[ext_resource path="res://Images/black_bg.png" type="Texture" id=18]
+[ext_resource path="res://Images/BG_02.png" type="Texture" id=18]
 [ext_resource path="res://Images/Side_Flame_02.png" type="Texture" id=19]
 [ext_resource path="res://Images/Blue_overlay.png" type="Texture" id=20]
 [ext_resource path="res://Images/Pink_Gradient.png" type="Texture" id=21]
+[ext_resource path="res://Images/Earth_Atmosphere.png" type="Texture" id=22]
 
-[sub_resource type="AnimatedTexture" id=1]
-frames = 4
-frame_0/texture = ExtResource( 14 )
-frame_1/texture = ExtResource( 15 )
-frame_1/delay_sec = 0.0
-frame_2/texture = ExtResource( 16 )
-frame_2/delay_sec = 0.0
-frame_3/texture = ExtResource( 17 )
-frame_3/delay_sec = 0.0
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 2
 
 [sub_resource type="AnimatedTexture" id=2]
 frames = 4
@@ -42,28 +36,41 @@ frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 17 )
 frame_3/delay_sec = 0.0
 
-[sub_resource type="CanvasItemMaterial" id=7]
+[sub_resource type="CanvasItemMaterial" id=3]
 blend_mode = 1
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="AnimatedTexture" id=4]
+frames = 4
+frame_0/texture = ExtResource( 14 )
+frame_1/texture = ExtResource( 15 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 16 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 17 )
+frame_3/delay_sec = 0.0
+
+[sub_resource type="CanvasItemMaterial" id=5]
+blend_mode = 1
+
+[sub_resource type="DynamicFont" id=6]
 size = 15
 font_data = ExtResource( 10 )
 
-[sub_resource type="AnimatedTexture" id=4]
+[sub_resource type="AnimatedTexture" id=7]
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 13 )
 frame_1/texture = ExtResource( 12 )
 frame_1/delay_sec = 0.0
 
-[sub_resource type="AnimatedTexture" id=5]
+[sub_resource type="AnimatedTexture" id=8]
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 3 )
 frame_1/texture = ExtResource( 19 )
 frame_1/delay_sec = 0.0
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="ParticlesMaterial" id=9]
 emission_shape = 2
 emission_box_extents = Vector3( 100, 100, 100 )
 flag_disable_z = true
@@ -114,12 +121,13 @@ __meta__ = {
 }
 
 [node name="bg" type="Sprite" parent="MarginContainer4"]
-position = Vector2( -49.1871, -74.5739 )
+position = Vector2( -97.5428, -366.215 )
 scale = Vector2( 1.49625, 1.41528 )
 texture = ExtResource( 18 )
 centered = false
 
 [node name="overlay_1" type="Sprite" parent="MarginContainer4"]
+material = SubResource( 1 )
 position = Vector2( -49.1871, -74.5739 )
 scale = Vector2( 1.49625, 1.41528 )
 texture = ExtResource( 21 )
@@ -143,18 +151,26 @@ visible = false
 margin_right = 162.0
 margin_bottom = 288.0
 rect_pivot_offset = Vector2( 81, 144 )
-texture = SubResource( 1 )
+texture = SubResource( 2 )
 
 [node name="rotating_earth2" type="Sprite" parent="MarginContainer2"]
+material = SubResource( 3 )
 position = Vector2( 85, 173 )
 scale = Vector2( 1.5, 1.5 )
-texture = SubResource( 2 )
+texture = SubResource( 4 )
 
 [node name="Tween" type="Tween" parent="MarginContainer2/rotating_earth2"]
 
+[node name="earth_overlay" type="Sprite" parent="MarginContainer2"]
+self_modulate = Color( 1, 1, 1, 0.745098 )
+position = Vector2( 85, 175 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 22 )
+
 [node name="overlay_2" type="Sprite" parent="MarginContainer2"]
+visible = false
 modulate = Color( 1, 1, 1, 0.482353 )
-material = SubResource( 7 )
+material = SubResource( 5 )
 position = Vector2( -85.1871, -351.574 )
 scale = Vector2( 1.49625, 1.41528 )
 texture = ExtResource( 20 )
@@ -174,7 +190,7 @@ __meta__ = {
 margin_top = 11.0
 margin_right = 240.0
 margin_bottom = 29.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 6 )
 text = "Galaxy Gladiator"
 align = 1
 valign = 1
@@ -234,10 +250,10 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -39.0
-margin_top = -57.0
+margin_top = -57.6983
 margin_right = 39.0
-margin_bottom = 21.0
-texture = SubResource( 4 )
+margin_bottom = 20.3017
+texture = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -252,7 +268,7 @@ margin_left = -71.0
 margin_top = -46.0
 margin_right = 18.0
 margin_bottom = 32.0
-texture = SubResource( 5 )
+texture = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -267,7 +283,7 @@ margin_left = -7.0
 margin_top = -46.0
 margin_right = 82.0
 margin_bottom = 32.0
-texture = SubResource( 5 )
+texture = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -342,10 +358,9 @@ amount = 30
 randomness = 0.43
 fixed_fps = 60
 visibility_rect = Rect2( 0, 0, 5, 5 )
-process_material = SubResource( 6 )
+process_material = SubResource( 9 )
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" to="." method="_on_left_arrow_pressed"]
-[connection signal="tween_completed" from="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship/Tween" to="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" method="switching_finished"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/credits" to="GUI/VBoxContainer/HBoxContainer/credits" method="switch_scene"]
-[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Play2" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Play2" to="GUI/VBoxContainer/HBoxContainer/Play2" method="switch_scene"]
+[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Play2" to="." method="switch_scene"]

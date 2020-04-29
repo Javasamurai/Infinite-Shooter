@@ -4,6 +4,7 @@ enum direction {
 	LEFT,
 	RIGHT
 }
+
 var tween
 var global
 var plane_node
@@ -105,7 +106,6 @@ func _on_arrow_pressed(_direction):
 		flames_lvl_3_right.visible = false
 	pass
 
-
 func switch_scene():
 	get_tree().change_scene("res://Nodes/Root.tscn")
 	pass
@@ -119,7 +119,5 @@ func _on_right_arrow_pressed():
 	_on_arrow_pressed(direction.RIGHT)
 
 func _on_left_arrow_pressed():
-	#plane_tween.interpolate_property(plane_tween, "transform/position", 0, -360, 0.5,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	#plane_tween.start()
 	_on_arrow_pressed(direction.LEFT)
 	pass

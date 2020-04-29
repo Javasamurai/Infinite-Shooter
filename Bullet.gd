@@ -11,7 +11,7 @@ var global
 func _ready():
 	set_physics_process(true)
 	global = get_node("/root/Globals")
-	area_2d = $Area2D
+	area_2d = $bullet_area
 	area_2d.connect("area_entered",self,"_on_bullet_hit")
 	Bullets = get_parent().get("Bullets")
 
@@ -54,7 +54,7 @@ func _on_bullet_hit(areas):
 	if !hitPlayer_bullet && !hitEnemy_bullet && (isPlayer_bullet or isEnemy_bullet):
 		if isPlayer_bullet:
 			areas.get_node("../").hit()
-		$Area2D.hide()
+		$bullet_area.hide()
 		$death.play()
 		
 		if isEnemy_bullet:

@@ -6,7 +6,6 @@
 [ext_resource path="res://Images/Bullet_02.png" type="Texture" id=4]
 
 [sub_resource type="AnimatedTexture" id=1]
-flags = 4
 frames = 2
 fps = 15.0
 frame_0/texture = ExtResource( 1 )
@@ -23,10 +22,10 @@ script = ExtResource( 2 )
 [node name="death" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="bullet_area" type="Area2D" parent="."]
 scale = Vector2( 1.77965, 1.65419 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bullet_area"]
 shape = SubResource( 2 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]

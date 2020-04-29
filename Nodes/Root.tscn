@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Images/fire_btn.png" type="Texture" id=2]
@@ -7,15 +7,20 @@
 [ext_resource path="res://SFX/Laser_Shoot7.wav" type="AudioStream" id=5]
 [ext_resource path="res://fonts/joystix monospace.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://Images/Layers/Layer_0010_1.png" type="Texture" id=7]
-[ext_resource path="res://Images/Layers/Layer_0009_2.png" type="Texture" id=8]
+[ext_resource path="res://Images/BG_02.png" type="Texture" id=8]
 [ext_resource path="res://Scripts/Parallax.gd" type="Script" id=9]
 [ext_resource path="res://Images/stars_bg.png" type="Texture" id=10]
 [ext_resource path="res://SFX/bgm.wav" type="AudioStream" id=11]
+[ext_resource path="res://SFX/Powerup.wav" type="AudioStream" id=12]
+[ext_resource path="res://Images/Pink_Gradient.png" type="Texture" id=13]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 154.391, 1000 )
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 2
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 190.69, 306.174 )
+
+[sub_resource type="DynamicFont" id=3]
 font_data = ExtResource( 6 )
 
 [node name="Root" type="Control"]
@@ -26,7 +31,7 @@ __meta__ = {
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 script = ExtResource( 1 )
-health_label = NodePath("../Control/MarginContainer/VBoxContainer/Label")
+health_label = NodePath("Control/MarginContainer/VBoxContainer/Label")
 
 [node name="Fire_button" type="Button" parent="Camera2D"]
 visible = false
@@ -91,6 +96,11 @@ icon = ExtResource( 3 )
 flat = true
 clip_text = true
 
+[node name="overlay" type="Sprite" parent="Camera2D"]
+material = SubResource( 1 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 13 )
+
 [node name="Player" parent="Camera2D" instance=ExtResource( 4 )]
 position = Vector2( 0, 100 )
 
@@ -103,6 +113,22 @@ mix_target = 2
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Camera2D"]
 
+[node name="NightSky" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
+motion_mirroring = Vector2( 1024, 1024 )
+script = ExtResource( 9 )
+
+[node name="Space" type="Sprite" parent="Camera2D/ParallaxBackground/NightSky"]
+texture = ExtResource( 10 )
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
+motion_mirroring = Vector2( 1, 1458 )
+script = ExtResource( 9 )
+
+[node name="bg" type="Sprite" parent="Camera2D/ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource( 8 )
+centered = false
+
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
 visible = false
 motion_scale = Vector2( 0.5, 1 )
@@ -114,29 +140,7 @@ z_as_relative = false
 texture = ExtResource( 7 )
 centered = false
 region_enabled = true
-region_rect = Rect2( 0, 0, 1024, 793 )
-
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
-visible = false
-motion_scale = Vector2( 0.2, 1 )
-motion_mirroring = Vector2( 1024, 1 )
-
-[node name="Sprite" type="Sprite" parent="Camera2D/ParallaxBackground/ParallaxLayer2"]
-position = Vector2( 7.59375, -182.25 )
-z_as_relative = false
-texture = ExtResource( 8 )
-centered = false
-region_enabled = true
-region_rect = Rect2( 0, 0, 1024, 793 )
-
-[node name="NightSky" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
-motion_mirroring = Vector2( 1024, 1024 )
-script = ExtResource( 9 )
-
-[node name="Space" type="Sprite" parent="Camera2D/ParallaxBackground/NightSky"]
-position = Vector2( 0, 0.711426 )
-texture = ExtResource( 10 )
-centered = false
+region_rect = Rect2( 244, 56, 0, 0 )
 
 [node name="heading" type="Label" parent="Camera2D"]
 visible = false
@@ -149,26 +153,38 @@ text = "Game Over"
 [node name="MusicManager" type="Node2D" parent="Camera2D"]
 
 [node name="Fire_area" type="Area2D" parent="Camera2D"]
+visible = false
 
 [node name="fire" type="CollisionShape2D" parent="Camera2D/Fire_area"]
 visible = false
 position = Vector2( 152.802, -5.60253 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
+
+[node name="swipe_area" type="Area2D" parent="Camera2D"]
+
+[node name="swipe" type="CollisionShape2D" parent="Camera2D/swipe_area"]
+position = Vector2( 1.6702, 0 )
+shape = SubResource( 2 )
 
 [node name="Accelerate_area" type="Area2D" parent="Camera2D"]
+visible = false
 
 [node name="accelerate" type="CollisionShape2D" parent="Camera2D/Accelerate_area"]
-visible = false
 position = Vector2( -156.67, 1.80081 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="bgm" type="AudioStreamPlayer2D" parent="Camera2D"]
 stream = ExtResource( 11 )
 autoplay = true
 
+[node name="powerup" type="AudioStreamPlayer" parent="Camera2D"]
+stream = ExtResource( 12 )
+
+[node name="powerup_container" type="Node2D" parent="Camera2D"]
+
 [node name="enemy_container" type="Node2D" parent="Camera2D"]
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="Camera2D"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -181,7 +197,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="Control"]
+[node name="MarginContainer" type="MarginContainer" parent="Camera2D/Control"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -240.0
@@ -191,17 +207,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera2D/Control/MarginContainer"]
 margin_right = 243.0
 margin_bottom = 40.0
 
-[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Camera2D/Control/MarginContainer/VBoxContainer"]
 margin_right = 243.0
 margin_bottom = 20.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 text = "100"
 
-[node name="HSlider" type="HSlider" parent="Control/MarginContainer/VBoxContainer"]
+[node name="HSlider" type="HSlider" parent="Camera2D/Control/MarginContainer/VBoxContainer"]
 visible = false
 margin_top = 24.0
 margin_right = 243.0
@@ -213,4 +229,4 @@ margin_bottom = 40.0
 [connection signal="button_down" from="Camera2D/down" to="Camera2D/Player" method="fire"]
 [connection signal="input_event" from="Camera2D/Fire_area" to="Camera2D/Player" method="_on_Fire"]
 [connection signal="input_event" from="Camera2D/Accelerate_area" to="Camera2D/Player" method="_on_Accelerate"]
-[connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/HSlider" to="Camera2D/ParallaxBackground/NightSky" method="_on_HSlider_value_changed"]
+[connection signal="value_changed" from="Camera2D/Control/MarginContainer/VBoxContainer/HSlider" to="Camera2D/ParallaxBackground/NightSky" method="_on_HSlider_value_changed"]

@@ -1,32 +1,104 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://Images/Players/Level_3_Player_04.png" type="Texture" id=1]
+[ext_resource path="res://Images/Powerup_anim/P_Up_02.png" type="Texture" id=1]
 [ext_resource path="res://Images/Players/Flame_01.png" type="Texture" id=2]
 [ext_resource path="res://Player.gd" type="Script" id=3]
 [ext_resource path="res://Images/Players/Flame_02.png" type="Texture" id=4]
+[ext_resource path="res://Images/Blast_03.png" type="Texture" id=5]
+[ext_resource path="res://Images/Blast_01.png" type="Texture" id=6]
+[ext_resource path="res://Images/Blast_02.png" type="Texture" id=7]
+[ext_resource path="res://Images/Blast_04.png" type="Texture" id=8]
+[ext_resource path="res://Images/Blast_05.png" type="Texture" id=9]
+[ext_resource path="res://Images/Players/Level_03_1.png" type="Texture" id=10]
+[ext_resource path="res://Images/Powerup_anim/P_Up_05.png" type="Texture" id=11]
+[ext_resource path="res://Images/Powerup_anim/P_Up_04.png" type="Texture" id=12]
+[ext_resource path="res://Images/Powerup_anim/P_Up_03.png" type="Texture" id=13]
+[ext_resource path="res://Images/Powerup_anim/P_Up_01.png" type="Texture" id=14]
+[ext_resource path="res://Images/Powerup_anim/P_Up_07.png" type="Texture" id=15]
+[ext_resource path="res://Images/Powerup_anim/P_Up_06.png" type="Texture" id=16]
+[ext_resource path="res://Images/Powerup_anim/P_Up_08.png" type="Texture" id=17]
+[ext_resource path="res://Images/Powerup_anim/P_Up_09.png" type="Texture" id=18]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="AnimatedTexture" id=1]
+frames = 9
+fps = 15.0
+frame_0/texture = ExtResource( 14 )
+frame_1/texture = ExtResource( 1 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 13 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 12 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 11 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 16 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 15 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 17 )
+frame_7/delay_sec = 0.0
+frame_8/texture = ExtResource( 18 )
+frame_8/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=2]
+frames = 5
+fps = 10.0
+frame_0/texture = ExtResource( 6 )
+frame_1/texture = ExtResource( 7 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 5 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 8 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 9 )
+frame_4/delay_sec = 0.0
+
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 13.3643, 16.2326 )
 
-[sub_resource type="AnimatedTexture" id=3]
+[sub_resource type="AnimatedTexture" id=4]
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 2 )
 frame_1/texture = ExtResource( 4 )
 frame_1/delay_sec = 0.0
 
-[node name="Player" type="Sprite"]
-texture = ExtResource( 1 )
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 14 ), ExtResource( 1 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource( 17 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "default",
+"speed": 7.0
+} ]
+
+[node name="Player" type="Node2D"]
 script = ExtResource( 3 )
+
+[node name="powerup_1" type="Sprite" parent="."]
+visible = false
+texture = SubResource( 1 )
+
+[node name="Player_bg" type="Sprite" parent="."]
+texture = ExtResource( 10 )
+
+[node name="explosion" type="Sprite" parent="."]
+visible = false
+texture = SubResource( 2 )
 
 [node name="player_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_area"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="flame" type="Sprite" parent="."]
 position = Vector2( 0, 22 )
-texture = SubResource( 3 )
+texture = SubResource( 4 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="powerup" type="AnimatedSprite" parent="."]
+visible = false
+frames = SubResource( 5 )
+[connection signal="frame_changed" from="powerup_1" to="." method="_on_powerup_frame_changed"]
 [connection signal="tween_completed" from="Tween" to="." method="hit_complete"]
+[connection signal="animation_finished" from="powerup" to="." method="_on_powerup_animation_finished"]
