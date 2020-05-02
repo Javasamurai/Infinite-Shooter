@@ -1,6 +1,4 @@
-# MIT License
-
-extends Camera
+extends Node2D
 
 export var decay_rate = 0.4
 export var max_yaw = 0.05
@@ -8,8 +6,8 @@ export var max_pitch = 0.05
 export var max_roll = 0.1
 export var max_offset = 0.2
 
-var _start_position
-var _start_rotation
+var _start_position = Vector2.ZERO
+var _start_rotation = Vector2.ZERO
 var _trauma
 
 

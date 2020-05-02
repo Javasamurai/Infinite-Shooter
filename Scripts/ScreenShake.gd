@@ -1,4 +1,4 @@
-extends Camera2D
+extends Node2D
 
 var _duration = 0.0
 var _period_in_ms = 0.0
@@ -8,8 +8,11 @@ var _last_shook_timer = 0
 var _previous_x = 0.0
 var _previous_y = 0.0
 var _last_offset = Vector2(0, 0)
+export(NodePath) var cam
 
+var camera_node
 func _ready():
+	camera_node = get_node(cam)
 	set_process(true)
 
 # Shake with decreasing intensity while there's time remaining.
@@ -33,13 +36,13 @@ func _process(delta):
 		_previous_y = new_y
 		# Track how much we've moved the offset, as opposed to other effects.
 		var new_offset = Vector2(x_component, y_component)
-		set_offset(get_offset() - _last_offset + new_offset)
+		camera_node.set_offset(camera_node.get_offset() - _last_offset + new_offset)
 		_last_offset = new_offset
 	# Reset the offset when we're done shaking.
 	_timer = _timer - delta
 	if _timer <= 0:
 		_timer = 0
-		set_offset(get_offset() - _last_offset)
+		camera_node.set_offset(camera_node.get_offset() - _last_offset)
 
 # Kick off a new screenshake effect.
 func shake(duration, frequency, amplitude):
@@ -51,5 +54,5 @@ func shake(duration, frequency, amplitude):
 	_previous_x = rand_range(-1.0, 1.0)
 	_previous_y = rand_range(-1.0, 1.0)
 	# Reset previous offset, if any.
-	set_offset(get_offset() - _last_offset)
+	camera_node.set_offset(camera_node.get_offset() - _last_offset)
 	_last_offset = Vector2(0, 0)

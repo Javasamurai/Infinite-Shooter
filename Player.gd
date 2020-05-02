@@ -1,7 +1,7 @@
 extends Node2D
 
 var speed = 3
-var fire_speed = 3
+var fire_speed = 100
 var fire_delay = 0.25
 var canMoveUp = false
 var canFire
@@ -153,6 +153,7 @@ func hit():
 	tween.start()
 	health = health - 50
 	emit_signal("hit")
+	health = 10
 	if health <= 0 && !global.over:
 		global.over = true
 		time_elapsed = 0

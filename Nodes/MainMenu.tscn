@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
 [ext_resource path="res://Images/UI_Level_1_Plane.png" type="Texture" id=2]
@@ -22,6 +22,8 @@
 [ext_resource path="res://Images/Blue_overlay.png" type="Texture" id=20]
 [ext_resource path="res://Images/Pink_Gradient.png" type="Texture" id=21]
 [ext_resource path="res://Images/Earth_Atmosphere.png" type="Texture" id=22]
+[ext_resource path="res://Images/UI/Play_OFF.png" type="Texture" id=23]
+[ext_resource path="res://Images/UI/Play_ON.png" type="Texture" id=24]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 2
@@ -334,7 +336,7 @@ margin_bottom = 86.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI/VBoxContainer"]
 margin_right = 243.0
-margin_bottom = 33.0
+margin_bottom = 34.0
 alignment = 1
 
 [node name="credits" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
@@ -347,10 +349,10 @@ texture_pressed = ExtResource( 5 )
 
 [node name="Play2" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
 margin_left = 106.0
-margin_right = 136.0
-margin_bottom = 33.0
-texture_normal = ExtResource( 8 )
-texture_pressed = ExtResource( 5 )
+margin_right = 137.0
+margin_bottom = 34.0
+texture_normal = ExtResource( 23 )
+texture_pressed = ExtResource( 24 )
 
 [node name="Particles2D" type="Particles2D" parent="."]
 position = Vector2( 133.9, 187.65 )
@@ -362,5 +364,5 @@ process_material = SubResource( 9 )
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/credits" to="GUI/VBoxContainer/HBoxContainer/credits" method="switch_scene"]
-[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Play2" to="GUI/VBoxContainer/HBoxContainer/Play2" method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Play2" to="." method="switch_scene"]
+[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Play2" to="GUI/VBoxContainer/HBoxContainer/Play2" method="switch_scene"]
