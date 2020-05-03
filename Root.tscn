@@ -87,6 +87,7 @@ flat = true
 clip_text = true
 
 [node name="Player" parent="Camera2D" instance=ExtResource( 4 )]
+visible = false
 position = Vector2( 0, 100 )
 
 [node name="movement" type="AudioStreamPlayer" parent="Camera2D/Player"]

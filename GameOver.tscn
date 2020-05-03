@@ -1,0 +1,111 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://fonts/ka1.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Images/black_bg.png" type="Texture" id=2]
+[ext_resource path="res://Images/UI/Restart_Button.png" type="Texture" id=3]
+[ext_resource path="res://Images/UI/Restart_Button_Pressed.png" type="Texture" id=4]
+[ext_resource path="res://Images/UI/Text_BoX.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/GameOver.gd" type="Script" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+resource_local_to_scene = true
+size = 20
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+resource_local_to_scene = true
+font_data = ExtResource( 1 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bg" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.01954
+margin_top = -1.63127
+margin_right = 1.01953
+margin_bottom = -1.63126
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -80.1637
+margin_top = 23.833
+margin_right = 81.8363
+margin_bottom = 66.833
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="title" type="Label" parent="."]
+modulate = Color( 0.815686, 0.435294, 0.0509804, 1 )
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -123.0
+margin_top = 29.7961
+margin_right = 123.0
+margin_bottom = 48.7961
+custom_fonts/font = SubResource( 1 )
+text = "Game Over"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="restart_btn" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -13.6743
+margin_top = 23.8851
+margin_right = 16.3257
+margin_bottom = 56.8851
+keep_pressed_outside = true
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -80.7321
+margin_top = 179.681
+margin_right = 81.2679
+margin_bottom = 222.681
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="score" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.9633
+margin_top = -9.5
+margin_right = 80.0367
+margin_bottom = 9.5
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.815686, 0.435294, 0.0509804, 1 )
+text = "Score: 10000"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_up" from="restart_btn" to="." method="on_restart"]

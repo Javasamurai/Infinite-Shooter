@@ -33,7 +33,7 @@ animations = [ {
 "frames": [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 11 ) ],
 "loop": true,
 "name": "explosion",
-"speed": 10.0
+"speed": 20.0
 } ]
 
 [node name="Enemy" type="AnimatedSprite"]

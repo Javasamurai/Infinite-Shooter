@@ -16,11 +16,15 @@ var last_spawned_time
 var screenBounds = Vector2.ZERO
 var last_position = Vector2.ZERO
 var temp_position = Vector2.ZERO
+var rng
 export(NodePath) var health_label
 
 signal hit
 
 func _ready():
+	rng = RandomNumberGenerator.new()
+	rng.randomize()
+	
 	set_process(true)
 	screenBounds = get_viewport_rect().size
 	enemy_list = []
@@ -85,9 +89,11 @@ func spawnPowerup():
 
 func _on_powerup_got(areas):
 	if areas.name == "bullet_area":
+		var which_one = "sonic_boom" if rng.randf_range(0, 1) < 0.5 else "minify"
+
 		$powerup.play()
 		powerup_clone.queue_free()
-		$Player.powerup("sonic_boom")
+		$Player.powerup(which_one)
 
 func spawnEnemies():
 	# check current enemies

@@ -2,7 +2,7 @@ extends Node2D
 
 var speed = 3
 var fire_speed = 100
-var fire_delay = 0.25
+var fire_delay = 1
 var canMoveUp = false
 var canFire
 var bullet 
@@ -28,6 +28,7 @@ var last_pos = Vector2.ZERO
 var global
 var tween 
 var is_sonic_boom
+var is_powerup_live
 signal hit
 
 func _ready():
@@ -41,6 +42,7 @@ func _ready():
 	bullet = preload("res://Nodes/Bullet.tscn")
 	set_process_input(true)
 	window_size = get_viewport_rect().size / 2
+	$Timer.connect("timeout", self, "clear_powerup")
 	pass
 
 func _process(delta):
@@ -50,6 +52,7 @@ func _process(delta):
 		fire()
 		if !is_sonic_boom and !global.over:
 			time_elapsed = 0
+
 	if is_sonic_boom and time_elapsed < 3:
 		fire()
 	else:
@@ -141,6 +144,10 @@ func fire():
 		get_parent().add_child(bullet_clone_1)
 		bullet_clone_2.fire("UP", fire_speed)
 		get_parent().add_child(bullet_clone_2)
+		
+		$muzzles.visible = true
+		tween.interpolate_property($muzzles, "modulate",Color.white, Color.transparent,0.075,Tween.TRANS_SINE,Tween.TRANS_LINEAR)
+		tween.start()
 	pass
 	
 func sonic_boom():
@@ -159,12 +166,6 @@ func hit():
 		time_elapsed = 0
 		$Player_bg.visible = false
 		$explosion.visible = true
-		#get_tree().change_scene("res://Nodes/MainMenu.tscn")
-		#$explosion.connect("frame_changed", self, "explosion_changed")
-
-func explosion_changed():
-	print("Frame changed")
-	pass
 
 func _on_Fire(viewport, _event, _shape_idx):
 	fire()
@@ -178,13 +179,35 @@ func _on_Accelerate(_viewport, event, shape_idx):
 			canMoveUp = true
 	pass
 
+func healthpotion():
+	health = 100
+	pass
+
+func minify():
+	tween.interpolate_property(self, "scale", Vector2.ONE,Vector2(0.5,0.5),0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+	tween.start()
+	pass
+func clear_powerup():
+	tween.interpolate_property(self, "scale", get_scale(),Vector2.ONE,0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+	tween.start()
+
 func powerup(which_one):
 	$powerup.visible = true
 	$powerup.play()
+
+	is_powerup_live = true
+	$Timer.start(3)
+
 	if which_one == "sonic_boom":
 		sonic_boom()
-func hit_complete(object, key):
+	elif which_one == "minify":
+		minify()
+	elif which_one == "health":
+		healthpotion()
+
+func hit_complete(object, path):
 	get_node(".").modulate = Color.white
+	$muzzles.visible = false
 	rotation_degrees = 0
 	pass
 

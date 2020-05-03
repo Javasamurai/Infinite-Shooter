@@ -31,4 +31,3 @@ scale = Vector2( 10, 10 )
 shape = SubResource( 2 )
 [connection signal="screen_exited" from="Sprite/VisibilityNotifier2D" to="Sprite" method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="viewport_exited" from="Sprite/VisibilityNotifier2D" to="Sprite" method="_on_VisibilityNotifier2D_viewport_exited"]
-[connection signal="area_entered" from="Sprite/powerup_area" to="Sprite" method="_on_powerup_area_area_entered"]

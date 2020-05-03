@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Images/Powerup_anim/P_Up_02.png" type="Texture" id=1]
 [ext_resource path="res://Images/Players/Flame_01.png" type="Texture" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://Images/Powerup_anim/P_Up_06.png" type="Texture" id=16]
 [ext_resource path="res://Images/Powerup_anim/P_Up_08.png" type="Texture" id=17]
 [ext_resource path="res://Images/Powerup_anim/P_Up_09.png" type="Texture" id=18]
+[ext_resource path="res://Images/Muzzle_Flash.png" type="Texture" id=19]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 9
@@ -85,9 +86,23 @@ texture = ExtResource( 10 )
 visible = false
 texture = SubResource( 2 )
 
+[node name="muzzles" type="Node2D" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.839216 )
+position = Vector2( -11.4962, -6.74535 )
+
+[node name="muzzle_top" type="Sprite" parent="muzzles"]
+position = Vector2( 0, 3.5 )
+texture = ExtResource( 19 )
+
+[node name="muzzle_top2" type="Sprite" parent="muzzles"]
+position = Vector2( 23.119, 3.5 )
+texture = ExtResource( 19 )
+
 [node name="player_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_area"]
+position = Vector2( -0.196144, 0 )
 shape = SubResource( 3 )
 
 [node name="flame" type="Sprite" parent="."]
@@ -99,6 +114,10 @@ texture = SubResource( 4 )
 [node name="powerup" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 5 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
 [connection signal="frame_changed" from="powerup_1" to="." method="_on_powerup_frame_changed"]
 [connection signal="tween_completed" from="Tween" to="." method="hit_complete"]
 [connection signal="animation_finished" from="powerup" to="." method="_on_powerup_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
