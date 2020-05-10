@@ -8,6 +8,7 @@ var is_firing = false
 var fire_speed = 0
 var global
 var tween
+var already_hit = false
 
 func _ready():
 	set_physics_process(true)
@@ -62,11 +63,14 @@ func _on_bullet_hit(areas):
 	#	queue_free()
 
 	if !hitPlayer_bullet && !hitEnemy_bullet && (isPlayer_bullet or isEnemy_bullet):
-		if isPlayer_bullet:
+		if isPlayer_bullet and already_hit == false:
 			areas.get_node("../").hit()
+			already_hit = true
+
 		$bullet_area.hide()
 		$death.play()
-		if isEnemy_bullet:
+		if isEnemy_bullet and already_hit == false:
+			already_hit = true
 			areas.get_node("../").hit()
 	pass
 

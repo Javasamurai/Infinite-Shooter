@@ -1,19 +1,24 @@
-extends Sprite
+extends AnimatedSprite
 
 var time_elapsed
 var speed = 120
 var powerup_names = {
-	1: "minify",
-	2: "sonic_boom",
-	3: "potion"
+	1: "Minify",
+	2: "sonic boom",
+	3: "potion",
+	4: "shield",
+	5: "Coins",
+	6: "coins crate",
+	7: "Machine gun"
 }
-var powerup
-
+var powerup = powerup_names[1]
 
 func _ready():
+	var potion = load("res://Images/UI/Health_01.png")
 	set_process(true)
 	time_elapsed = 0
-	powerup = powerup_names[int(rand_range(0, 3))]
+	powerup = powerup_names[randi() % powerup_names.size() + 1]
+	play(powerup)
 	pass
 
 func _process(delta):

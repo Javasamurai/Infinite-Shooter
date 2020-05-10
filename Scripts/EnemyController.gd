@@ -1,5 +1,7 @@
 extends AnimatedSprite
 
+
+
 export var fire_speed = 4
 export var fireDelay = 0.2
 export var canFire = true
@@ -12,22 +14,26 @@ var smart = false
 var tween
 var enemy_selected_config
 var last_chased = 0
+var which_one
+var score_lbl
+
+signal enemy_hit(which_one)
 
 var enemy_config = {
 	1: {
 		"smart": true,
 		"speed": 200,
 		"chaseDelay": 1.0,
-		"fireDelayMin": 0.1,
-		"fireDelayMax": 0.2,
+		"fireDelayMin": 2,
+		"fireDelayMax": 2.5,
 		"bullet_speed": 300
 	},
 	2: {
 		"smart": false,
 		"speed": 150,
 		"chaseDelay": 2.0,
-		"fireDelayMin": 0.05,
-		"fireDelayMax": 0.3,
+		"fireDelayMin": 0.1,
+		"fireDelayMax": 3,
 		"bullet_speed": 250
 	}
 }
@@ -35,10 +41,11 @@ var enemy_config = {
 func _ready():
 	set_process_input(true)
 	bullet = preload("res://Nodes/Bullet.tscn")
+	score_lbl = $score
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	tween = get_node("Tween")
-	var which_one = 1 if rng.randf_range(0, 1) < 0.5 else 2
+	which_one = 1 if rng.randf_range(0, 1) < 0.5 else 2
 	enemy_selected_config = enemy_config[which_one]
 	fireDelay = rand_range(enemy_selected_config["fireDelayMin"],enemy_selected_config["fireDelayMax"])
 	#fireDelay = enemy_config[which_one]["fireDelayMax"]
@@ -67,6 +74,11 @@ func move_to(_pos):
 func hit():
 	$explosion.visible = true
 	$explosion.play("explosion")
+	emit_signal("enemy_hit", which_one)
+	score_lbl.visible = true
+	tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 0.7,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 100, 1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
 
 func _process(delta):
 	time_elapsed+=delta
@@ -91,7 +103,11 @@ func fire():
 func on_enemy_invisible():
 	queue_free()
 
-
 func _on_explosion_animation_finished():
 	queue_free()
+	pass
+
+
+func on_chase_compelete(object, key):
+	fire()
 	pass

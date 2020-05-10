@@ -25,10 +25,6 @@ config/icon="res://Images/Players/Level_1_Player_1.png"
 
 Globals="*res://Scripts/Globals.gd"
 
-[debug]
-
-settings/fps/force_fps=60
-
 [display]
 
 window/size/width=243

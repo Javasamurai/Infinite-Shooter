@@ -89,7 +89,7 @@ texture = SubResource( 2 )
 [node name="muzzles" type="Node2D" parent="."]
 visible = false
 modulate = Color( 1, 1, 1, 0.839216 )
-position = Vector2( -11.4962, -6.74535 )
+position = Vector2( -11.4962, -4.74535 )
 
 [node name="muzzle_top" type="Sprite" parent="muzzles"]
 position = Vector2( 0, 3.5 )
@@ -120,4 +120,3 @@ wait_time = 3.0
 [connection signal="frame_changed" from="powerup_1" to="." method="_on_powerup_frame_changed"]
 [connection signal="tween_completed" from="Tween" to="." method="hit_complete"]
 [connection signal="animation_finished" from="powerup" to="." method="_on_powerup_animation_finished"]
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

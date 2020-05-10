@@ -6,6 +6,7 @@ var fire_delay = 1
 var canMoveUp = false
 var canFire
 var bullet 
+var isSheilded = false
 
 var time_elapsed = 0
 var health = 100
@@ -13,6 +14,7 @@ var window_size = {
 	"x": 0,
 	"y": 0
 	}
+
 enum DIRECTION {
 	LEFT,
 	RIGHT,
@@ -20,7 +22,7 @@ enum DIRECTION {
 	DOWN
 }
 
-
+var current_powerup
 var is_pressed = false
 var curr_pos = Vector2.ZERO
 var last_pos = Vector2.ZERO
@@ -29,6 +31,8 @@ var global
 var tween 
 var is_sonic_boom
 var is_powerup_live
+var health_sprite
+
 signal hit
 
 func _ready():
@@ -61,11 +65,10 @@ func _process(delta):
 	
 	if health<=0 and time_elapsed > 0.5:
 		get_tree().change_scene("res://Nodes/MainMenu.tscn")
-
 	movement()
 
 	# Gyroscope movement logic
-	#var acc = int(Input.get_accelerometer().x)
+	# var acc = int(Input.get_accelerometer().x)
 
 	#if acc < 0:
 	#	movement(DIRECTION.LEFT, acc)
@@ -79,14 +82,18 @@ func _process(delta):
 	#pass
 
 func _input(event):
+	var extra_speed
 	if event is InputEventScreenDrag:
 		is_pressed = true
+			
 		position.x = position.x + event.relative.x
+		position.y = position.y + event.relative.y
 	
 	if event.is_pressed():
 		is_pressed = true
 	elif !(event is InputEventScreenDrag) and !(event is InputEventMouseMotion):
 		is_pressed = false
+
 	#if event is InputEventScreenTouch:
 		#curr_pos = event.position - last_pos
 		#if event.is_pressed():
@@ -100,6 +107,7 @@ func _input(event):
 
 func movement(_direction = null, _acc = null):
 	var _speed = speed
+
 	if _acc != null:
 		if _acc < 0:
 			_speed = speed - _acc;
@@ -127,6 +135,16 @@ func movement(_direction = null, _acc = null):
 	if Input.is_key_pressed(KEY_SPACE):
 		fire()
 
+func create_bullet(pos):
+	var bullet_clone_1 = bullet.instance()
+	bullet_clone_1.position = Vector2(self.position.x - (pos * 10), self.position.y)
+	bullet_clone_1.name = "player_bullet"
+	
+	var bullet_clone_2 = bullet.instance()
+	bullet_clone_2.position = Vector2(self.position.x + (pos * 10), self.position.y)
+	bullet_clone_2.name = "player_bullet"
+
+	pass
 func fire():
 	if canFire:
 		canFire = false
@@ -137,6 +155,9 @@ func fire():
 		var bullet_clone_2 = bullet.instance()
 		bullet_clone_2.position = Vector2(self.position.x + 10, self.position.y)
 		bullet_clone_2.name = "player_bullet"
+		
+		if current_powerup == "Machine gun":
+			create_bullet(2)
 
 		# Firreeee!!!!
 		$shot.play()
@@ -158,9 +179,8 @@ func sonic_boom():
 func hit():
 	tween.interpolate_property($".", "modulate", Color.white,Color.transparent,0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
-	health = health - 50
-	emit_signal("hit")
-	health = 10
+	health = health - 5
+
 	if health <= 0 && !global.over:
 		global.over = true
 		time_elapsed = 0
@@ -184,12 +204,15 @@ func healthpotion():
 	pass
 
 func minify():
-	tween.interpolate_property(self, "scale", Vector2.ONE,Vector2(0.5,0.5),0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+	tween.interpolate_property(self, "scale", Vector2.ONE,Vector2(0.25,0.25),0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
 	pass
 func clear_powerup():
 	tween.interpolate_property(self, "scale", get_scale(),Vector2.ONE,0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
+	isSheilded = false
+	current_powerup = null
+	modulate = Color.white
 
 func powerup(which_one):
 	$powerup.visible = true
@@ -198,12 +221,20 @@ func powerup(which_one):
 	is_powerup_live = true
 	$Timer.start(3)
 
-	if which_one == "sonic_boom":
+	current_powerup = which_one
+	if which_one == "sonic boom":
 		sonic_boom()
-	elif which_one == "minify":
+	elif which_one == "Minify":
 		minify()
-	elif which_one == "health":
+	elif which_one == "potion":
 		healthpotion()
+	elif which_one == "shield":
+		sheild()
+
+func sheild():
+	isSheilded = true
+	modulate = Color(1,1,1, 0.25)
+	pass
 
 func hit_complete(object, path):
 	get_node(".").modulate = Color.white
@@ -214,7 +245,6 @@ func hit_complete(object, path):
 func _on_powerup_animation_finished():
 	$powerup.visible = false
 	pass
-
 
 func _on_swipe_area_mouse_entered():
 	print("Mouse entered")
