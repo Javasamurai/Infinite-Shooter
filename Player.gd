@@ -135,37 +135,36 @@ func movement(_direction = null, _acc = null):
 	if Input.is_key_pressed(KEY_SPACE):
 		fire()
 
-func create_bullet(pos):
+func create_bullet(pos, rotate = false):
 	var bullet_clone_1 = bullet.instance()
 	bullet_clone_1.position = Vector2(self.position.x - (pos * 10), self.position.y)
-	bullet_clone_1.name = "player_bullet"
+	if rotate:
+		bullet_clone_1.rotation = -20
+	bullet_clone_1.name = "player_bullet_1"
 	
 	var bullet_clone_2 = bullet.instance()
+	if rotate:
+		bullet_clone_2.rotation = 20
 	bullet_clone_2.position = Vector2(self.position.x + (pos * 10), self.position.y)
-	bullet_clone_2.name = "player_bullet"
+	bullet_clone_2.name = "player_bullet_2"
+
+	bullet_clone_1.fire("UP", fire_speed)
+	get_parent().add_child(bullet_clone_1)
+	bullet_clone_2.fire("UP", fire_speed)
+	get_parent().add_child(bullet_clone_2)
 
 	pass
 func fire():
 	if canFire:
 		canFire = false
-		var bullet_clone_1 = bullet.instance()
-		bullet_clone_1.position = Vector2(self.position.x - 10, self.position.y)
-		bullet_clone_1.name = "player_bullet"
-
-		var bullet_clone_2 = bullet.instance()
-		bullet_clone_2.position = Vector2(self.position.x + 10, self.position.y)
-		bullet_clone_2.name = "player_bullet"
-		
+		create_bullet(1)
 		if current_powerup == "Machine gun":
-			create_bullet(2)
+			#fire_delay = 0.025
+			create_bullet(2, false)
+			create_bullet(3, false)
 
 		# Firreeee!!!!
 		$shot.play()
-		bullet_clone_1.fire("UP", fire_speed)
-		get_parent().add_child(bullet_clone_1)
-		bullet_clone_2.fire("UP", fire_speed)
-		get_parent().add_child(bullet_clone_2)
-		
 		$muzzles.visible = true
 		tween.interpolate_property($muzzles, "modulate",Color.white, Color.transparent,0.075,Tween.TRANS_SINE,Tween.TRANS_LINEAR)
 		tween.start()
@@ -177,6 +176,7 @@ func sonic_boom():
 	fire_delay = 0
 
 func hit():
+	emit_signal("hit")
 	tween.interpolate_property($".", "modulate", Color.white,Color.transparent,0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
 	health = health - 5
@@ -237,7 +237,7 @@ func sheild():
 	pass
 
 func hit_complete(object, path):
-	get_node(".").modulate = Color.white
+	self.modulate = Color.white
 	$muzzles.visible = false
 	rotation_degrees = 0
 	pass

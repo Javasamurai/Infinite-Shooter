@@ -1,5 +1,7 @@
 extends AnimatedSprite
 
+signal powerup_cleared
+
 var time_elapsed
 var speed = 120
 var powerup_names = {
@@ -27,9 +29,11 @@ func _process(delta):
 	pass
 
 func _on_VisibilityNotifier2D_screen_exited():
+	emit_signal("powerup_cleared")
 	queue_free()
 	pass
 
 func _on_VisibilityNotifier2D_viewport_exited(viewport):
+	emit_signal("powerup_cleared")
 	queue_free()
 	pass

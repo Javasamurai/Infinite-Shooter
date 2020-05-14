@@ -30,8 +30,8 @@ func _ready():
 	earth_node = get_node(earth)
 	
 	global = get_node("/root/Globals")
-	left_arrow = find_node("left_arrow", true, true)
-	right_arrow = find_node("right_arrow")
+	left_arrow = find_node("left_btn")
+	right_arrow = find_node("right_btn")
 	flames_lvl_3_left = find_node("flames_lvl_3_left")
 	flames_lvl_3_right = find_node("flames_lvl_3_right")
 	var rot_tween = earth_node.get_node("Tween")
@@ -39,9 +39,9 @@ func _ready():
 	rot_tween.start()
 
 	if global.selected_plane == 1:
-		left_arrow.disabled = true
+		left_arrow.modulate = Color(0,0.0, 0.75)
 	if global.selected_plane == 3:
-		right_arrow.disabled = true
+		right_arrow.modulate = Color.white
 
 	if global.over:
 		get_node("/root/Control/AudioManager/death").play()
@@ -52,7 +52,7 @@ func _ready():
 func _process(delta):
 	time_spent+= delta
 	if global.selected_plane == 3:
-		print(time_spent)
+		#print(time_spent)
 		if time_spent > 1.25 and flames_lvl_3_left.visible == false:
 			flames_lvl_3_left.visible = true
 			flames_lvl_3_right.visible = true
@@ -60,25 +60,29 @@ func _process(delta):
 
 func _on_arrow_pressed(_direction):
 	button_click.play()
-	
+
 	if _direction == direction.LEFT:
-		right_arrow.disabled = false
+		right_arrow.modulate = Color.white
 		if global.selected_plane > 1:
-			left_arrow.disabled = false
+			left_arrow.modulate = Color.white
 			global.selected_plane = global.selected_plane - 1
-		else: 
-			left_arrow.disabled = true
-	
+
 	if _direction == direction.RIGHT:
-		left_arrow.disabled = false
+		left_arrow.modulate = Color.white
 		if global.selected_plane < 3:
-			right_arrow.disabled = false
-			global.selected_plane = global.selected_plane +1
+			right_arrow.modulate = Color.white
+			global.selected_plane = global.selected_plane + 1
 		else:
-			right_arrow.disabled = true
+			right_arrow.modulate = Color(0,0.0, 0.75)
 		pass
 	var tex = null
+	print(global.selected_plane)
+	
+	if global.selected_plane == 1:
+		left_arrow.modulate = Color(0,0.0, 0.75)
+
 	if global.selected_plane == 3:
+		right_arrow.modulate = Color(0,0.0, 0.75)
 		time_spent = 0
 		var texture = {
 			1: load("res://Images/level_" + str(global.selected_plane) + "_01.png"),

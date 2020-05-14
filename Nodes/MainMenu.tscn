@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
 [ext_resource path="res://Images/UI_Level_1_Plane.png" type="Texture" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://Images/left_arrow.png" type="Texture" id=7]
 [ext_resource path="res://Images/UI/Play_Button.png" type="Texture" id=8]
 [ext_resource path="res://Images/right_arrow.png" type="Texture" id=9]
-[ext_resource path="res://fonts/ka1.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://SFX/General Sounds/Buttons/sfx_sounds_button3.wav" type="AudioStream" id=11]
 [ext_resource path="res://Images/Flame_02.png" type="Texture" id=12]
 [ext_resource path="res://Images/Flame_01.png" type="Texture" id=13]
@@ -22,8 +21,9 @@
 [ext_resource path="res://Images/Blue_overlay.png" type="Texture" id=20]
 [ext_resource path="res://Images/Pink_Gradient.png" type="Texture" id=21]
 [ext_resource path="res://Images/Earth_Atmosphere.png" type="Texture" id=22]
-[ext_resource path="res://Images/UI/Play_OFF.png" type="Texture" id=23]
+[ext_resource path="res://Images/UI/Play_OFF (1).png" type="Texture" id=23]
 [ext_resource path="res://Images/UI/Play_ON.png" type="Texture" id=24]
+[ext_resource path="res://fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=25]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 2
@@ -55,24 +55,28 @@ frame_3/delay_sec = 0.0
 blend_mode = 1
 
 [sub_resource type="DynamicFont" id=6]
-size = 17
-font_data = ExtResource( 10 )
+size = 10
+font_data = ExtResource( 25 )
 
-[sub_resource type="AnimatedTexture" id=7]
+[sub_resource type="DynamicFont" id=7]
+size = 27
+font_data = ExtResource( 25 )
+
+[sub_resource type="AnimatedTexture" id=8]
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 13 )
 frame_1/texture = ExtResource( 12 )
 frame_1/delay_sec = 0.0
 
-[sub_resource type="AnimatedTexture" id=8]
+[sub_resource type="AnimatedTexture" id=9]
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 3 )
 frame_1/texture = ExtResource( 19 )
 frame_1/delay_sec = 0.0
 
-[sub_resource type="ParticlesMaterial" id=9]
+[sub_resource type="ParticlesMaterial" id=10]
 emission_shape = 2
 emission_box_extents = Vector3( 100, 100, 100 )
 flag_disable_z = true
@@ -182,17 +186,34 @@ centered = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -120.0
+margin_top = 6.0
 margin_right = 120.0
-margin_bottom = 40.0
+margin_bottom = 49.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="title" type="Label" parent="MarginContainer3"]
-margin_top = 10.0
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer3"]
 margin_right = 240.0
-margin_bottom = 30.0
+margin_bottom = 43.0
+
+[node name="max_score" type="Label" parent="MarginContainer3/VBoxContainer"]
+margin_right = 240.0
+margin_bottom = 11.0
 custom_fonts/font = SubResource( 6 )
+text = "Max Score: 10000"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="title" type="Label" parent="MarginContainer3/VBoxContainer"]
+modulate = Color( 0.0130463, 0.175601, 0.222656, 1 )
+margin_top = 15.0
+margin_right = 240.0
+margin_bottom = 43.0
+custom_fonts/font = SubResource( 7 )
 text = "Galaxy Gladiator"
 align = 1
 valign = 1
@@ -228,13 +249,12 @@ margin_bottom = 232.0
 mouse_filter = 2
 alignment = 1
 
-[node name="left_arrow" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
-margin_left = 54.0
+[node name="left_btn" type="TextureButton" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
+margin_left = 66.0
 margin_right = 92.0
 margin_bottom = 64.0
-action_mode = 0
-icon = ExtResource( 7 )
-flat = true
+keep_pressed_outside = true
+texture_normal = ExtResource( 7 )
 
 [node name="Selected_ship" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 margin_left = 96.0
@@ -252,10 +272,10 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -39.0
-margin_top = -57.6983
+margin_top = -59.5891
 margin_right = 39.0
-margin_bottom = 20.3017
-texture = SubResource( 7 )
+margin_bottom = 18.4109
+texture = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -270,7 +290,7 @@ margin_left = -71.0
 margin_top = -46.0
 margin_right = 18.0
 margin_bottom = 32.0
-texture = SubResource( 8 )
+texture = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -285,19 +305,35 @@ margin_left = -7.0
 margin_top = -46.0
 margin_right = 82.0
 margin_bottom = 32.0
-texture = SubResource( 8 )
+texture = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Tween" type="Tween" parent="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship"]
 
+[node name="left_arrow" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
+visible = false
+margin_left = 24.0
+margin_right = 62.0
+margin_bottom = 64.0
+action_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
 [node name="right_arrow" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
-margin_left = 164.0
-margin_right = 202.0
+visible = false
+margin_left = 143.0
+margin_right = 181.0
 margin_bottom = 64.0
 icon = ExtResource( 9 )
 flat = true
+
+[node name="right_btn" type="TextureButton" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
+margin_left = 164.0
+margin_right = 190.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 9 )
 
 [node name="VerticalContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
 margin_top = 236.0
@@ -360,9 +396,11 @@ amount = 30
 randomness = 0.43
 fixed_fps = 60
 visibility_rect = Rect2( 0, 0, 5, 5 )
-process_material = SubResource( 9 )
+process_material = SubResource( 10 )
+[connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/left_btn" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]
+[connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/right_btn" to="." method="_on_right_arrow_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/credits" to="GUI/VBoxContainer/HBoxContainer/credits" method="switch_scene"]
-[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Play2" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Play2" to="GUI/VBoxContainer/HBoxContainer/Play2" method="switch_scene"]
+[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Play2" to="." method="switch_scene"]

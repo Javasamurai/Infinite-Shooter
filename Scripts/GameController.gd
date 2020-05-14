@@ -8,7 +8,7 @@ var powerup_clone
 var enemy_list = []
 var max_enemies = 5
 var time_elapsed = 0
-var powerup_spawn_delay = 7
+var powerup_spawn_delay = 10
 var isPowerSpawned = false
 var canSpawn = true
 var spawnDelay = 1
@@ -23,6 +23,11 @@ var announcement_panel
 var tween
 var timer
 
+
+var powerup_enengy
+var powerup_timer
+var time_passed_since_powerup = 0
+
 export(NodePath) var health_label
 export(NodePath) var score_label
 export(NodePath) var health_sprite
@@ -34,6 +39,12 @@ signal hit
 func _ready():
 	tween = get_node("Tween")
 	timer = get_node("Timer")
+	powerup_enengy = get_node("Control/PowerupEnergy")
+	powerup_timer = powerup_enengy.get_node("powerup_timer")
+	powerup_enengy.visible = true
+	powerup_enengy.percent_visible = true
+	powerup_enengy.value = 30
+	powerup_enengy.set_percent_visible(100)
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	set_process(true)
@@ -52,7 +63,7 @@ func _process(delta):
 	time_elapsed+=delta
 	last_spawned_time+= delta
 
-	if time_elapsed > 0.25:
+	if time_elapsed > 2:
 		for i in range($enemy_container.get_child_count()):
 			var enemy = $enemy_container.get_child(i)
 
@@ -64,9 +75,14 @@ func _process(delta):
 		canSpawn = true
 		spawnEnemies()
 
-	if (int(time_elapsed) % powerup_spawn_delay) == 0 and powerup_container.get_child_count() == 0 and time_elapsed > 0:
-		isPowerSpawned = true
-		spawnPowerup()
+func check_powerup():
+	if (powerup_container.get_child_count() == 0 and !isPowerSpawned):
+		timer.start()
+		var random_gen = randi() % powerup_spawn_delay + 5
+		
+		if int(time_elapsed) % random_gen == 0: 
+			isPowerSpawned = true
+			spawnPowerup()
 	pass
 
 func _input(event):
@@ -98,10 +114,18 @@ func spawnPowerup():
 
 	isPowerSpawned = true
 	powerup_clone = powerup_node.instance()
+	var powerup_node = powerup_clone.get_node("powerup_animated")
+	powerup_node.connect("powerup_cleared", self, "powerup_cleared")
 	var collision_area = powerup_clone.find_node("powerup_area")
 	collision_area.connect("area_entered", self ,"_on_powerup_got")
 	powerup_clone.position = Vector2(rand_range(-screenBounds.x / 2, screenBounds.x / 2), -(screenBounds.y / 2))
 	powerup_container.add_child(powerup_clone)
+	pass
+
+func powerup_cleared():
+	isPowerSpawned = false
+	time_passed_since_powerup = 0
+	powerup_enengy.visible = false
 	pass
 
 func _on_powerup_got(areas):
@@ -111,6 +135,7 @@ func _on_powerup_got(areas):
 		announcement_panel.visible = true
 		announcement_lbl.text = which_one
 		
+		isPowerSpawned = false
 		tween.interpolate_property(announcement_lbl, "margin_left",250, -55,0.5,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 		tween.interpolate_property(announcement_lbl, "modulate", Color.transparent,Color.white,2,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 		tween.start()
@@ -118,6 +143,10 @@ func _on_powerup_got(areas):
 		if which_one == "potion":
 			$health.play()
 		else:
+			time_passed_since_powerup = 0
+			powerup_enengy.visible = true
+			powerup_enengy.value = 100
+			powerup_timer.start()
 			$powerup.play()
 		$Player.powerup(which_one)
 		powerup_clone.queue_free()
@@ -139,18 +168,11 @@ func spawnEnemies():
 			enemy_clone.move_to($Player.position)
 	pass
 
-
-func _on_speed_changed():
-	pass
-
-
-func _on_Tween_tween_completed(object, key):
-	#print(key)
-	#if key == "margin_left":
-	#	announcement_panel.visible = false
-	pass
-
-
 func _on_Tween_tween_all_completed():
 	announcement_panel.visible = false
+	pass
+
+func _on_powerup_timer_timeout():
+	time_passed_since_powerup = time_passed_since_powerup + powerup_timer.wait_time
+	powerup_enengy.value = 100 - (time_passed_since_powerup / 3) * 100
 	pass

@@ -31,8 +31,15 @@ func set_bullet_texture(path):
 	pass
 
 func _process(delta):
+	var extra = Vector2.ZERO
 	if is_firing:
 		if DIRECTION == "UP":
+			if self.rotation != 0:
+				if self.rotation > 0:
+					self.position.x = self.position.x + 0.25
+				else:
+					self.position.x = self.position.x - 0.25
+				pass
 			self.position = Vector2(self.position.x, self.position.y - (fire_speed * delta))
 		else:
 			self.position = Vector2(self.position.x, self.position.y + (fire_speed * delta))
