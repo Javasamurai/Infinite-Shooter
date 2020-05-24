@@ -18,6 +18,4 @@ func _process(delta):
 func _on_HSlider_value_changed(value):
 	print(speed)
 	speed = init_speed * (value / 100)
-	print(value / 100)
-	print(speed)
 	pass

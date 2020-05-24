@@ -1,7 +1,7 @@
 extends Node2D
 
 var speed = 3
-var fire_speed = 100
+var fire_speed = 300
 var fire_delay = 1
 var canMoveUp = false
 var canFire
@@ -32,14 +32,16 @@ var tween
 var is_sonic_boom
 var is_powerup_live
 var health_sprite
+var speed_damping = 0.5
 
 signal hit
+signal player_die
 
 func _ready():
 	global = get_node("/root/Globals")
 	
-	var tex = load("res://Images/Players/Level_" + str(global.selected_plane) + "_Player.png")
-	$Player_bg.set_texture(tex)
+	#var tex = load("res://Images/Players/Level_" + str(global.selected_plane) + "_Player.png")
+	$Player_bg.play(str(global.selected_plane))
 	tween = get_node("Tween")
 	canFire = false
 	is_sonic_boom = false
@@ -63,7 +65,8 @@ func _process(delta):
 		fire_delay = 0.25
 		is_sonic_boom = false
 	
-	if health<=0 and time_elapsed > 0.5:
+	if health <=0 and time_elapsed > 0.5:
+		emit_signal("player_die")
 		get_tree().change_scene("res://Nodes/MainMenu.tscn")
 	movement()
 
@@ -83,12 +86,14 @@ func _process(delta):
 
 func _input(event):
 	var extra_speed
+	var move_to = Vector2.ONE
 	if event is InputEventScreenDrag:
 		is_pressed = true
 			
-		position.x = position.x + event.relative.x
-		position.y = position.y + event.relative.y
-	
+		#move_to.x = (position.x + event.relative.x) * 1 
+		#move_to.y = (position.y + event.relative.y) * 1
+		#position = move_to
+		translate(event.relative * speed_damping)
 	if event.is_pressed():
 		is_pressed = true
 	elif !(event is InputEventScreenDrag) and !(event is InputEventMouseMotion):
@@ -152,22 +157,29 @@ func create_bullet(pos, rotate = false):
 	get_parent().add_child(bullet_clone_1)
 	bullet_clone_2.fire("UP", fire_speed)
 	get_parent().add_child(bullet_clone_2)
-
 	pass
 func fire():
 	if canFire:
 		canFire = false
 		create_bullet(1)
 		if current_powerup == "Machine gun":
-			#fire_delay = 0.025
-			create_bullet(2, false)
-			create_bullet(3, false)
+			fire_delay = 0.001
+			create_bullet(2, true)
+			create_bullet(3, true)
 
 		# Firreeee!!!!
 		$shot.play()
-		$muzzles.visible = true
-		tween.interpolate_property($muzzles, "modulate",Color.white, Color.transparent,0.075,Tween.TRANS_SINE,Tween.TRANS_LINEAR)
-		tween.start()
+		$Player_bg.play(str(global.selected_plane) + "_muzzle")
+		$Player_bg/muzzle_timer.start()
+		#$muzzles.visible = true
+		
+		#if global.selected_plane == 1:
+		#	$muzzles1.visible = true
+		#	tween.interpolate_property($muzzles1, "modulate",Color.white, Color.transparent,0.075,Tween.TRANS_SINE,Tween.TRANS_LINEAR)
+		#	tween.start()
+		#else:
+		#tween.interpolate_property($Player_bg, "modulate",Color.white, Color.transparent,0.075,Tween.TRANS_SINE,Tween.TRANS_LINEAR)
+		#tween.start()
 	pass
 	
 func sonic_boom():
@@ -179,7 +191,7 @@ func hit():
 	emit_signal("hit")
 	tween.interpolate_property($".", "modulate", Color.white,Color.transparent,0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
-	health = health - 5
+	health = 0
 
 	if health <= 0 && !global.over:
 		global.over = true
@@ -206,20 +218,23 @@ func healthpotion():
 func minify():
 	tween.interpolate_property(self, "scale", Vector2.ONE,Vector2(0.25,0.25),0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
+	speed_damping = 1
 	pass
+
 func clear_powerup():
 	tween.interpolate_property(self, "scale", get_scale(),Vector2.ONE,0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
 	isSheilded = false
 	current_powerup = null
 	modulate = Color.white
+	speed_damping = 0.85
 
 func powerup(which_one):
 	$powerup.visible = true
 	$powerup.play()
 
 	is_powerup_live = true
-	$Timer.start(3)
+	$Timer.start()
 
 	current_powerup = which_one
 	if which_one == "sonic boom":
@@ -238,7 +253,8 @@ func sheild():
 
 func hit_complete(object, path):
 	self.modulate = Color.white
-	$muzzles.visible = false
+	#$muzzles.visible = false
+	#$muzzles1.visible = false
 	rotation_degrees = 0
 	pass
 
@@ -248,4 +264,8 @@ func _on_powerup_animation_finished():
 
 func _on_swipe_area_mouse_entered():
 	print("Mouse entered")
+	pass
+
+func _on_muzzle_timer_timeout():
+	$Player_bg.play(str(global.selected_plane))
 	pass

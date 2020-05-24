@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Images/fire_btn.png" type="Texture" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://Images/UI/Health_01.png" type="Texture" id=15]
 [ext_resource path="res://SFX/health.wav" type="AudioStream" id=16]
 [ext_resource path="res://fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=17]
+[ext_resource path="res://Nodes/coin_wave.tscn" type="PackedScene" id=18]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 2
@@ -63,6 +64,8 @@ blend_mode = 2
 bg_color = Color( 0.117647, 0.105882, 0.105882, 1 )
 
 [sub_resource type="DynamicFont" id=11]
+size = 15
+extra_spacing_space = 2
 font_data = ExtResource( 17 )
 
 [node name="Root" type="Control"]
@@ -161,6 +164,11 @@ mix_target = 2
 stream = ExtResource( 5 )
 mix_target = 2
 
+[node name="bgm" type="AudioStreamPlayer" parent="Camera2D/Player"]
+stream = ExtResource( 11 )
+volume_db = -80.0
+mix_target = 2
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Camera2D"]
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
@@ -226,10 +234,6 @@ visible = false
 position = Vector2( -156.67, 1.80081 )
 shape = SubResource( 5 )
 
-[node name="bgm" type="AudioStreamPlayer2D" parent="Camera2D"]
-stream = ExtResource( 11 )
-autoplay = true
-
 [node name="powerup" type="AudioStreamPlayer" parent="Camera2D"]
 stream = ExtResource( 12 )
 
@@ -240,29 +244,36 @@ stream = ExtResource( 16 )
 
 [node name="enemy_container" type="Node2D" parent="Camera2D"]
 
+[node name="coin_wave" parent="Camera2D" instance=ExtResource( 18 )]
+visible = true
+position = Vector2( -277, 0 )
+
 [node name="Control" type="Control" parent="Camera2D"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -120.54
-margin_top = -203.9
-margin_right = 119.46
-margin_bottom = 201.1
+margin_left = -120.0
+margin_top = -201.0
+margin_right = 120.0
+margin_bottom = 204.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PowerupEnergy" type="ProgressBar" parent="Camera2D/Control"]
+visible = false
 margin_left = 11.2787
 margin_top = 331.131
 margin_right = 217.279
 margin_bottom = 345.131
 rect_rotation = -90.0
+rect_scale = Vector2( 1, 0.2 )
 mouse_filter = 2
 custom_styles/fg = SubResource( 6 )
 custom_styles/bg = SubResource( 7 )
 custom_colors/font_color = Color( 1, 1, 1, 0 )
+value = 30.0
 rounded = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -332,7 +343,6 @@ __meta__ = {
 }
 
 [node name="announcement_panel" type="Panel" parent="Camera2D/Control/center_container"]
-visible = false
 material = SubResource( 9 )
 margin_right = 275.0
 margin_bottom = 20.0
@@ -343,12 +353,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -55.0
-margin_top = -8.5
-margin_right = 55.0
-margin_bottom = 8.5
+margin_left = -119.5
+margin_top = -8.0
+margin_right = 122.5
+margin_bottom = 9.0
 custom_fonts/font = SubResource( 11 )
-text = "Wave incoming"
+text = "In a galaxy far far away "
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false

@@ -46,14 +46,24 @@ anim_speed_random = 0.02
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
+"frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "sonic_boom",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "minify",
+"speed": 15.0
+}, {
 "frames": [ ExtResource( 14 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
 "loop": true,
 "name": "coins_create",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 9 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 8 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ) ],
 "loop": true,
-"name": "shield",
+"name": "potion",
 "speed": 15.0
 }, {
 "frames": [ ExtResource( 22 ), ExtResource( 24 ), ExtResource( 23 ) ],
@@ -66,19 +76,9 @@ animations = [ {
 "name": "coins",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "potion",
-"speed": 15.0
-}, {
 "frames": [ ExtResource( 9 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 8 ) ],
 "loop": true,
-"name": "minify",
-"speed": 15.0
-}, {
-"frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ) ],
-"loop": true,
-"name": "sonic_boom",
+"name": "shield",
 "speed": 15.0
 } ]
 

@@ -20,13 +20,14 @@ var health = 10
 var canShoot = true
 var chaseX = true
 var chaseY = true
+var key = 1
 
 signal enemy_hit(which_one)
 
 var enemy_config = {
 	1: {
 		"key": 1,
-		"name": "alien",
+		"name": "spaceship",
 		"smart": true,
 		"canShoot": true,
 		"speed": 200,
@@ -34,13 +35,13 @@ var enemy_config = {
 		"fireDelayMin": 2,
 		"fireDelayMax": 2.5,
 		"bullet_speed": 300,
-		"health": 10,
+		"health": 50,
 		"chaseX": true,
 		"chaseY": true
 	},
 	2: {
 		"key": 2,
-		"name": "spaceship",
+		"name": "alien",
 		"smart": false,
 		"canShoot": true,
 		"speed": 150,
@@ -48,7 +49,7 @@ var enemy_config = {
 		"fireDelayMin": 0.1,
 		"fireDelayMax": 3,
 		"bullet_speed": 250,
-		"health": 10,
+		"health": 80,
 		"chaseX": true,
 		"chaseY": false
 	},
@@ -65,8 +66,81 @@ var enemy_config = {
 		"health": 50,
 		"chaseX": false,
 		"chaseY": false
+	},
+	4: {
+		"key": 4,
+		"name": "asteroid",
+		"smart": false,
+		"canShoot": false,
+		"speed": 250,
+		"chaseDelay": 2.0,
+		"fireDelayMin": 0.1,
+		"fireDelayMax": 3,
+		"bullet_speed": 300,
+		"health": 50,
+		"chaseX": false,
+		"chaseY": false
+	},
+	5: {
+		"key": 5,
+		"name": "asteroid",
+		"smart": false,
+		"canShoot": false,
+		"speed": 250,
+		"chaseDelay": 2.0,
+		"fireDelayMin": 0.1,
+		"fireDelayMax": 3,
+		"bullet_speed": 300,
+		"health": 50,
+		"chaseX": false,
+		"chaseY": false
+	},
+	6: {
+		"key": 6,
+		"name": "asteroid",
+		"smart": false,
+		"canShoot": false,
+		"speed": 250,
+		"chaseDelay": 2.0,
+		"fireDelayMin": 0.1,
+		"fireDelayMax": 3,
+		"bullet_speed": 300,
+		"health": 50,
+		"chaseX": false,
+		"chaseY": false
+	},
+	7: {
+		"key": 7,
+		"name": "asteroid",
+		"smart": false,
+		"canShoot": false,
+		"speed": 250,
+		"chaseDelay": 2.0,
+		"fireDelayMin": 0.1,
+		"fireDelayMax": 3,
+		"bullet_speed": 250,
+		"health": 50,
+		"chaseX": false,
+		"chaseY": false
+	},
+	8: {
+		"key": 8,
+		"name": "plane",
+		"smart": false,
+		"canShoot": false,
+		"speed": 250,
+		"chaseDelay": 2.0,
+		"fireDelayMin": 0.1,
+		"fireDelayMax": 3,
+		"bullet_speed": 250,
+		"health": 50,
+		"chaseX": false,
+		"chaseY": false
 	}
 }
+
+var alien_colors = [Color.white, Color.aqua, Color.black, Color.blue, Color.yellow]
+var dead = false
 
 func _ready():
 	set_process_input(true)
@@ -75,8 +149,8 @@ func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	tween = get_node("Tween")
-	enemy_selected_config = enemy_config[ randi() % enemy_config.size() + 1]
 	
+	enemy_selected_config = enemy_config[ randi() % enemy_config.size() + 1]
 	fireDelay = rand_range(enemy_selected_config["fireDelayMin"],enemy_selected_config["fireDelayMax"])
 
 	speed = enemy_selected_config["speed"]
@@ -85,9 +159,14 @@ func _ready():
 	canShoot = enemy_selected_config["canShoot"]
 	chaseX = enemy_selected_config["chaseX"]
 	chaseY = enemy_selected_config["chaseY"]
-
-	play(str(enemy_selected_config["key"]))
+	key = enemy_selected_config["key"]
+	play(str(key))
 	bullets = []
+	
+	#randomly change alien color
+	print(key)
+	if key == 2:
+		modulate = alien_colors[randi() % alien_colors.size()]
 	pass
 
 func move_to(_pos):
@@ -99,20 +178,34 @@ func move_to(_pos):
 	if chaseY:
 		_pos.y = position.y
 	if canChase:
-		tween.interpolate_property(self, "position", position, _pos, 0.75,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		tween.interpolate_property(self, "position", position, _pos, 3,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		tween.start()
+	else: 
+		if key == 3 or key == 4:
+			tween.interpolate_property(self, "rotation", 0, 7200, 15,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
+			tween.start()
 	pass
 
 func hit():
-	tween.interpolate_property(self, "modulate", Color.white, Color.transparent, 0.25,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.interpolate_property(self, "modulate", Color.white, Color(0,0,0,0.5), 0.25,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
+	tween.interpolate_property(self, "position", position, Vector2(position.x, position.y - 3), 0.1,Tween.TRANS_BOUNCE, Tween.EASE_IN_OUT)
+
 	tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 0.7,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 100, 1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 	health = health - 10
-	if health <= 0:
+	if health <= 0 && !dead:
+		dead = true
 		die()
+
+	if key == 1 or key == 2:
+		$Timer.start()
+		play("hit_"+ str(key))
 	pass
 
+func reset_anim():
+	play(str(key))
+	pass
 func die():
 	emit_signal("enemy_hit", which_one)
 	score_lbl.visible = true
@@ -149,8 +242,8 @@ func _on_explosion_animation_finished():
 	pass
 
 func on_chase_compelete(object, key):
-	if key == "modulate":
-		modulate = Color.white
-	if canFire and key == "position":
+	if key == ":modulate":
+		self.modulate = Color.white
+	if canFire and key == ":position" and canShoot:
 		fire()
 	pass
