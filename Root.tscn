@@ -159,7 +159,6 @@ shape = SubResource( 1 )
 
 [node name="bgm" type="AudioStreamPlayer2D" parent="Camera2D"]
 stream = ExtResource( 11 )
-volume_db = -80.0
 pitch_scale = 0.01
 
 [node name="enemy_container" type="Node2D" parent="Camera2D"]

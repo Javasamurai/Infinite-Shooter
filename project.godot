@@ -15,11 +15,11 @@ _global_script_class_icons={
 
 [application]
 
-config/name="TopDownShooter"
+config/name="Galaxy Gladiator"
 run/main_scene="res://Nodes/MainMenu.tscn"
-boot_splash/image="res://Images/empty_sky.png"
-boot_splash/bg_color=Color( 1, 1, 1, 1 )
-config/icon="res://Images/Players/Level_1_Player_1.png"
+boot_splash/image="res://Images/splash.png"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
+config/icon="res://Images/Players/Level_3_Player_05.png"
 
 [autoload]
 

@@ -32,17 +32,31 @@ func set_bullet_texture(path):
 
 func _process(delta):
 	var extra = Vector2.ZERO
-	if is_firing:
+
+	if is_firing:	
+		if self.rotation != 0:
+			if self.rotation > 0:
+				self.position.x = self.position.x + (10 * delta)
+			else:
+				self.position.x = self.position.x - (10 * delta)
+			pass
+
 		if DIRECTION == "UP":
-			if self.rotation != 0:
-				if self.rotation > 0:
-					self.position.x = self.position.x + 0.25
-				else:
-					self.position.x = self.position.x - 0.25
-				pass
 			self.position = Vector2(self.position.x, self.position.y - (fire_speed * delta))
-		else:
+		elif DIRECTION == "DOWN":
 			self.position = Vector2(self.position.x, self.position.y + (fire_speed * delta))
+		elif DIRECTION == "LEFT":
+			self.position = Vector2(self.position.x - (fire_speed * delta), self.position.y)
+		elif DIRECTION == "RIGHT":
+			self.position = Vector2(self.position.x + (fire_speed * delta), self.position.y)
+		elif DIRECTION == "TOP_LEFT":
+			self.position = Vector2(self.position.x - (fire_speed * delta), self.position.y + (fire_speed * delta))
+		elif DIRECTION == "TOP_RIGHT":
+			self.position = Vector2(self.position.x + (fire_speed * delta), self.position.y - (fire_speed * delta))
+		elif DIRECTION == "BOTT_LEFT":
+			self.position = Vector2(self.position.x - (fire_speed * delta), self.position.y + (fire_speed * delta))
+		elif DIRECTION == "BOTT_RIGHT":
+			self.position = Vector2(self.position.x + (fire_speed * delta), self.position.y + (fire_speed * delta))
 
 	time_elapsed+= delta
 	# remove after 10 seconds

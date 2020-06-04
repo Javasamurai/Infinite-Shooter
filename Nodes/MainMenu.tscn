@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
 [ext_resource path="res://Images/UI_Level_1_Plane.png" type="Texture" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://Images/left_arrow.png" type="Texture" id=7]
 [ext_resource path="res://Images/UI/About_OFF.png" type="Texture" id=8]
 [ext_resource path="res://Images/right_arrow.png" type="Texture" id=9]
-[ext_resource path="res://Nodes/coin_wave.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Images/UI/Coin_01_1.png" type="Texture" id=10]
 [ext_resource path="res://SFX/General Sounds/Buttons/sfx_sounds_button3.wav" type="AudioStream" id=11]
 [ext_resource path="res://Images/Flame_02.png" type="Texture" id=12]
 [ext_resource path="res://Images/Flame_01.png" type="Texture" id=13]
@@ -27,8 +27,11 @@
 [ext_resource path="res://fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=25]
 [ext_resource path="res://Images/UI/Text_BoX.png" type="Texture" id=26]
 [ext_resource path="res://Scripts/Score_saving.gd" type="Script" id=27]
-[ext_resource path="res://Images/UI/Sound_ON .png" type="Texture" id=28]
+[ext_resource path="res://Images/UI/Coin_03_1.png" type="Texture" id=28]
 [ext_resource path="res://Images/UI/Sound_OFF.png" type="Texture" id=29]
+[ext_resource path="res://game_over.tscn" type="PackedScene" id=30]
+[ext_resource path="res://Images/UI/Coin_02_1.png" type="Texture" id=31]
+[ext_resource path="res://Images/UI/Coin_04_1.png" type="Texture" id=32]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 2
@@ -58,6 +61,17 @@ frame_3/delay_sec = 0.0
 
 [sub_resource type="CanvasItemMaterial" id=5]
 blend_mode = 1
+
+[sub_resource type="AnimatedTexture" id=11]
+frames = 4
+fps = 10.0
+frame_0/texture = ExtResource( 10 )
+frame_1/texture = ExtResource( 31 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 28 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 32 )
+frame_3/delay_sec = 0.0
 
 [sub_resource type="DynamicFont" id=6]
 size = 10
@@ -188,48 +202,83 @@ texture = ExtResource( 20 )
 centered = false
 
 [node name="MarginContainer3" type="MarginContainer" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -120.0
-margin_top = 6.0
-margin_right = 120.0
-margin_bottom = 49.0
+anchor_right = 1.0
+margin_left = 10.0
+margin_top = 8.0
+margin_right = -11.0
+margin_bottom = 20.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer3"]
-margin_right = 240.0
-margin_bottom = 43.0
+[node name="GridContainer" type="GridContainer" parent="MarginContainer3"]
+margin_right = 222.0
+margin_bottom = 12.0
+columns = 3
 
-[node name="title_bg" type="Sprite" parent="MarginContainer3/VBoxContainer"]
-position = Vector2( 119.726, 37.4211 )
-scale = Vector2( 1.30514, 1.21062 )
-texture = ExtResource( 26 )
+[node name="TextureRect" type="TextureRect" parent="MarginContainer3/GridContainer"]
+margin_right = 10.0
+margin_bottom = 12.0
+texture = SubResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="max_score" type="Label" parent="MarginContainer3/VBoxContainer"]
-margin_right = 240.0
+[node name="coins" type="Label" parent="MarginContainer3/GridContainer"]
+margin_left = 14.0
+margin_right = 68.0
 margin_bottom = 11.0
 custom_fonts/font = SubResource( 6 )
-text = "Max Score: 10000"
-align = 2
+text = "Coins: 10000"
 valign = 1
 script = ExtResource( 27 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="title" type="Label" parent="MarginContainer3/VBoxContainer"]
-margin_top = 15.0
-margin_right = 240.0
-margin_bottom = 43.0
-custom_fonts/font = SubResource( 7 )
-text = "Galaxy Gladiator"
-align = 1
-valign = 1
+[node name="max_score" type="Label" parent="MarginContainer3"]
+margin_right = 222.0
+margin_bottom = 11.0
+custom_fonts/font = SubResource( 6 )
+text = "Max Score: 10000"
+align = 2
+script = ExtResource( 27 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="MarginContainer6" type="MarginContainer" parent="."]
+anchor_left = 0.527
+anchor_right = 0.527
+margin_left = -128.061
+margin_top = 25.0
+margin_right = 114.939
+margin_bottom = 57.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="title_bg" type="Sprite" parent="MarginContainer6"]
+position = Vector2( 120.5, 20 )
+scale = Vector2( 1.32, 1 )
+texture = ExtResource( 26 )
+
+[node name="title" type="Label" parent="MarginContainer6"]
+margin_top = 2.0
+margin_right = 243.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 7 )
+text = "Galaxy Gladiator"
+align = 1
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer6"]
+margin_right = 243.0
+margin_bottom = 32.0
+alignment = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 0.5
@@ -241,6 +290,7 @@ margin_top = -202.5
 margin_right = 128.5
 margin_bottom = 202.5
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -249,6 +299,7 @@ margin_right = 257.0
 margin_bottom = 405.0
 alignment = 1
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -374,14 +425,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="setting" type="TextureButton" parent="MarginContainer5"]
+[node name="music_btn" type="TextureButton" parent="MarginContainer5"]
 margin_right = 31.0
 margin_bottom = 34.0
 texture_normal = ExtResource( 29 )
-texture_pressed = ExtResource( 28 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Container" type="MarginContainer" parent="."]
 margin_left = 28.0
@@ -436,11 +483,25 @@ fixed_fps = 60
 visibility_rect = Rect2( 0, 0, 5, 5 )
 process_material = SubResource( 10 )
 
-[node name="coin_wave" parent="." instance=ExtResource( 10 )]
-position = Vector2( -399.494, 408.199 )
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="game_over" parent="." instance=ExtResource( 30 )]
+visible = false
+
+[node name="AnimatedSprite" parent="game_over" index="1"]
+frame = 3
+playing = false
 [connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/left_btn" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]
 [connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/right_btn" to="." method="_on_right_arrow_pressed"]
+[connection signal="button_up" from="MarginContainer5/music_btn" to="." method="_on_music_button_up"]
+[connection signal="button_up" from="Container/credits" to="." method="_on_credits_button_up"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="GUI/VBoxContainer/HBoxContainer/play" method="switch_scene"]
+[connection signal="timeout" from="Timer" to="." method="game_over"]
+[connection signal="animation_finished" from="game_over/AnimatedSprite" to="." method="game_over_animation_finished"]
+[connection signal="button_up" from="game_over/retry_btn" to="." method="switch_scene"]
+
+[editable path="game_over"]

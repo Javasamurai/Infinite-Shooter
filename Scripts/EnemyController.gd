@@ -21,6 +21,10 @@ var canShoot = true
 var chaseX = true
 var chaseY = true
 var key = 1
+var bullet_type = "normal"
+var canRotate = false
+var path_node = null
+#var selected_color
 
 signal enemy_hit(which_one)
 
@@ -28,13 +32,15 @@ var enemy_config = {
 	1: {
 		"key": 1,
 		"name": "spaceship",
+		"bullet_type": "normal",
+		"canRotate": false,
 		"smart": true,
 		"canShoot": true,
 		"speed": 200,
-		"chaseDelay": 1.0,
+		"chaseDelay": 2.0,
 		"fireDelayMin": 2,
 		"fireDelayMax": 2.5,
-		"bullet_speed": 300,
+		"bullet_speed": 500,
 		"health": 50,
 		"chaseX": true,
 		"chaseY": true
@@ -42,13 +48,15 @@ var enemy_config = {
 	2: {
 		"key": 2,
 		"name": "alien",
+		"bullet_type": "normal",
+		"canRotate": false,
 		"smart": false,
 		"canShoot": true,
 		"speed": 150,
 		"chaseDelay": 2.0,
-		"fireDelayMin": 0.1,
-		"fireDelayMax": 3,
-		"bullet_speed": 250,
+		"fireDelayMin": 2,
+		"fireDelayMax": 2,
+		"bullet_speed": 300,
 		"health": 80,
 		"chaseX": true,
 		"chaseY": false
@@ -56,9 +64,11 @@ var enemy_config = {
 	3: {
 		"key": 3,
 		"name": "asteroid",
+		"bullet_type": "normal",
+		"canRotate": false,
 		"smart": false,
 		"canShoot": false,
-		"speed": 150,
+		"speed": 50,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 0.1,
 		"fireDelayMax": 3,
@@ -70,9 +80,11 @@ var enemy_config = {
 	4: {
 		"key": 4,
 		"name": "asteroid",
+		"bullet_type": "normal",
+		"canRotate": false,
 		"smart": false,
 		"canShoot": false,
-		"speed": 250,
+		"speed": 70,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 0.1,
 		"fireDelayMax": 3,
@@ -84,6 +96,8 @@ var enemy_config = {
 	5: {
 		"key": 5,
 		"name": "asteroid",
+		"bullet_type": "normal",
+		"canRotate": false,
 		"smart": false,
 		"canShoot": false,
 		"speed": 250,
@@ -97,10 +111,12 @@ var enemy_config = {
 	},
 	6: {
 		"key": 6,
-		"name": "asteroid",
+		"name": "small_plane",
+		"bullet_type": "normal",
+		"canRotate": false,
 		"smart": false,
 		"canShoot": false,
-		"speed": 250,
+		"speed": 100,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 0.1,
 		"fireDelayMax": 3,
@@ -111,27 +127,31 @@ var enemy_config = {
 	},
 	7: {
 		"key": 7,
-		"name": "asteroid",
+		"name": "big_plane",
+		"bullet_type": "sided",
+		"canRotate": true,
 		"smart": false,
-		"canShoot": false,
-		"speed": 250,
+		"canShoot": true,
+		"speed": 200,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 0.1,
 		"fireDelayMax": 3,
 		"bullet_speed": 250,
-		"health": 50,
+		"health": 80,
 		"chaseX": false,
 		"chaseY": false
 	},
 	8: {
 		"key": 8,
 		"name": "plane",
+		"bullet_type": "spiral",
+		"canRotate": false,
 		"smart": false,
-		"canShoot": false,
-		"speed": 250,
+		"canShoot": true,
+		"speed": 20,
 		"chaseDelay": 2.0,
-		"fireDelayMin": 0.1,
-		"fireDelayMax": 3,
+		"fireDelayMin": 2,
+		"fireDelayMax": 2,
 		"bullet_speed": 250,
 		"health": 50,
 		"chaseX": false,
@@ -145,6 +165,7 @@ var dead = false
 func _ready():
 	set_process_input(true)
 	bullet = preload("res://Nodes/Bullet.tscn")
+	path_node = find_node("path")
 	score_lbl = $score
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
@@ -160,14 +181,16 @@ func _ready():
 	chaseX = enemy_selected_config["chaseX"]
 	chaseY = enemy_selected_config["chaseY"]
 	key = enemy_selected_config["key"]
+	canRotate = enemy_selected_config["canRotate"]
+	bullet_type = enemy_selected_config["bullet_type"]
+	
 	play(str(key))
 	bullets = []
 	
 	#randomly change alien color
-	print(key)
-	if key == 2:
-		modulate = alien_colors[randi() % alien_colors.size()]
-	pass
+	#if key == 2:
+	#	modulate = alien_colors[randi() % alien_colors.size()]
+	#pass
 
 func move_to(_pos):
 	var canChase = chaseX == true or chaseY == true
@@ -188,8 +211,7 @@ func move_to(_pos):
 
 func hit():
 	tween.interpolate_property(self, "modulate", Color.white, Color(0,0,0,0.5), 0.25,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
-	tween.interpolate_property(self, "position", position, Vector2(position.x, position.y - 3), 0.1,Tween.TRANS_BOUNCE, Tween.EASE_IN_OUT)
-
+	tween.interpolate_property(self, "position", position, Vector2(position.x, position.y - 6), 0.1,Tween.TRANS_BOUNCE, Tween.EASE_IN_OUT)
 	tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 0.7,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 100, 1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
@@ -206,8 +228,9 @@ func hit():
 func reset_anim():
 	play(str(key))
 	pass
+
 func die():
-	emit_signal("enemy_hit", which_one)
+	emit_signal("enemy_hit", key)
 	score_lbl.visible = true
 	$explosion.visible = true
 	$explosion_particle.visible = true
@@ -217,21 +240,51 @@ func _process(delta):
 	time_elapsed+=delta
 	last_chased+=delta
 	position.y = (position.y) + (speed * delta)
-
+	if path_node != null:
+		path_node.off
+	if canRotate:
+		rotation = rotation + (5 * delta)
 	if time_elapsed > fireDelay && canShoot:
 		canFire = true
-		fire()
+		if bullet_type == "spiral":
+			fire_spiral()
+		elif bullet_type == "sided":
+			fire_side()
+		else:
+			fire()
 		time_elapsed = 0
 	pass
+	
+func fire_side():
+	create_bullet("LEFT")
+	create_bullet("UP")
+	create_bullet("RIGHT")
+	create_bullet("DOWN")
+	pass
+func fire_spiral():
+	create_bullet("LEFT")
+	create_bullet("UP")
+	create_bullet("RIGHT")
+	create_bullet("DOWN")
+	
+	create_bullet("TOP_RIGHT")
+	create_bullet("TOP_LEFT")
+	create_bullet("BOTT_LEFT")
+	create_bullet("BOTT_RIGHT")
+	pass
 
-func fire():
+func create_bullet(direction):
 	var bullet_clone = bullet.instance()
 
 	bullet_clone.position = Vector2(self.position.x, self.position.y)
 	bullet_clone.name = "enemy_bullet"
-	bullet_clone.set_bullet_texture("res://Images/Enemy_Level_01_Bullet.png")
+	bullet_clone.set_bullet_texture("res://Images/Enemy_Level_02_Bullets.png")
 	get_parent().get_parent().add_child(bullet_clone)
-	bullet_clone.fire("DOWN", enemy_selected_config["bullet_speed"])
+	bullet_clone.fire(direction, enemy_selected_config["bullet_speed"])
+	pass
+
+func fire():
+	create_bullet("DOWN")
 	pass
 
 func on_enemy_invisible():

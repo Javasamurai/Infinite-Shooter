@@ -2,7 +2,7 @@ extends Node2D
 
 var speed = 3
 var fire_speed = 300
-var fire_delay = 1
+var fire_delay = 0.25
 var canMoveUp = false
 var canFire
 var bullet 
@@ -36,10 +36,10 @@ var speed_damping = 0.5
 
 signal hit
 signal player_die
+signal game_over
 
 func _ready():
 	global = get_node("/root/Globals")
-	
 	#var tex = load("res://Images/Players/Level_" + str(global.selected_plane) + "_Player.png")
 	$Player_bg.play(str(global.selected_plane))
 	tween = get_node("Tween")
@@ -49,6 +49,12 @@ func _ready():
 	set_process_input(true)
 	window_size = get_viewport_rect().size / 2
 	$Timer.connect("timeout", self, "clear_powerup")
+	
+	print(global.selected_plane)
+	if global.selected_plane == 3:
+		$side_flame.visible = true
+	else:
+		$side_flame.visible = false
 	pass
 
 func _process(delta):
@@ -62,12 +68,11 @@ func _process(delta):
 	if is_sonic_boom and time_elapsed < 3:
 		fire()
 	else:
-		fire_delay = 0.25
+		#fire_delay = 0.25
 		is_sonic_boom = false
 	
 	if health <=0 and time_elapsed > 0.5:
 		emit_signal("player_die")
-		get_tree().change_scene("res://Nodes/MainMenu.tscn")
 	movement()
 
 	# Gyroscope movement logic
@@ -93,6 +98,13 @@ func _input(event):
 		#move_to.x = (position.x + event.relative.x) * 1 
 		#move_to.y = (position.y + event.relative.y) * 1
 		#position = move_to
+		
+		if event.relative.x <=0:
+			tween.interpolate_property(get_node("."), "rotation_degrees", 0,-5,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+			tween.start()
+		else: 
+			tween.interpolate_property(get_node("."), "rotation_degrees", 0,5,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+			tween.start()
 		translate(event.relative * speed_damping)
 	if event.is_pressed():
 		is_pressed = true
@@ -142,7 +154,7 @@ func movement(_direction = null, _acc = null):
 
 func create_bullet(pos, rotate = false):
 	var bullet_clone_1 = bullet.instance()
-	bullet_clone_1.position = Vector2(self.position.x - (pos * 10), self.position.y)
+	bullet_clone_1.position = Vector2(self.position.x - (pos * 5), self.position.y)
 	if rotate:
 		bullet_clone_1.rotation = -20
 	bullet_clone_1.name = "player_bullet_1"
@@ -150,18 +162,23 @@ func create_bullet(pos, rotate = false):
 	var bullet_clone_2 = bullet.instance()
 	if rotate:
 		bullet_clone_2.rotation = 20
-	bullet_clone_2.position = Vector2(self.position.x + (pos * 10), self.position.y)
+	bullet_clone_2.position = Vector2(self.position.x + (pos * 5), self.position.y)
 	bullet_clone_2.name = "player_bullet_2"
-
 	bullet_clone_1.fire("UP", fire_speed)
 	get_parent().add_child(bullet_clone_1)
 	bullet_clone_2.fire("UP", fire_speed)
 	get_parent().add_child(bullet_clone_2)
 	pass
+
 func fire():
-	if canFire:
+	if canFire and health > 0:
 		canFire = false
 		create_bullet(1)
+		if global.selected_plane >= 2:
+			create_bullet(2, false)
+			if global.selected_plane == 3:
+				create_bullet(3, false)
+
 		if current_powerup == "Machine gun":
 			fire_delay = 0.001
 			create_bullet(2, true)
@@ -188,13 +205,14 @@ func sonic_boom():
 	fire_delay = 0
 
 func hit():
-	emit_signal("hit")
 	tween.interpolate_property($".", "modulate", Color.white,Color.transparent,0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
-	health = 0
+	health = health - 20
+	emit_signal("hit")
 
 	if health <= 0 && !global.over:
 		global.over = true
+		emit_signal("game_over")
 		time_elapsed = 0
 		$Player_bg.visible = false
 		$explosion.visible = true
@@ -227,7 +245,8 @@ func clear_powerup():
 	isSheilded = false
 	current_powerup = null
 	modulate = Color.white
-	speed_damping = 0.85
+	speed_damping = 0.9
+	fire_delay = 0.25
 
 func powerup(which_one):
 	$powerup.visible = true
@@ -268,4 +287,10 @@ func _on_swipe_area_mouse_entered():
 
 func _on_muzzle_timer_timeout():
 	$Player_bg.play(str(global.selected_plane))
+	pass
+
+
+func _on_player_area_area_entered(area):
+	if area.name == "enemy_area":
+		hit()
 	pass

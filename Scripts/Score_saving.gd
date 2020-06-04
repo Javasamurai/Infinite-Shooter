@@ -1,23 +1,25 @@
 extends Node
 
 var score_path = "user://score.txt"
+var global
+
 func _ready():
-	$".".text = str(load_score())
+	global = get_node("/root/Globals")
+
+#	$".".text = "Max Score:" + str(load_score())
 	pass
+
+func load_coins():
 	
+	pass
+
 func load_score():
 	var f = File.new()
-	if f.file_exists(score_path):
-		f.open(score_path,File.READ)
+	if f.file_exists(global.save_file_path):
+		f.open(global.save_file_path,File.READ)
 		var score = f.get_as_text()
+		print(score)
 		#highscore = int(score)
 		f.close()
 		return int(score)
-	pass
-
-func save_score(score):
-	var f = File.new()
-	f.open(score_path)
-	f.store_string(score)
-	f.close()
 	pass

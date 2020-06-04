@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Images/UI/Restart_Button.png" type="Texture" id=1]
+[ext_resource path="res://Images/GAME_OVER_03.png" type="Texture" id=2]
+[ext_resource path="res://Images/GAME_OVER_01.png" type="Texture" id=3]
+[ext_resource path="res://Images/GAME_OVER_04.png" type="Texture" id=4]
+[ext_resource path="res://Images/GAME_OVER_BG.png" type="Texture" id=5]
+[ext_resource path="res://Images/GAME_OVER_02.png" type="Texture" id=6]
+[ext_resource path="res://Images/UI/Restart_Button_Pressed.png" type="Texture" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "last",
+"speed": 5.0
+} ]
+
+[node name="game_over" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.466667 )
+scale = Vector2( 1.49625, 1.23115 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 1.29383, 1 )
+frames = SubResource( 1 )
+playing = true
+centered = false
+
+[node name="retry_btn" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -9.5
+margin_top = 304.0
+margin_right = 30.5
+margin_bottom = 344.0
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 7 )

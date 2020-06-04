@@ -7,11 +7,11 @@ func _ready():
 
 func _process(delta):
 	if started == true:
-		position.y +=(100 * delta)
+		position.y +=(250 * delta)
 	pass
 
 func got_coin():
-	$audio.play()
+	print("Got coin")
 	pass
 
 func start_wave():
@@ -23,5 +23,6 @@ func start_wave():
 func reset_wave():
 	started = false
 	position = Vector2.ZERO
-	visible = false 
+	visible = false
+	queue_free()
 	pass

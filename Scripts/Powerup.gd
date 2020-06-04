@@ -16,11 +16,10 @@ var powerup_names = {
 var powerup = powerup_names[1]
 
 func _ready():
-	var potion = load("res://Images/UI/Health_01.png")
+	#var potion = load("res://Images/UI/Health_01.png")
 	set_process(true)
 	time_elapsed = 0
 	powerup = powerup_names[randi() % powerup_names.size() + 1]
-	powerup = "Machine gun"
 	play(powerup)
 	pass
 
