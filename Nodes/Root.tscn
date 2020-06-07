@@ -476,9 +476,6 @@ autostart = true
 visible = false
 position = Vector2( -3, -176 )
 
-[node name="PathFollow2D" parent="Camera2D/path" index="0"]
-rotation = 2.78265
-
 [node name="Enemy" parent="Camera2D/path/PathFollow2D" index="0" instance=ExtResource( 18 )]
 position = Vector2( -0.0625763, -0.389984 )
 [connection signal="button_down" from="Camera2D/Fire_button" to="Camera2D/Player" method="fire"]

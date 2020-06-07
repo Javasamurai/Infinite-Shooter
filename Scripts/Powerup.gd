@@ -4,7 +4,7 @@ signal powerup_cleared
 
 var time_elapsed
 var speed = 120
-var powerup_names = {
+onready var powerup_names = {
 	1: "Minify",
 	2: "sonic boom",
 	3: "potion",
@@ -13,13 +13,15 @@ var powerup_names = {
 	6: "coins crate",
 	7: "Machine gun"
 }
-var powerup = powerup_names[1]
 
+var powerup = null
 func _ready():
-	#var potion = load("res://Images/UI/Health_01.png")
+	randomize()
+	powerup = powerup_names[1]
 	set_process(true)
 	time_elapsed = 0
-	powerup = powerup_names[randi() % powerup_names.size() + 1]
+	var random_int = randi()
+	powerup = powerup_names[random_int % powerup_names.size() + 1]
 	play(powerup)
 	pass
 
@@ -29,11 +31,11 @@ func _process(delta):
 	pass
 
 func _on_VisibilityNotifier2D_screen_exited():
-	emit_signal("powerup_cleared")
+	#emit_signal("powerup_cleared")
 	queue_free()
 	pass
 
 func _on_VisibilityNotifier2D_viewport_exited(viewport):
-	emit_signal("powerup_cleared")
+	#emit_signal("powerup_cleared")
 	queue_free()
 	pass

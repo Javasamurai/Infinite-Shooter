@@ -62,7 +62,7 @@ frame_3/delay_sec = 0.0
 [sub_resource type="CanvasItemMaterial" id=5]
 blend_mode = 1
 
-[sub_resource type="AnimatedTexture" id=11]
+[sub_resource type="AnimatedTexture" id=6]
 frames = 4
 fps = 10.0
 frame_0/texture = ExtResource( 10 )
@@ -73,29 +73,29 @@ frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 32 )
 frame_3/delay_sec = 0.0
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 size = 10
 font_data = ExtResource( 25 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 size = 27
 font_data = ExtResource( 25 )
 
-[sub_resource type="AnimatedTexture" id=8]
+[sub_resource type="AnimatedTexture" id=9]
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 13 )
 frame_1/texture = ExtResource( 12 )
 frame_1/delay_sec = 0.0
 
-[sub_resource type="AnimatedTexture" id=9]
+[sub_resource type="AnimatedTexture" id=10]
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 3 )
 frame_1/texture = ExtResource( 19 )
 frame_1/delay_sec = 0.0
 
-[sub_resource type="ParticlesMaterial" id=10]
+[sub_resource type="ParticlesMaterial" id=11]
 emission_shape = 2
 emission_box_extents = Vector3( 100, 100, 100 )
 flag_disable_z = true
@@ -219,7 +219,7 @@ columns = 3
 [node name="TextureRect" type="TextureRect" parent="MarginContainer3/GridContainer"]
 margin_right = 10.0
 margin_bottom = 12.0
-texture = SubResource( 11 )
+texture = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -228,7 +228,7 @@ __meta__ = {
 margin_left = 14.0
 margin_right = 68.0
 margin_bottom = 11.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 text = "Coins: 10000"
 valign = 1
 script = ExtResource( 27 )
@@ -239,7 +239,7 @@ __meta__ = {
 [node name="max_score" type="Label" parent="MarginContainer3"]
 margin_right = 222.0
 margin_bottom = 11.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 text = "Max Score: 10000"
 align = 2
 script = ExtResource( 27 )
@@ -267,7 +267,7 @@ texture = ExtResource( 26 )
 margin_top = 2.0
 margin_right = 243.0
 margin_bottom = 30.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Galaxy Gladiator"
 align = 1
 valign = 2
@@ -336,7 +336,7 @@ margin_left = -39.0
 margin_top = -59.5891
 margin_right = 39.0
 margin_bottom = 18.4109
-texture = SubResource( 8 )
+texture = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -351,7 +351,7 @@ margin_left = -71.0
 margin_top = -46.0
 margin_right = 18.0
 margin_bottom = 32.0
-texture = SubResource( 9 )
+texture = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -366,7 +366,7 @@ margin_left = -7.0
 margin_top = -46.0
 margin_right = 82.0
 margin_bottom = 32.0
-texture = SubResource( 9 )
+texture = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -481,27 +481,23 @@ amount = 30
 randomness = 0.43
 fixed_fps = 60
 visibility_rect = Rect2( 0, 0, 5, 5 )
-process_material = SubResource( 10 )
+process_material = SubResource( 11 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
 
 [node name="game_over" parent="." instance=ExtResource( 30 )]
-visible = false
-
-[node name="AnimatedSprite" parent="game_over" index="1"]
-frame = 3
-playing = false
 [connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/left_btn" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]
 [connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/right_btn" to="." method="_on_right_arrow_pressed"]
 [connection signal="button_up" from="MarginContainer5/music_btn" to="." method="_on_music_button_up"]
 [connection signal="button_up" from="Container/credits" to="." method="_on_credits_button_up"]
-[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="GUI/VBoxContainer/HBoxContainer/play" method="switch_scene"]
+[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
 [connection signal="timeout" from="Timer" to="." method="game_over"]
 [connection signal="animation_finished" from="game_over/AnimatedSprite" to="." method="game_over_animation_finished"]
 [connection signal="button_up" from="game_over/retry_btn" to="." method="switch_scene"]
+[connection signal="button_up" from="game_over/home_btn" to="." method="hide_game_over"]
 
 [editable path="game_over"]

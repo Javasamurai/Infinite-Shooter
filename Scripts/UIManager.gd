@@ -59,6 +59,7 @@ func _ready():
 		get_node("/root/Control/AudioManager/death").play()
 		global.over = false
 		$game_over.visible=true
+		
 		$Timer.start(3)
 	pass
 
@@ -160,7 +161,7 @@ func game_over_animation_finished():
 
 func fill_values():
 	var file = File.new()
-	var current_data = null
+	var current_data = global.saved_data
 
 	if !file.file_exists(global.save_file_path):
 		file.open(global.save_file_path, File.READ_WRITE)
@@ -172,6 +173,7 @@ func fill_values():
 		current_data = parse_json(file.get_as_text())
 		if current_data == null:
 			file.store_string(to_json(global.saved_data))
+			current_data = global.saved_data
 
 	var off = false
 	
@@ -223,4 +225,9 @@ func _on_music_button_up(_toogle = true):
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF.png"))
 	else:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_ON.png"))
+	pass
+
+
+func hide_game_over():
+	find_node("game_over").visible = false
 	pass

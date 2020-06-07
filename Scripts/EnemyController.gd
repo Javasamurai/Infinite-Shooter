@@ -163,6 +163,7 @@ var alien_colors = [Color.white, Color.aqua, Color.black, Color.blue, Color.yell
 var dead = false
 
 func _ready():
+	randomize()
 	set_process_input(true)
 	bullet = preload("res://Nodes/Bullet.tscn")
 	path_node = find_node("path")
@@ -213,7 +214,7 @@ func hit():
 	tween.interpolate_property(self, "modulate", Color.white, Color(0,0,0,0.5), 0.25,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
 	tween.interpolate_property(self, "position", position, Vector2(position.x, position.y - 6), 0.1,Tween.TRANS_BOUNCE, Tween.EASE_IN_OUT)
 	tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 0.7,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 100, 1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 200, 1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 	health = health - 10
 	if health <= 0 && !dead:

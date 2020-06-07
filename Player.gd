@@ -32,7 +32,7 @@ var tween
 var is_sonic_boom
 var is_powerup_live
 var health_sprite
-var speed_damping = 0.5
+var speed_damping = 0.9
 
 signal hit
 signal player_die

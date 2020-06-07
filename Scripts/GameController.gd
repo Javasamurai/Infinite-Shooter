@@ -41,6 +41,7 @@ export(NodePath) var announcement_lbl_path
 export(NodePath) var announcement_panel_path
 export(NodePath) var heart_container_path
 
+# warning-ignore:unused_signal
 signal hit
 
 var coin_range = range(2000, 30000, 2000)
@@ -122,7 +123,9 @@ func _ready():
 	coin_wave_node = preload("res://Nodes/coin_wave_linear.tscn")
 
 	powerup_node = preload("res://Nodes/powerup.tscn")
+# warning-ignore:return_value_discarded
 	$Player.connect("hit",self, "on_player_hit")
+# warning-ignore:return_value_discarded
 	$Player.connect("player_die", self, "save_score")
 
 	powerup_container = $powerup_container
@@ -158,6 +161,7 @@ func _process(delta):
 func check_powerup():
 	if (powerup_container.get_child_count() == 0 and !isPowerSpawned):
 		timer.start(3)
+# warning-ignore:unused_variable
 		var random_gen = randi() % powerup_spawn_delay + 3
 		
 		spawnPowerup()
@@ -169,6 +173,7 @@ func check_powerup():
 func _input(event):
 	if event is InputEventScreenDrag:
 		return
+# warning-ignore:unreachable_code
 		temp_position = event.get("position")
 		if $Player != null:
 			if temp_position.x > last_position.x:
@@ -183,11 +188,11 @@ func _input(event):
 	pass
 
 func check_wave():
-	#var score_range = waves[current_wave]
-	if score > current_wave * 100:
-	#if score > waves[current_wave]:
+	var score_range = waves[current_wave]
+	#if score > current_wave * 100:
+	if score > score_range:
 		current_wave = current_wave + 1
-		announce_something("WAVE:" + str(current_wave))
+		announce_something("WAVE " + str(current_wave))
 		if spawnDelay > 0.1:
 			spawnDelay = spawnDelay - 0.1
 		#spawnEnemiesWAVE1()
@@ -201,8 +206,9 @@ func coin_wave():
 	$".".add_child(coin_wave_clone)
 	coin_wave_clone.visible = true
 	# all powerup and enemies destroy
-	if powerup_clone!=null:
+	if powerup_clone != null:
 		powerup_clone.queue_free()
+		powerup_clone = null
 
 	for n in $enemy_container.get_children():
 		$enemy_container.remove_child(n)
@@ -230,8 +236,8 @@ func on_player_hit():
 func spawnPowerup():
 	isPowerSpawned = true
 	powerup_clone = powerup_node.instance()
-	var powerup_node = powerup_clone.get_node("powerup_animated")
-	powerup_node.connect("powerup_cleared", self, "powerup_cleared")
+	var powerup_animated = powerup_clone.get_node("powerup_animated")
+	powerup_animated.connect("powerup_cleared", self, "powerup_cleared")
 	var collision_area = powerup_clone.find_node("powerup_area")
 	collision_area.connect("area_entered", self ,"_on_powerup_got")
 	powerup_clone.position = Vector2(rand_range(-screenBounds.x / 2, screenBounds.x / 2), -(screenBounds.y / 2))
@@ -254,27 +260,30 @@ func announce_something(what, time = 2):
 	pass
 
 func _on_powerup_got(areas):
-	if areas.name == "bullet_area" and powerup_clone != null:
+	if areas.name == "bullet_area" && powerup_clone != null:
 		#var which_one = "sonic_boom" if rng.randf_range(0, 1) < 0.5 else "minify"
 		var which_one = powerup_clone.get_node("powerup_animated").powerup
 		announce_something(which_one)
-
+		
+		print(which_one)
+		time_passed_since_powerup = 0
 		isPowerSpawned = false
 		if which_one == "coins crate":
+			coin_wave()
 			powerup_clone.find_node("coins").visible = true
-			powerup_timer.start()
 		elif which_one == "potion":
 			$health.play()
-			powerup_timer.start()
 		else:
-			time_passed_since_powerup = 0
 			powerup_enengy.visible = true
 			powerup_enengy.value = 100
-			powerup_timer.start()
+			powerup_clone.queue_free()
+			powerup_clone = null
 			$powerup.play()
 		$Player.powerup(which_one)
-
+		powerup_timer.start()
+	pass
 func spawnEnemiesWAVE1():
+	randomize()
 	# check current enemies
 	var enemy_counter = 0
 
@@ -300,7 +309,7 @@ func _on_powerup_timer_timeout():
 	powerup_enengy.value = 100 - (time_passed_since_powerup / $Player.get_node("./Timer").wait_time) * 100
 	
 	if time_passed_since_powerup > 0.5:
-		if powerup_clone != null:
+		if powerup_clone != null && is_instance_valid(powerup_node):
 			powerup_clone.queue_free()
 			powerup_clone = null
 	if time_passed_since_powerup > $Player.get_node("./Timer").wait_time:
@@ -326,6 +335,7 @@ func save_score():
 	var curr_score = load_score()
 	
 	global.saved_data["score"] = score
+	global.current_wave = current_wave
 
 	if score > curr_score:
 		f.store_string(to_json(global.saved_data))
