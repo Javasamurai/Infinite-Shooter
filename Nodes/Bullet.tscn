@@ -30,6 +30,5 @@ position = Vector2( -0.51476, -0.0537351 )
 scale = Vector2( 0.343681, 0.607742 )
 
 [node name="Tween" type="Tween" parent="."]
-[connection signal="finished" from="death" to="." method="_on_music_finished"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="tween_all_completed" from="Tween" to="." method="fade_again"]

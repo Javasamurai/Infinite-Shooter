@@ -156,6 +156,22 @@ var enemy_config = {
 		"health": 50,
 		"chaseX": false,
 		"chaseY": false
+	},
+	9: {
+		"key": 9,
+		"name": "big_ufo",
+		"bullet_type": "sided",
+		"canRotate": false,
+		"smart": true,
+		"canShoot": true,
+		"speed": 5,
+		"chaseDelay": 2.0,
+		"fireDelayMin": 2,
+		"fireDelayMax": 2,
+		"bullet_speed": 250,
+		"health": 250,
+		"chaseX": true,
+		"chaseY": false
 	}
 }
 
@@ -219,7 +235,10 @@ func hit():
 	health = health - 10
 	if health <= 0 && !dead:
 		dead = true
+		$death_sfx.play()
 		die()
+	else:
+		$hit_sfx.play()
 
 	if key == 1 or key == 2:
 		$Timer.start()

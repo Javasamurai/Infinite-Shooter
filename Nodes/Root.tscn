@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Images/fire_btn.png" type="Texture" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://Images/UI/Empty_Health.png" type="Texture" id=22]
 [ext_resource path="res://Images/UI/Full_Health.png" type="Texture" id=23]
 [ext_resource path="res://Nodes/crazy_path.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Nodes/stars.tscn" type="PackedScene" id=25]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 2
@@ -211,6 +212,10 @@ centered = false
 [node name="NightSky" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
 motion_mirroring = Vector2( 1024, 1024 )
 script = ExtResource( 9 )
+
+[node name="Particles2D" parent="Camera2D/ParallaxBackground/NightSky" instance=ExtResource( 25 )]
+position = Vector2( 0.899994, 7.64999 )
+amount = 10
 
 [node name="Space" type="Sprite" parent="Camera2D/ParallaxBackground/NightSky"]
 modulate = Color( 1, 1, 1, 0.486275 )
@@ -475,6 +480,9 @@ autostart = true
 [node name="path" parent="Camera2D" instance=ExtResource( 24 )]
 visible = false
 position = Vector2( -3, -176 )
+
+[node name="PathFollow2D" parent="Camera2D/path" index="0"]
+position = Vector2( 97.4536, 432.727 )
 
 [node name="Enemy" parent="Camera2D/path/PathFollow2D" index="0" instance=ExtResource( 18 )]
 position = Vector2( -0.0625763, -0.389984 )

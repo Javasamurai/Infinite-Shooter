@@ -89,10 +89,10 @@ func _on_bullet_hit(areas):
 			already_hit = true
 
 		$bullet_area.hide()
-		$death.play()
 		if isEnemy_bullet and already_hit == false:
 			already_hit = true
 			areas.get_node("../").hit()
+			queue_free()
 	pass
 
 func _on_music_finished():

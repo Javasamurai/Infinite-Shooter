@@ -265,12 +265,11 @@ func _on_powerup_got(areas):
 		var which_one = powerup_clone.get_node("powerup_animated").powerup
 		announce_something(which_one)
 		
-		print(which_one)
 		time_passed_since_powerup = 0
 		isPowerSpawned = false
 		if which_one == "coins crate":
-			coin_wave()
 			powerup_clone.find_node("coins").visible = true
+			coin_wave()
 		elif which_one == "potion":
 			$health.play()
 		else:

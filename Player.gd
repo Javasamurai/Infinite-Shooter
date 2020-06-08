@@ -154,7 +154,12 @@ func movement(_direction = null, _acc = null):
 
 func create_bullet(pos, rotate = false):
 	var bullet_clone_1 = bullet.instance()
-	bullet_clone_1.position = Vector2(self.position.x - (pos * 5), self.position.y)
+	var extra_space = 0
+	#if pos <= 3:
+	#	yield (get_tree().create_timer((pos - 3) / 4), "timeout")
+	if pos >= 2:
+		extra_space = pos
+	bullet_clone_1.position = Vector2(self.position.x - (pos * 5), self.position.y + extra_space)
 	if rotate:
 		bullet_clone_1.rotation = -20
 	bullet_clone_1.name = "player_bullet_1"
@@ -162,7 +167,7 @@ func create_bullet(pos, rotate = false):
 	var bullet_clone_2 = bullet.instance()
 	if rotate:
 		bullet_clone_2.rotation = 20
-	bullet_clone_2.position = Vector2(self.position.x + (pos * 5), self.position.y)
+	bullet_clone_2.position = Vector2(self.position.x + (pos * 5), self.position.y + extra_space)
 	bullet_clone_2.name = "player_bullet_2"
 	bullet_clone_1.fire("UP", fire_speed)
 	get_parent().add_child(bullet_clone_1)

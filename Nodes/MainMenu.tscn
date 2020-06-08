@@ -32,6 +32,7 @@
 [ext_resource path="res://game_over.tscn" type="PackedScene" id=30]
 [ext_resource path="res://Images/UI/Coin_02_1.png" type="Texture" id=31]
 [ext_resource path="res://Images/UI/Coin_04_1.png" type="Texture" id=32]
+[ext_resource path="res://Nodes/stars.tscn" type="PackedScene" id=33]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 2
@@ -94,14 +95,6 @@ fps = 30.0
 frame_0/texture = ExtResource( 3 )
 frame_1/texture = ExtResource( 19 )
 frame_1/delay_sec = 0.0
-
-[sub_resource type="ParticlesMaterial" id=11]
-emission_shape = 2
-emission_box_extents = Vector3( 100, 100, 100 )
-flag_disable_z = true
-gravity = Vector3( 0, 0, 0 )
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -475,18 +468,15 @@ margin_bottom = 34.0
 texture_normal = ExtResource( 23 )
 texture_pressed = ExtResource( 24 )
 
-[node name="Particles2D" type="Particles2D" parent="."]
-position = Vector2( 133.9, 187.65 )
-amount = 30
-randomness = 0.43
-fixed_fps = 60
-visibility_rect = Rect2( 0, 0, 5, 5 )
-process_material = SubResource( 11 )
+[node name="Particles2D" parent="." instance=ExtResource( 33 )]
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
 
 [node name="game_over" parent="." instance=ExtResource( 30 )]
+
+[node name="AnimatedSprite" parent="game_over" index="1"]
+frame = 0
 [connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/left_btn" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]
