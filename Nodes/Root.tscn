@@ -195,7 +195,6 @@ mix_target = 2
 
 [node name="bgm" type="AudioStreamPlayer" parent="Camera2D/Player"]
 stream = ExtResource( 11 )
-autoplay = true
 mix_target = 2
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Camera2D"]
@@ -481,11 +480,10 @@ autostart = true
 visible = false
 position = Vector2( -3, -176 )
 
-[node name="PathFollow2D" parent="Camera2D/path" index="0"]
-position = Vector2( 97.4536, 432.727 )
-
 [node name="Enemy" parent="Camera2D/path/PathFollow2D" index="0" instance=ExtResource( 18 )]
 position = Vector2( -0.0625763, -0.389984 )
+
+[node name="crazy_enemies_path" type="Node2D" parent="Camera2D"]
 [connection signal="button_down" from="Camera2D/Fire_button" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/left" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/right" to="Camera2D/Player" method="fire"]

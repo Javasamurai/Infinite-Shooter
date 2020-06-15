@@ -20,6 +20,7 @@ var time_spent
 var initial_plane_pos
 var music_btn
 var score_lbl
+var music = false
 var coins_lbl
 
 export(NodePath) var earth
@@ -56,7 +57,8 @@ func _ready():
 		right_arrow.modulate = Color.white
 
 	if global.over:
-		get_node("/root/Control/AudioManager/death").play()
+		if !music:
+			get_node("/root/Control/AudioManager/death").play()
 		global.over = false
 		$game_over.visible=true
 		
@@ -77,7 +79,8 @@ func _process(delta):
 			plane_node.set_texture(load("res://Images/level_" + str(global.selected_plane) + "_05.png"))
 
 func _on_arrow_pressed(_direction):
-	button_click.play()
+	if !music:
+		button_click.play()
 	if _direction == direction.LEFT:
 		right_arrow.modulate = Color.white
 		if global.selected_plane > 1:
@@ -175,11 +178,13 @@ func fill_values():
 			file.store_string(to_json(global.saved_data))
 			current_data = global.saved_data
 
-	var off = false
+	music = false
 	
-	off = current_data["music"]
+	music = current_data["music"]
+	print("Off" + str(music))
+	global.saved_data["music"] = music
 	
-	if off:
+	if music:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF.png"))
 	else:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_ON.png"))
@@ -215,16 +220,21 @@ func _on_music_button_up(_toogle = true):
 	current_data = parse_json(file.get_as_text())
 	if current_data == null:
 		return
+
 	if toggle == true:
 		current_data["music"] = !current_data["music"]
+		global.saved_data["music"] = current_data["music"]
 		file.store_string(to_json(current_data))
 	off = current_data["music"]
+	
 	file.close()
 	
-	if off:
+	if !off:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF.png"))
+		music = false
 	else:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_ON.png"))
+		music = true
 	pass
 
 

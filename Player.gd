@@ -50,7 +50,8 @@ func _ready():
 	window_size = get_viewport_rect().size / 2
 	$Timer.connect("timeout", self, "clear_powerup")
 	
-	print(global.selected_plane)
+	if global.saved_data["music"]:
+		$bgm.play()
 	if global.selected_plane == 3:
 		$side_flame.visible = true
 	else:
@@ -190,7 +191,8 @@ func fire():
 			create_bullet(3, true)
 
 		# Firreeee!!!!
-		$shot.play()
+		if global.saved_data["music"]:
+			$shot.play()
 		$Player_bg.play(str(global.selected_plane) + "_muzzle")
 		$Player_bg/muzzle_timer.start()
 		#$muzzles.visible = true

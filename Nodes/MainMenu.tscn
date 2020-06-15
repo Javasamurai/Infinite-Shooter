@@ -404,10 +404,12 @@ alignment = 1
 
 [node name="Watch Ad" type="Button" parent="MarginContainer/VBoxContainer2/VerticalContainer/HBoxContainer"]
 visible = false
-margin_left = 92.0
-margin_right = 165.0
+anchor_top = 0.7
+anchor_bottom = 0.7
+margin_left = 91.0
+margin_right = 166.0
 margin_bottom = 20.0
-text = "Watch Ad"
+text = "Buy Plane"
 
 [node name="MarginContainer5" type="MarginContainer" parent="."]
 margin_left = 200.0
@@ -476,7 +478,7 @@ wait_time = 3.0
 [node name="game_over" parent="." instance=ExtResource( 30 )]
 
 [node name="AnimatedSprite" parent="game_over" index="1"]
-frame = 0
+frame = 3
 [connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/left_btn" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/left_arrow" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]

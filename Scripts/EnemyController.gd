@@ -24,8 +24,9 @@ var key = 1
 var bullet_type = "normal"
 var canRotate = false
 var path_node = null
+var current_wave = 1
 #var selected_color
-
+var is_active = false
 signal enemy_hit(which_one)
 
 var enemy_config = {
@@ -36,29 +37,29 @@ var enemy_config = {
 		"canRotate": false,
 		"smart": true,
 		"canShoot": true,
-		"speed": 200,
+		"speed": 175,
 		"chaseDelay": 2.0,
-		"fireDelayMin": 2,
+		"fireDelayMin": 2.4,
 		"fireDelayMax": 2.5,
-		"bullet_speed": 500,
+		"bullet_speed": 300,
 		"health": 50,
 		"chaseX": true,
 		"chaseY": true
 	},
 	2: {
 		"key": 2,
-		"name": "alien",
+		"name": "small_plane",
 		"bullet_type": "normal",
 		"canRotate": false,
 		"smart": false,
-		"canShoot": true,
-		"speed": 150,
+		"canShoot": false,
+		"speed": 100,
 		"chaseDelay": 2.0,
-		"fireDelayMin": 2,
-		"fireDelayMax": 2,
-		"bullet_speed": 300,
-		"health": 80,
-		"chaseX": true,
+		"fireDelayMin": 0.1,
+		"fireDelayMax": 3,
+		"bullet_speed": 75,
+		"health": 50,
+		"chaseX": false,
 		"chaseY": false
 	},
 	3: {
@@ -111,18 +112,18 @@ var enemy_config = {
 	},
 	6: {
 		"key": 6,
-		"name": "small_plane",
+		"name": "alien",
 		"bullet_type": "normal",
 		"canRotate": false,
 		"smart": false,
-		"canShoot": false,
-		"speed": 100,
+		"canShoot": true,
+		"speed": 150,
 		"chaseDelay": 2.0,
-		"fireDelayMin": 0.1,
-		"fireDelayMax": 3,
+		"fireDelayMin": 2,
+		"fireDelayMax": 2,
 		"bullet_speed": 300,
-		"health": 50,
-		"chaseX": false,
+		"health": 80,
+		"chaseX": true,
 		"chaseY": false
 	},
 	7: {
@@ -177,18 +178,28 @@ var enemy_config = {
 
 var alien_colors = [Color.white, Color.aqua, Color.black, Color.blue, Color.yellow]
 var dead = false
+var global
 
 func _ready():
 	randomize()
 	set_process_input(true)
+	global = get_node("/root/Globals")
 	bullet = preload("res://Nodes/Bullet.tscn")
 	path_node = find_node("path")
 	score_lbl = $score
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	tween = get_node("Tween")
-	
-	enemy_selected_config = enemy_config[ randi() % enemy_config.size() + 1]
+
+	# randomly change alien color
+	# if key == 2:
+	#	modulate = alien_colors[randi() % alien_colors.size()]
+	# pass
+
+func generate_enemy(max_enemies = enemy_config.size()):
+	is_active = true
+	current_wave = max_enemies
+	enemy_selected_config = enemy_config[ randi() % max_enemies + 1]
 	fireDelay = rand_range(enemy_selected_config["fireDelayMin"],enemy_selected_config["fireDelayMax"])
 
 	speed = enemy_selected_config["speed"]
@@ -204,13 +215,14 @@ func _ready():
 	play(str(key))
 	bullets = []
 	
-	#randomly change alien color
-	#if key == 2:
-	#	modulate = alien_colors[randi() % alien_colors.size()]
-	#pass
+	if key == 3 or key == 4:
+		$Tween.interpolate_property(self, "rotation", 0, 7200, 15,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
+		$Tween.start()
+	pass
 
 func move_to(_pos):
-	var canChase = chaseX == true or chaseY == true
+	var canChase = (chaseX == true or chaseY == true) && current_wave > 3
+
 	if last_chased < rand_range(0.25,enemy_selected_config["chaseDelay"]):
 		return
 	else:
@@ -220,25 +232,23 @@ func move_to(_pos):
 	if canChase:
 		tween.interpolate_property(self, "position", position, _pos, 3,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		tween.start()
-	else: 
-		if key == 3 or key == 4:
-			tween.interpolate_property(self, "rotation", 0, 7200, 15,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
-			tween.start()
 	pass
 
 func hit():
 	tween.interpolate_property(self, "modulate", Color.white, Color(0,0,0,0.5), 0.25,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
 	tween.interpolate_property(self, "position", position, Vector2(position.x, position.y - 6), 0.1,Tween.TRANS_BOUNCE, Tween.EASE_IN_OUT)
-	tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 0.7,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 200, 1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 1.5,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 200, 1.25,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 	health = health - 10
 	if health <= 0 && !dead:
 		dead = true
-		$death_sfx.play()
+		if global.saved_data["music"]:
+			$death_sfx.play()
 		die()
 	else:
-		$hit_sfx.play()
+		if global.saved_data["music"]:
+			$hit_sfx.play()
 
 	if key == 1 or key == 2:
 		$Timer.start()
@@ -254,9 +264,12 @@ func die():
 	score_lbl.visible = true
 	$explosion.visible = true
 	$explosion_particle.visible = true
-	$explosion.play("explosion")
+	if global.saved_data["music"]:
+		$explosion.play("explosion")
 
 func _process(delta):
+	if !is_active:
+		return
 	time_elapsed+=delta
 	last_chased+=delta
 	position.y = (position.y) + (speed * delta)
@@ -295,6 +308,9 @@ func fire_spiral():
 
 func create_bullet(direction):
 	var bullet_clone = bullet.instance()
+
+	if enemy_selected_config == null:
+		return
 
 	bullet_clone.position = Vector2(self.position.x, self.position.y)
 	bullet_clone.name = "enemy_bullet"

@@ -29,6 +29,7 @@
 [ext_resource path="res://Images/Players/BIG_UFO_02.png" type="Texture" id=27]
 [ext_resource path="res://Images/Players/BIG_UFO_03.png" type="Texture" id=28]
 [ext_resource path="res://Images/Players/BIG_UFO_04.png" type="Texture" id=29]
+[ext_resource path="res://Nodes/enemy_area.tscn" type="PackedScene" id=30]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -37,14 +38,24 @@ animations = [ {
 "name": "hit_1",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 18 ), ExtResource( 19 ) ],
+"frames": [ ExtResource( 14 ), ExtResource( 15 ) ],
 "loop": true,
-"name": "7",
+"name": "5",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 20 ), ExtResource( 21 ) ],
+"frames": [ ExtResource( 12 ) ],
 "loop": true,
-"name": "8",
+"name": "3",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
+"loop": true,
+"name": "9",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "1",
 "speed": 10.0
 }, {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
@@ -57,14 +68,14 @@ animations = [ {
 "name": "hit_2",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 17 ), ExtResource( 16 ) ],
+"frames": [ ExtResource( 18 ), ExtResource( 19 ) ],
 "loop": true,
-"name": "6",
+"name": "7",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 5 ) ],
+"frames": [ ExtResource( 20 ), ExtResource( 21 ) ],
 "loop": true,
-"name": "1",
+"name": "8",
 "speed": 10.0
 }, {
 "frames": [  ],
@@ -72,25 +83,20 @@ animations = [ {
 "name": "hit_3",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 17 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "6",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 13 ) ],
 "loop": true,
 "name": "4",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 12 ) ],
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
-"name": "3",
-"speed": 15.0
-}, {
-"frames": [ ExtResource( 14 ), ExtResource( 15 ) ],
-"loop": true,
-"name": "5",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
-"loop": true,
-"name": "9",
-"speed": 5.0
+"name": "100",
+"speed": 10.0
 } ]
 
 [sub_resource type="DynamicFontData" id=2]
@@ -100,10 +106,7 @@ font_path = "res://fonts/joystix monospace.ttf"
 size = 8
 font_data = SubResource( 2 )
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 13.3514, 18.2589 )
-
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=4]
 animations = [ {
 "frames": [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 11 ) ],
 "loop": true,
@@ -111,7 +114,7 @@ animations = [ {
 "speed": 20.0
 } ]
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="ParticlesMaterial" id=5]
 render_priority = 1
 lifetime_randomness = 1.0
 emission_shape = 2
@@ -124,7 +127,7 @@ initial_velocity = 37.81
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 
-[sub_resource type="AnimatedTexture" id=7]
+[sub_resource type="AnimatedTexture" id=6]
 frames = 5
 fps = 15.0
 frame_0/texture = ExtResource( 9 )
@@ -154,11 +157,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="enemy_area" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_area"]
-shape = SubResource( 4 )
-one_way_collision = true
+[node name="enemy_area" parent="." instance=ExtResource( 30 )]
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 
@@ -166,7 +165,7 @@ one_way_collision = true
 
 [node name="explosion" type="AnimatedSprite" parent="."]
 visible = false
-frames = SubResource( 5 )
+frames = SubResource( 4 )
 animation = "explosion"
 
 [node name="explosion_particle" type="Particles2D" parent="."]
@@ -175,8 +174,8 @@ amount = 10
 lifetime = 0.75
 explosiveness = 0.4
 randomness = 0.54
-process_material = SubResource( 6 )
-texture = SubResource( 7 )
+process_material = SubResource( 5 )
+texture = SubResource( 6 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.15

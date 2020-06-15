@@ -13,7 +13,7 @@ var isPowerSpawned = false
 var canSpawn = true
 
 var wave_cooldown = 3
-var spawnDelay = 4
+var spawnDelay = 1.5
 var last_spawned_time
 var screenBounds = Vector2.ZERO
 var last_position = Vector2.ZERO
@@ -33,6 +33,7 @@ var powerup_timer
 var time_passed_since_powerup = 0
 var health_progress
 var global
+var max_enemies_spawn = 1
 
 export(NodePath) var health_label
 export(NodePath) var score_label
@@ -45,6 +46,10 @@ export(NodePath) var heart_container_path
 signal hit
 
 var coin_range = range(2000, 30000, 2000)
+var coin_wave_clone = null
+var crazy_path
+var wave_range = range(4, 3000, 5)
+
 
 var waves = {
 	1: 100,
@@ -103,7 +108,7 @@ var enemies_waves = {
 
 func _ready():
 	global = get_node("/root/Globals")
-	global.saved_data["coins"] = 0
+	#global.saved_data["coins"] = 0
 	load_score()
 	tween = get_node("Tween")
 	timer = get_node("Timer")
@@ -120,6 +125,8 @@ func _ready():
 	last_spawned_time = 0
 	enemy = preload("res://Nodes/Enemy.tscn")
 	player = preload("res://Nodes/Player.tscn")
+	crazy_path = preload("res://Nodes/crazy_path.tscn")
+
 	coin_wave_node = preload("res://Nodes/coin_wave_linear.tscn")
 
 	powerup_node = preload("res://Nodes/powerup.tscn")
@@ -151,23 +158,27 @@ func _process(delta):
 		#if enemy.smart:
 		enemy.move_to($Player.position)
 
-	if last_spawned_time > spawnDelay:
+	if last_spawned_time > rand_range(1, spawnDelay):
 		last_spawned_time = 0
 		canSpawn = true
-		spawnEnemiesWAVE1()
+		
+		if !wave_range.has(current_wave):
+			spawnEnemiesWAVE1()
+		else:
+			crazy_wave()
 
 # Wave generation logic
 
 func check_powerup():
-	if (powerup_container.get_child_count() == 0 and !isPowerSpawned):
+	if (powerup_container.get_child_count() == 0):
 		timer.start(3)
 # warning-ignore:unused_variable
 		var random_gen = randi() % powerup_spawn_delay + 3
 		
-		spawnPowerup()
-		#if int(time_elapsed) % random_gen == 0: 
-		#	isPowerSpawned = true
-		#	spawnPowerup()
+		#spawnPowerup()
+		if int(time_elapsed) % random_gen == 0: 
+			isPowerSpawned = true
+			spawnPowerup()
 	pass
 
 func _input(event):
@@ -201,8 +212,14 @@ func check_wave():
 		coin_wave()
 	pass
 	
+func coin_removed():
+	if coin_wave_clone != null:
+		coin_wave_clone = null
+	pass
+
 func coin_wave():
-	var coin_wave_clone = coin_wave_node.instance()
+	coin_wave_clone = coin_wave_node.instance()
+	coin_wave_clone.connect("dead", self, "coin_removed")
 	$".".add_child(coin_wave_clone)
 	coin_wave_clone.visible = true
 	# all powerup and enemies destroy
@@ -212,6 +229,10 @@ func coin_wave():
 
 	for n in $enemy_container.get_children():
 		$enemy_container.remove_child(n)
+		n.queue_free()
+
+	for n in $crazy_enemies_path.get_children():
+		$crazy_enemies_path.remove_child(n)
 		n.queue_free()
 
 	coin_wave_clone.start_wave()
@@ -271,17 +292,21 @@ func _on_powerup_got(areas):
 			powerup_clone.find_node("coins").visible = true
 			coin_wave()
 		elif which_one == "potion":
-			$health.play()
+			if global.saved_data["music"]:
+				$health.play()
 		else:
 			powerup_enengy.visible = true
 			powerup_enengy.value = 100
 			powerup_clone.queue_free()
 			powerup_clone = null
-			$powerup.play()
+			if global.saved_data["music"]:
+				$powerup.play()
 		$Player.powerup(which_one)
 		powerup_timer.start()
 	pass
 func spawnEnemiesWAVE1():
+	if coin_wave_clone != null:
+		return
 	randomize()
 	# check current enemies
 	var enemy_counter = 0
@@ -289,14 +314,23 @@ func spawnEnemiesWAVE1():
 	if $enemy_container.get_child_count() <= max_enemies && canSpawn:
 		enemy_counter = enemy_counter + 1
 		var enemy_clone = enemy.instance()
+		
+		enemy_clone.generate_enemy(current_wave)
 		var texture = enemy_clone.get_sprite_frames().get_frame("1", 0)
 
 		enemy_clone.position = Vector2(rand_range(-screenBounds.x / 2 + texture.get_size().x / 2, screenBounds.x / 2- texture.get_size().x / 2), -(screenBounds.y / 2) + texture.get_size().y)
 		$enemy_container.add_child(enemy_clone)
-
 		enemy_clone.connect("enemy_hit", self, "enemy_hit")
 		if enemy_clone.smart:
 			enemy_clone.move_to($Player.position)
+
+	pass
+
+func crazy_wave():
+	if $"crazy_enemies_path".get_child_count() <= max_enemies && canSpawn:
+		var crazy_enemy = crazy_path.instance()
+		crazy_enemy.position = Vector2(0, - 405/ 2)
+		$"crazy_enemies_path".add_child(crazy_enemy)
 	pass
 
 func _on_Tween_tween_all_completed():

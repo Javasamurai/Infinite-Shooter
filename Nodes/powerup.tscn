@@ -28,11 +28,6 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 14 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
-"loop": true,
-"name": "coins",
-"speed": 15.0
-}, {
 "frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ) ],
 "loop": true,
 "name": "sonic_boom",
@@ -62,6 +57,11 @@ animations = [ {
 "loop": true,
 "name": "machine_gun",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "coins",
+"speed": 15.0
 } ]
 
 [sub_resource type="CanvasItemMaterial" id=2]

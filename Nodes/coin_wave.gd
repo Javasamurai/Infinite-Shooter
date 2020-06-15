@@ -1,6 +1,8 @@
 extends Node2D
 
 var started = false
+signal dead
+
 func _ready():
 	set_process(true)
 	pass
@@ -24,5 +26,6 @@ func reset_wave():
 	started = false
 	position = Vector2.ZERO
 	visible = false
+	emit_signal("dead")
 	queue_free()
 	pass
