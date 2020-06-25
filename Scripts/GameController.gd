@@ -112,7 +112,7 @@ func _ready():
 	load_score()
 	tween = get_node("Tween")
 	timer = get_node("Timer")
-	powerup_enengy = get_node("Control/PowerupEnergy")
+	powerup_enengy = get_node("../Control/PowerupEnergy")
 	powerup_timer = powerup_enengy.get_node("powerup_timer")
 	health_progress = get_node(health_progress_path)
 	powerup_enengy.percent_visible = true
@@ -134,6 +134,8 @@ func _ready():
 	$Player.connect("hit",self, "on_player_hit")
 # warning-ignore:return_value_discarded
 	$Player.connect("player_die", self, "save_score")
+	$Player.connect("left", self, "left")
+	$Player.connect("right", self, "right")
 
 	powerup_container = $powerup_container
 	announcement_lbl = get_node(announcement_lbl_path)
@@ -141,6 +143,18 @@ func _ready():
 	announce_something("WAVE " + str(current_wave))
 
 	#announce_something("In a galaxy far far away. There was a gladiator.", 5)
+
+func left():
+	$anim.play("left_camera_lerp")
+	#tween.interpolate_property(self, "position",self.position,Vector2(-10, 0),0.5,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+	#tween.start()
+	pass
+
+func right():
+	$anim.play("right_camera_lerp")
+	#tween.interpolate_property(self, "position", self.position, Vector2(10, 0),0.5,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+	#tween.start()
+	pass
 
 func game_over():
 	global.over = true
@@ -277,7 +291,6 @@ func announce_something(what, time = 2):
 	tween.interpolate_property(announcement_lbl, "margin_left",250, -119,0.5,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.interpolate_property(announcement_lbl, "modulate", Color.transparent,Color.white,time,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
-	
 	pass
 
 func _on_powerup_got(areas):
@@ -293,6 +306,7 @@ func _on_powerup_got(areas):
 			coin_wave()
 		elif which_one == "potion":
 			if global.saved_data["music"]:
+				health_progress.value = $Player.health
 				$health.play()
 		else:
 			powerup_enengy.visible = true
@@ -330,6 +344,7 @@ func crazy_wave():
 	if $"crazy_enemies_path".get_child_count() <= max_enemies && canSpawn:
 		var crazy_enemy = crazy_path.instance()
 		crazy_enemy.position = Vector2(0, - 405/ 2)
+		crazy_enemy.find_node("Enemy").connect("enemy_hit", self, "enemy_hit")
 		$"crazy_enemies_path".add_child(crazy_enemy)
 	pass
 
@@ -374,4 +389,10 @@ func save_score():
 		f.store_string(to_json(global.saved_data))
 		f.close()
 	get_tree().change_scene("res://Nodes/MainMenu.tscn")
+	pass
+
+
+func _on_Tween_tween_completed(object, key):
+	if object.name == "Camera2D":
+		$".".position = Vector2.ZERO
 	pass

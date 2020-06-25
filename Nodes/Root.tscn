@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Images/fire_btn.png" type="Texture" id=2]
@@ -17,7 +17,6 @@
 [ext_resource path="res://Images/UI/Health_01.png" type="Texture" id=15]
 [ext_resource path="res://SFX/health.wav" type="AudioStream" id=16]
 [ext_resource path="res://fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=17]
-[ext_resource path="res://Nodes/Enemy.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Images/UI/Health_02.png" type="Texture" id=19]
 [ext_resource path="res://Images/UI/Health_04.png" type="Texture" id=20]
 [ext_resource path="res://Images/UI/Health_03.png" type="Texture" id=21]
@@ -25,6 +24,61 @@
 [ext_resource path="res://Images/UI/Full_Health.png" type="Texture" id=23]
 [ext_resource path="res://Nodes/crazy_path.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Nodes/stars.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Nodes/crt.tscn" type="PackedScene" id=26]
+
+[sub_resource type="Animation" id=16]
+resource_name = "left_camera_lerp"
+tracks/0/type = "value"
+tracks/0/path = NodePath("ParallaxBackground/ParallaxLayer2/bg:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -10, 0 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ParallaxBackground/NightSky/Space:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -5, 0 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "right_camera_lerp"
+tracks/0/type = "value"
+tracks/0/path = NodePath("ParallaxBackground/ParallaxLayer2/bg:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 10, 0 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ParallaxBackground/NightSky/Space:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 5, 0 ), Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 2
@@ -102,14 +156,19 @@ __meta__ = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0.567, 0 )
 current = true
 script = ExtResource( 1 )
-health_label = NodePath("Control/MarginContainer/header/health")
-score_label = NodePath("Control/MarginContainer/header/score")
-health_progress_path = NodePath("Control/health_progress")
-announcement_lbl_path = NodePath("Control/center_container/announcement_panel/announcement")
-announcement_panel_path = NodePath("Control/center_container/announcement_panel")
-heart_container_path = NodePath("Control/MarginContainer/header")
+health_label = NodePath("../Control/MarginContainer/header/health")
+score_label = NodePath("../Control/MarginContainer/header/score")
+health_progress_path = NodePath("../Control/health_progress")
+announcement_lbl_path = NodePath("../Control/center_container/announcement_panel/announcement")
+announcement_panel_path = NodePath("../Control/center_container/announcement_panel")
+heart_container_path = NodePath("../Control/MarginContainer/header")
+
+[node name="anim" type="AnimationPlayer" parent="Camera2D"]
+anims/left_camera_lerp = SubResource( 16 )
+anims/right_camera_lerp = SubResource( 17 )
 
 [node name="ScreenShake" type="Node2D" parent="Camera2D"]
 script = ExtResource( 14 )
@@ -183,8 +242,15 @@ material = SubResource( 1 )
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 13 )
 
+[node name="crt" parent="Camera2D" instance=ExtResource( 26 )]
+visible = false
+margin_left = -121.0
+margin_top = -200.0
+margin_right = 122.0
+margin_bottom = 205.0
+
 [node name="Player" parent="Camera2D" instance=ExtResource( 4 )]
-position = Vector2( 0, 150 )
+position = Vector2( 0, 250 )
 
 [node name="movement" type="AudioStreamPlayer" parent="Camera2D/Player"]
 mix_target = 2
@@ -211,6 +277,9 @@ centered = false
 [node name="NightSky" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
 motion_mirroring = Vector2( 1024, 1024 )
 script = ExtResource( 9 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Particles2D" parent="Camera2D/ParallaxBackground/NightSky" instance=ExtResource( 25 )]
 position = Vector2( 0.899994, 7.64999 )
@@ -221,6 +290,9 @@ modulate = Color( 1, 1, 1, 0.486275 )
 material = SubResource( 4 )
 texture = ExtResource( 10 )
 centered = false
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
 visible = false
@@ -276,7 +348,20 @@ stream = ExtResource( 16 )
 
 [node name="enemy_container" type="Node2D" parent="Camera2D"]
 
-[node name="Control" type="Control" parent="Camera2D"]
+[node name="Timer" type="Timer" parent="Camera2D"]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="Tween" type="Tween" parent="Camera2D"]
+
+[node name="path" parent="Camera2D" instance=ExtResource( 24 )]
+visible = false
+position = Vector2( -3, -176 )
+
+[node name="crazy_enemies_path" type="Node2D" parent="Camera2D"]
+
+[node name="Control" type="Control" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -289,7 +374,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PowerupEnergy" type="ProgressBar" parent="Camera2D/Control"]
+[node name="PowerupEnergy" type="ProgressBar" parent="Control"]
 visible = false
 margin_left = 11.2787
 margin_top = 331.131
@@ -307,10 +392,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="powerup_timer" type="Timer" parent="Camera2D/Control/PowerupEnergy"]
+[node name="powerup_timer" type="Timer" parent="Control/PowerupEnergy"]
 wait_time = 0.1
 
-[node name="health_progress" type="ProgressBar" parent="Camera2D/Control"]
+[node name="health_progress" type="ProgressBar" parent="Control"]
 margin_right = 120.0
 margin_bottom = 14.0
 custom_styles/fg = SubResource( 8 )
@@ -322,7 +407,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="heart" type="TextureRect" parent="Camera2D/Control/health_progress"]
+[node name="heart" type="TextureRect" parent="Control/health_progress"]
 margin_left = -8.0
 margin_top = -6.0
 margin_right = 9.0
@@ -333,7 +418,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="Camera2D/Control"]
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
 anchor_right = 0.5
 margin_right = 120.0
 margin_bottom = 20.0
@@ -341,12 +426,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="header" type="HBoxContainer" parent="Camera2D/Control/MarginContainer"]
+[node name="header" type="HBoxContainer" parent="Control/MarginContainer"]
 margin_right = 240.0
 margin_bottom = 20.0
 alignment = 2
 
-[node name="heart" type="TextureRect" parent="Camera2D/Control/MarginContainer/header"]
+[node name="heart" type="TextureRect" parent="Control/MarginContainer/header"]
 visible = false
 margin_left = 82.0
 margin_right = 99.0
@@ -356,7 +441,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="heart2" type="TextureRect" parent="Camera2D/Control/MarginContainer/header"]
+[node name="heart2" type="TextureRect" parent="Control/MarginContainer/header"]
 visible = false
 margin_left = 103.0
 margin_right = 120.0
@@ -366,7 +451,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="heart3" type="TextureRect" parent="Camera2D/Control/MarginContainer/header"]
+[node name="heart3" type="TextureRect" parent="Control/MarginContainer/header"]
 visible = false
 margin_left = 124.0
 margin_right = 141.0
@@ -376,7 +461,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="heart4" type="TextureRect" parent="Camera2D/Control/MarginContainer/header"]
+[node name="heart4" type="TextureRect" parent="Control/MarginContainer/header"]
 visible = false
 margin_left = 145.0
 margin_right = 162.0
@@ -386,7 +471,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="heart5" type="TextureRect" parent="Camera2D/Control/MarginContainer/header"]
+[node name="heart5" type="TextureRect" parent="Control/MarginContainer/header"]
 visible = false
 margin_left = 166.0
 margin_right = 183.0
@@ -396,7 +481,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="health" type="Label" parent="Camera2D/Control/MarginContainer/header"]
+[node name="health" type="Label" parent="Control/MarginContainer/header"]
 visible = false
 margin_left = 161.0
 margin_top = 1.0
@@ -405,7 +490,7 @@ margin_bottom = 18.0
 custom_fonts/font = SubResource( 12 )
 text = "100"
 
-[node name="score" type="Label" parent="Camera2D/Control/MarginContainer/header"]
+[node name="score" type="Label" parent="Control/MarginContainer/header"]
 margin_left = 187.0
 margin_top = 1.0
 margin_right = 240.0
@@ -413,7 +498,7 @@ margin_bottom = 18.0
 custom_fonts/font = SubResource( 12 )
 text = "Score:0"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Camera2D/Control/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
 visible = false
 margin_right = 240.0
 margin_bottom = 20.0
@@ -421,12 +506,12 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="HSlider" type="HSlider" parent="Camera2D/Control/MarginContainer/VBoxContainer"]
+[node name="HSlider" type="HSlider" parent="Control/MarginContainer/VBoxContainer"]
 visible = false
 margin_right = 240.0
 margin_bottom = 16.0
 
-[node name="Panel" type="Panel" parent="Camera2D/Control"]
+[node name="Panel" type="Panel" parent="Control"]
 visible = false
 margin_right = 219.0
 margin_bottom = 393.0
@@ -434,7 +519,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="center_container" type="MarginContainer" parent="Camera2D/Control"]
+[node name="center_container" type="MarginContainer" parent="Control"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -447,13 +532,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="announcement_panel" type="Panel" parent="Camera2D/Control/center_container"]
+[node name="announcement_panel" type="Panel" parent="Control/center_container"]
 material = SubResource( 13 )
 margin_right = 275.0
 margin_bottom = 20.0
 custom_styles/panel = SubResource( 14 )
 
-[node name="announcement" type="Label" parent="Camera2D/Control/center_container/announcement_panel"]
+[node name="announcement" type="Label" parent="Control/center_container/announcement_panel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -468,22 +553,6 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Timer" type="Timer" parent="Camera2D"]
-wait_time = 3.0
-one_shot = true
-autostart = true
-
-[node name="Tween" type="Tween" parent="Camera2D"]
-
-[node name="path" parent="Camera2D" instance=ExtResource( 24 )]
-visible = false
-position = Vector2( -3, -176 )
-
-[node name="Enemy" parent="Camera2D/path/PathFollow2D" index="0" instance=ExtResource( 18 )]
-position = Vector2( -0.0625763, -0.389984 )
-
-[node name="crazy_enemies_path" type="Node2D" parent="Camera2D"]
 [connection signal="button_down" from="Camera2D/Fire_button" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/left" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/right" to="Camera2D/Player" method="fire"]
@@ -491,10 +560,10 @@ position = Vector2( -0.0625763, -0.389984 )
 [connection signal="button_down" from="Camera2D/down" to="Camera2D/Player" method="fire"]
 [connection signal="input_event" from="Camera2D/Fire_area" to="Camera2D/Player" method="_on_Fire"]
 [connection signal="input_event" from="Camera2D/Accelerate_area" to="Camera2D/Player" method="_on_Accelerate"]
-[connection signal="timeout" from="Camera2D/Control/PowerupEnergy/powerup_timer" to="Camera2D" method="_on_powerup_timer_timeout"]
-[connection signal="value_changed" from="Camera2D/Control/MarginContainer/VBoxContainer/HSlider" to="Camera2D/ParallaxBackground/NightSky" method="_on_HSlider_value_changed"]
 [connection signal="timeout" from="Camera2D/Timer" to="Camera2D" method="check_powerup"]
 [connection signal="tween_all_completed" from="Camera2D/Tween" to="Camera2D" method="_on_Tween_tween_all_completed"]
 [connection signal="tween_completed" from="Camera2D/Tween" to="Camera2D" method="_on_Tween_tween_completed"]
+[connection signal="timeout" from="Control/PowerupEnergy/powerup_timer" to="Camera2D" method="_on_powerup_timer_timeout"]
+[connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/HSlider" to="Camera2D/ParallaxBackground/NightSky" method="_on_HSlider_value_changed"]
 
 [editable path="Camera2D/path"]

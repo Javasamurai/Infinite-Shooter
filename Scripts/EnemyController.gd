@@ -333,6 +333,6 @@ func _on_explosion_animation_finished():
 func on_chase_compelete(object, key):
 	if key == ":modulate":
 		self.modulate = Color.white
-	if canFire and key == ":position" and canShoot:
+	if canFire && key == ":position" && canShoot:
 		fire()
 	pass

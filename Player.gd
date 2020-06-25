@@ -37,14 +37,21 @@ var speed_damping = 0.9
 signal hit
 signal player_die
 signal game_over
+signal left
+signal right
 
 func _ready():
 	global = get_node("/root/Globals")
 	#var tex = load("res://Images/Players/Level_" + str(global.selected_plane) + "_Player.png")
 	$Player_bg.play(str(global.selected_plane))
 	tween = get_node("Tween")
+	
+	tween.interpolate_property(self, "position", Vector2(0,250),Vector2(0, 150),1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+	tween.start()
+
 	canFire = false
 	is_sonic_boom = false
+	
 	bullet = preload("res://Nodes/Bullet.tscn")
 	set_process_input(true)
 	window_size = get_viewport_rect().size / 2
@@ -99,14 +106,15 @@ func _input(event):
 		#move_to.x = (position.x + event.relative.x) * 1 
 		#move_to.y = (position.y + event.relative.y) * 1
 		#position = move_to
-		
-		if event.relative.x <=0:
-			tween.interpolate_property(get_node("."), "rotation_degrees", 0,-5,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
-			tween.start()
-		else: 
-			tween.interpolate_property(get_node("."), "rotation_degrees", 0,5,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
-			tween.start()
-		translate(event.relative * speed_damping)
+			
+		if event.relative.x != 0:
+			if event.relative.x < 0:
+				tween.interpolate_property(get_node("."), "rotation_degrees", 0,-7,0.1,Tween.TRANS_LINEAR,Tween.TRANS_ELASTIC)
+				tween.start()
+			else:
+				tween.interpolate_property(get_node("."), "rotation_degrees", 0,7,0.1,Tween.TRANS_LINEAR,Tween.TRANS_ELASTIC)
+				tween.start()
+			translate(event.relative * speed_damping)
 	if event.is_pressed():
 		is_pressed = true
 	elif !(event is InputEventScreenDrag) and !(event is InputEventMouseMotion):
@@ -136,11 +144,13 @@ func movement(_direction = null, _acc = null):
 		get_tree().change_scene("./MainMenu.tscn")
 	if Input.is_key_pressed(KEY_LEFT) || _direction == DIRECTION.LEFT:
 		if self.position.x > -window_size.x:
+			emit_signal("left")
 			tween.interpolate_property(get_node("."), "rotation_degrees", 0,-5,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 			tween.start()
 			self.position = Vector2(self.position.x - _speed, self.position.y)
 	if Input.is_key_pressed(KEY_RIGHT) || _direction == DIRECTION.RIGHT:
 		if self.position.x < window_size.x:
+			emit_signal("right")
 			tween.interpolate_property(get_node("."), "rotation_degrees", 0,5,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 			tween.start()
 			self.position = Vector2(self.position.x + _speed, self.position.y)
@@ -212,6 +222,8 @@ func sonic_boom():
 	fire_delay = 0
 
 func hit():
+	if isSheilded:
+		return
 	tween.interpolate_property($".", "modulate", Color.white,Color.transparent,0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
 	health = health - 20
@@ -243,7 +255,7 @@ func healthpotion():
 func minify():
 	tween.interpolate_property(self, "scale", Vector2.ONE,Vector2(0.25,0.25),0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
-	speed_damping = 1
+	speed_damping = 1.2
 	pass
 
 func clear_powerup():

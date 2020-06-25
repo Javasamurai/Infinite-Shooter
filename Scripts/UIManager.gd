@@ -46,6 +46,9 @@ func _ready():
 	flames_lvl_3_right = find_node("flames_lvl_3_right")
 	initial_plane_pos = plane_node.get_position_in_parent()
 	fill_values()
+	$anim.play("cloud_movement")
+	$anim.play("fade")
+
 
 	var rot_tween = earth_node.get_node("Tween")
 	rot_tween.interpolate_property(earth_node, "rotation_degrees", 0, 36000, 1500,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -148,11 +151,13 @@ func switching_finished(_object, _key):
 	pass
 
 func _on_right_arrow_pressed():
-	_on_arrow_pressed(direction.RIGHT)
+	$anim.play("right")
+	#_on_arrow_pressed(direction.RIGHT)
 	#switch_plane(false)
 
 func _on_left_arrow_pressed():
-	_on_arrow_pressed(direction.LEFT)
+	$anim.play("left")
+	#_on_arrow_pressed(direction.LEFT)
 	#switch_plane(true)
 	pass
 
@@ -240,4 +245,13 @@ func _on_music_button_up(_toogle = true):
 
 func hide_game_over():
 	find_node("game_over").visible = false
+	pass
+
+
+func _on_anim_animation_finished(anim_name):
+	$anim.play("fade")
+	if (anim_name == "left"):
+		_on_arrow_pressed(direction.LEFT)
+	elif (anim_name == "right"):
+		_on_arrow_pressed(direction.RIGHT)
 	pass
