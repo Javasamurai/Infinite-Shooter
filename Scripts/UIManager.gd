@@ -48,7 +48,7 @@ func _ready():
 	fill_values()
 	$anim.play("cloud_movement")
 	$anim.play("fade")
-
+	$anim.play("meteor")
 
 	var rot_tween = earth_node.get_node("Tween")
 	rot_tween.interpolate_property(earth_node, "rotation_degrees", 0, 36000, 1500,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -246,10 +246,14 @@ func _on_music_button_up(_toogle = true):
 func hide_game_over():
 	find_node("game_over").visible = false
 	pass
-
+	
+	
+func spawnMeteor():
+	pass
 
 func _on_anim_animation_finished(anim_name):
 	$anim.play("fade")
+	$anim.play("meteor")
 	if (anim_name == "left"):
 		_on_arrow_pressed(direction.LEFT)
 	elif (anim_name == "right"):

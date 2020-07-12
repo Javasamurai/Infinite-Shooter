@@ -48,6 +48,7 @@ signal hit
 var coin_range = range(2000, 30000, 2000)
 var coin_wave_clone = null
 var crazy_path
+var circular_path
 var wave_range = range(4, 3000, 5)
 
 
@@ -125,8 +126,8 @@ func _ready():
 	last_spawned_time = 0
 	enemy = preload("res://Nodes/Enemy.tscn")
 	player = preload("res://Nodes/Player.tscn")
-	crazy_path = preload("res://Nodes/crazy_path.tscn")
-
+	crazy_path = preload("res://Nodes/spiral_path.tscn")
+	circular_path = preload("res://Nodes/circular_path.tscn")
 	coin_wave_node = preload("res://Nodes/coin_wave_linear.tscn")
 
 	powerup_node = preload("res://Nodes/powerup.tscn")
@@ -342,7 +343,7 @@ func spawnEnemiesWAVE1():
 
 func crazy_wave():
 	if $"crazy_enemies_path".get_child_count() <= max_enemies && canSpawn:
-		var crazy_enemy = crazy_path.instance()
+		var crazy_enemy =  circular_path.instance()
 		crazy_enemy.position = Vector2(0, - 405/ 2)
 		crazy_enemy.find_node("Enemy").connect("enemy_hit", self, "enemy_hit")
 		$"crazy_enemies_path".add_child(crazy_enemy)
