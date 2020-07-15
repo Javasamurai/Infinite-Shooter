@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
 [ext_resource path="res://Images/UI_Level_1_Plane.png" type="Texture" id=2]
@@ -41,6 +41,8 @@
 [ext_resource path="res://Images/Cloud_02.png" type="Texture" id=39]
 [ext_resource path="res://Images/Meteor_02.png" type="Texture" id=40]
 [ext_resource path="res://Images/Meteor_01.png" type="Texture" id=41]
+[ext_resource path="res://Nodes/ParallaxBackground.tscn" type="PackedScene" id=42]
+[ext_resource path="res://SFX/maximum_overdrive.wav" type="AudioStream" id=43]
 
 [sub_resource type="Animation" id=1]
 resource_name = "cloud_movement"
@@ -105,54 +107,6 @@ tracks/0/keys = {
 resource_name = "meteor"
 length = 15.0
 loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("MarginContainer4/meteor_1:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 4.5, 4.6, 9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 59, 920 ), Vector2( 59, -50 ), Vector2( 89, 1000 ), Vector2( 89, -50 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("MarginContainer4/meteor_1:rotation_degrees")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 4.5, 4.6, 9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, 180.0, 66.6, -180.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("MarginContainer4/meteor_2:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 8.4, 8.5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 216, 1160 ), Vector2( 216, -100 ), Vector2( 216, 1000 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("MarginContainer4/meteor_2:rotation_degrees")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 8.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 72.0, 0.0 ]
-}
 
 [sub_resource type="Animation" id=5]
 tracks/0/type = "bezier"
@@ -321,8 +275,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="bgm" type="AudioStreamPlayer2D" parent="AudioManager"]
+stream = ExtResource( 43 )
+autoplay = true
+
 [node name="anim" type="AnimationPlayer" parent="."]
-autoplay = "fade"
 method_call_mode = 1
 anims/cloud_movement = SubResource( 1 )
 anims/fade = SubResource( 2 )
@@ -343,23 +300,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ParallaxBackground" parent="MarginContainer4" instance=ExtResource( 42 )]
+
 [node name="bg" type="Sprite" parent="MarginContainer4"]
+visible = false
 position = Vector2( -97.5428, -366.215 )
 scale = Vector2( 1.49625, 1.41528 )
 texture = ExtResource( 18 )
 centered = false
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="meteor_1" type="Sprite" parent="MarginContainer4"]
-position = Vector2( 89, 192.501 )
-rotation = -2.14757
+position = Vector2( 59, 920 )
 texture = ExtResource( 41 )
 
 [node name="meteor_2" type="Sprite" parent="MarginContainer4"]
-position = Vector2( 216, -37.5708 )
-rotation = 0.0763141
+position = Vector2( 216, 1160 )
+rotation = 1.25664
 texture = ExtResource( 40 )
 
 [node name="overlay_1" type="Sprite" parent="MarginContainer4"]
@@ -489,6 +445,7 @@ __meta__ = {
 }
 
 [node name="title_bg" type="Sprite" parent="MarginContainer6"]
+visible = false
 position = Vector2( 120.5, 20 )
 scale = Vector2( 1.32, 1 )
 texture = ExtResource( 26 )
@@ -520,7 +477,6 @@ margin_top = -202.5
 margin_right = 128.5
 margin_bottom = 202.5
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -529,7 +485,6 @@ margin_right = 257.0
 margin_bottom = 405.0
 alignment = 1
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -700,7 +655,7 @@ margin_bottom = 20.0
 text = "Buy Plane"
 
 [node name="choose_lbl" type="Label" parent="MarginContainer/VBoxContainer2/VerticalContainer"]
-modulate = Color( 0.909804, 0.843137, 0.592157, 0.556863 )
+modulate = Color( 0.815686, 0.686275, 0.180392, 1 )
 margin_right = 257.0
 margin_bottom = 15.0
 custom_fonts/font = SubResource( 16 )
@@ -799,6 +754,7 @@ texture_normal = ExtResource( 23 )
 texture_pressed = ExtResource( 24 )
 
 [node name="Particles2D" parent="." instance=ExtResource( 33 )]
+visible = false
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
@@ -809,7 +765,7 @@ environment = SubResource( 21 )
 [node name="game_over" parent="." instance=ExtResource( 30 )]
 
 [node name="AnimatedSprite" parent="game_over" index="1"]
-frame = 3
+frame = 2
 
 [node name="home_btn" parent="game_over" index="3"]
 texture_normal = ExtResource( 36 )
@@ -826,5 +782,7 @@ texture_pressed = ExtResource( 37 )
 [connection signal="animation_finished" from="game_over/AnimatedSprite" to="." method="game_over_animation_finished"]
 [connection signal="button_up" from="game_over/retry_btn" to="." method="switch_scene"]
 [connection signal="button_up" from="game_over/home_btn" to="." method="hide_game_over"]
+
+[editable path="MarginContainer4/ParallaxBackground"]
 
 [editable path="game_over"]
