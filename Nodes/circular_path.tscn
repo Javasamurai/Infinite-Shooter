@@ -14,12 +14,13 @@ curve = SubResource( 1 )
 
 [node name="path1" type="PathFollow2D" parent="."]
 position = Vector2( 24, 200 )
-rotation = 0.0565842
+rotation = 0.0565843
 loop = false
 
 [node name="Enemy" parent="path1" instance=ExtResource( 1 )]
 position = Vector2( -0.392227, -7.0602 )
 rotation = -0.197395
 animation = "100"
+frame = 1
 playing = true
 script = ExtResource( 2 )

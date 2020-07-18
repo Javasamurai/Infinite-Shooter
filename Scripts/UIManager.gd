@@ -48,7 +48,6 @@ func _ready():
 	fill_values()
 	$anim.play("cloud_movement")
 	$anim.play("fade")
-	$anim.play("meteor")
 
 	var rot_tween = earth_node.get_node("Tween")
 	rot_tween.interpolate_property(earth_node, "rotation_degrees", 0, 36000, 1500,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -93,9 +92,11 @@ func _on_arrow_pressed(_direction):
 	if _direction == direction.RIGHT:
 		left_arrow.modulate = Color.white
 		if global.selected_plane < 3:
+			right_arrow.disabled = false
 			right_arrow.modulate = Color.white
 			global.selected_plane = global.selected_plane + 1
 		else:
+			right_arrow.disabled = true
 			right_arrow.modulate = Color(0,0.0, 0.75)
 		pass
 	var tex = null
@@ -186,7 +187,6 @@ func fill_values():
 	music = false
 	
 	music = current_data["music"]
-	print("Off" + str(music))
 	global.saved_data["music"] = music
 	
 	if music:
@@ -232,6 +232,13 @@ func _on_music_button_up(_toogle = true):
 		file.store_string(to_json(current_data))
 	off = current_data["music"]
 	
+	if off:
+		get_node("/root/Control/AudioManager/bgm").stop()
+	else:
+		get_node("/root/Control/AudioManager/bgm").play()
+
+
+	
 	file.close()
 	
 	if !off:
@@ -253,7 +260,6 @@ func spawnMeteor():
 
 func _on_anim_animation_finished(anim_name):
 	$anim.play("fade")
-	$anim.play("meteor")
 	if (anim_name == "left"):
 		_on_arrow_pressed(direction.LEFT)
 	elif (anim_name == "right"):

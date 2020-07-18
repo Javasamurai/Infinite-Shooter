@@ -106,29 +106,18 @@ func _input(event):
 		#move_to.x = (position.x + event.relative.x) * 1 
 		#move_to.y = (position.y + event.relative.y) * 1
 		#position = move_to
-			
 		if event.relative.x != 0:
 			if event.relative.x < 0:
-				tween.interpolate_property(get_node("."), "rotation_degrees", 0,-7,0.1,Tween.TRANS_LINEAR,Tween.TRANS_ELASTIC)
+				tween.interpolate_property(get_node("."), "rotation_degrees", 0,-5,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 				tween.start()
 			else:
-				tween.interpolate_property(get_node("."), "rotation_degrees", 0,7,0.1,Tween.TRANS_LINEAR,Tween.TRANS_ELASTIC)
+				tween.interpolate_property(get_node("."), "rotation_degrees", 0,5,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 				tween.start()
 			translate(event.relative * speed_damping)
 	if event.is_pressed():
 		is_pressed = true
 	elif !(event is InputEventScreenDrag) and !(event is InputEventMouseMotion):
 		is_pressed = false
-
-	#if event is InputEventScreenTouch:
-		#curr_pos = event.position - last_pos
-		#if event.is_pressed():
-		#	curr_pos = last_pos - event.position
-		#	position = position + curr_pos
-		#	print("Pressed")
-		#else:
-		#	last_pos = event.position
-		#	print("Released")
 	pass
 
 func movement(_direction = null, _acc = null):

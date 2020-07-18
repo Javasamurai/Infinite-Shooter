@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
@@ -122,21 +122,10 @@ scale_random = 1.0
 scale_curve = SubResource( 21 )
 color_ramp = SubResource( 17 )
 
-[sub_resource type="Environment" id=23]
-glow_enabled = true
-glow_levels/1 = true
-glow_levels/2 = true
-glow_levels/4 = true
-glow_levels/6 = true
-glow_levels/7 = true
-glow_intensity = 4.37
-glow_strength = 0.36
-glow_bloom = 0.25
-glow_blend_mode = 0
-
 [node name="Explosion" type="Node2D"]
 
 [node name="Particles2D" type="Particles2D" parent="."]
+modulate = Color( 1.2, 1, 1, 1 )
 material = SubResource( 1 )
 amount = 200
 lifetime = 0.5
@@ -169,6 +158,3 @@ amount = 500
 speed_scale = 3.0
 explosiveness = 0.8
 process_material = SubResource( 22 )
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Particles2D"]
-environment = SubResource( 23 )

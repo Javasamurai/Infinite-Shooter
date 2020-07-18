@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Images/fire_btn.png" type="Texture" id=2]
@@ -6,10 +6,7 @@
 [ext_resource path="res://Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://SFX/Laser_Shoot7.wav" type="AudioStream" id=5]
 [ext_resource path="res://fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=6]
-[ext_resource path="res://Images/Layers/Layer_0010_1.png" type="Texture" id=7]
-[ext_resource path="res://Images/BG_02.png" type="Texture" id=8]
-[ext_resource path="res://Scripts/Parallax.gd" type="Script" id=9]
-[ext_resource path="res://Images/stars_bg.png" type="Texture" id=10]
+[ext_resource path="res://Nodes/ParallaxBackground.tscn" type="PackedScene" id=7]
 [ext_resource path="res://SFX/bgm.wav" type="AudioStream" id=11]
 [ext_resource path="res://SFX/Powerup.wav" type="AudioStream" id=12]
 [ext_resource path="res://Images/Pink_Gradient.png" type="Texture" id=13]
@@ -23,12 +20,18 @@
 [ext_resource path="res://Images/UI/Empty_Health.png" type="Texture" id=22]
 [ext_resource path="res://Images/UI/Full_Health.png" type="Texture" id=23]
 [ext_resource path="res://Nodes/circular_path.tscn" type="PackedScene" id=24]
-[ext_resource path="res://Nodes/stars.tscn" type="PackedScene" id=25]
 [ext_resource path="res://Nodes/crt.tscn" type="PackedScene" id=26]
 
+[sub_resource type="Environment" id=1]
+background_mode = 1
+background_color = Color( 0.0823529, 0.784314, 0.0392157, 1 )
+ambient_light_color = Color( 0.552941, 0.4, 0.4, 1 )
+fog_enabled = true
+glow_enabled = true
+glow_blend_mode = 0
 
-[sub_resource type="Animation" id=1]
-resource_name = "left_camera_lerp"
+[sub_resource type="Animation" id=2]
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("ParallaxBackground/ParallaxLayer2/bg:position")
 tracks/0/interp = 2
@@ -39,7 +42,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( -10, 0 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( -10, 0 ), Vector2( -5, 0 ), Vector2( 0, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("ParallaxBackground/NightSky/Space:position")
@@ -54,8 +57,8 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( -5, 0 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "right_camera_lerp"
+[sub_resource type="Animation" id=3]
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("ParallaxBackground/ParallaxLayer2/bg:position")
 tracks/0/interp = 2
@@ -66,7 +69,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 10, 0 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( -10, 0 ), Vector2( 5, 2 ), Vector2( 0, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("ParallaxBackground/NightSky/Space:position")
@@ -81,33 +84,18 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 5, 0 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="CanvasItemMaterial" id=3]
+[sub_resource type="CanvasItemMaterial" id=4]
 blend_mode = 2
 
-[sub_resource type="Shader" id=4]
-code = "shader_type canvas_item;
-
-void fragment(){
-	COLOR = texture(TEXTURE,UV);
-	COLOR.rgba = COLOR.rgba * vec4(0,0,0,0.12);
-}
-"
-
-[sub_resource type="ShaderMaterial" id=5]
-shader = SubResource( 4 )
-
-[sub_resource type="CanvasItemMaterial" id=6]
-blend_mode = 4
-
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 190.69, 306.174 )
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.337255, 0.847059, 0.372549, 1 )
 corner_radius_top_left = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.235294, 0.231373, 0.231373, 0 )
 border_color = Color( 0, 0, 0, 1 )
 border_blend = true
@@ -116,17 +104,17 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxTexture" id=10]
+[sub_resource type="StyleBoxTexture" id=8]
 texture = ExtResource( 23 )
 region_rect = Rect2( 0, 0, 47, 5 )
 
-[sub_resource type="StyleBoxTexture" id=11]
+[sub_resource type="StyleBoxTexture" id=9]
 texture = ExtResource( 22 )
 region_rect = Rect2( 0, 0, 47, 5 )
 
-[sub_resource type="BitmapFont" id=12]
+[sub_resource type="BitmapFont" id=10]
 
-[sub_resource type="AnimatedTexture" id=13]
+[sub_resource type="AnimatedTexture" id=11]
 frames = 4
 fps = 10.0
 frame_0/texture = ExtResource( 15 )
@@ -137,16 +125,16 @@ frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 20 )
 frame_3/delay_sec = 0.0
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=12]
 font_data = ExtResource( 6 )
 
-[sub_resource type="CanvasItemMaterial" id=15]
+[sub_resource type="CanvasItemMaterial" id=13]
 blend_mode = 2
 
-[sub_resource type="StyleBoxFlat" id=16]
+[sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0.117647, 0.105882, 0.105882, 1 )
 
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=15]
 size = 15
 extra_spacing_space = 2
 font_data = ExtResource( 17 )
@@ -167,9 +155,12 @@ announcement_lbl_path = NodePath("../Control/center_container/announcement_panel
 announcement_panel_path = NodePath("../Control/center_container/announcement_panel")
 heart_container_path = NodePath("../Control/MarginContainer/header")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Camera2D"]
+environment = SubResource( 1 )
+
 [node name="anim" type="AnimationPlayer" parent="Camera2D"]
-anims/left_camera_lerp = SubResource( 1 )
-anims/right_camera_lerp = SubResource( 2 )
+anims/left_camera_lerp = SubResource( 2 )
+anims/right_camera_lerp = SubResource( 3 )
 
 [node name="ScreenShake" type="Node2D" parent="Camera2D"]
 script = ExtResource( 14 )
@@ -239,7 +230,7 @@ flat = true
 clip_text = true
 
 [node name="overlay" type="Sprite" parent="Camera2D"]
-material = SubResource( 3 )
+material = SubResource( 4 )
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 13 )
 
@@ -264,49 +255,11 @@ mix_target = 2
 stream = ExtResource( 11 )
 mix_target = 2
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="Camera2D"]
+[node name="ParallaxBackground" parent="Camera2D" instance=ExtResource( 7 )]
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
-material = SubResource( 5 )
-motion_mirroring = Vector2( 1, 1458 )
-script = ExtResource( 9 )
-
-[node name="bg" type="Sprite" parent="Camera2D/ParallaxBackground/ParallaxLayer2"]
-texture = ExtResource( 8 )
-centered = false
-
-[node name="NightSky" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
-motion_mirroring = Vector2( 1024, 1024 )
-script = ExtResource( 9 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Particles2D" parent="Camera2D/ParallaxBackground/NightSky" instance=ExtResource( 25 )]
-position = Vector2( 0.899994, 7.64999 )
-amount = 10
-
-[node name="Space" type="Sprite" parent="Camera2D/ParallaxBackground/NightSky"]
-modulate = Color( 1, 1, 1, 0.486275 )
-material = SubResource( 6 )
-texture = ExtResource( 10 )
-centered = false
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="ParallaxLayer4" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
-visible = false
-motion_scale = Vector2( 0.5, 1 )
-motion_mirroring = Vector2( 1024, 1 )
-
-[node name="Sprite" type="Sprite" parent="Camera2D/ParallaxBackground/ParallaxLayer4"]
-position = Vector2( 7.59375, -182.25 )
-z_as_relative = false
-texture = ExtResource( 7 )
-centered = false
-region_enabled = true
-region_rect = Rect2( 244, 56, 0, 0 )
+[node name="bg" parent="Camera2D/ParallaxBackground/ParallaxLayer2" index="0"]
+position = Vector2( -10, 0 )
+scale = Vector2( 1, 1.4 )
 
 [node name="heading" type="Label" parent="Camera2D"]
 visible = false
@@ -324,20 +277,20 @@ visible = false
 [node name="fire" type="CollisionShape2D" parent="Camera2D/Fire_area"]
 visible = false
 position = Vector2( 152.802, -5.60253 )
-shape = SubResource( 7 )
+shape = SubResource( 5 )
 
 [node name="swipe_area" type="Area2D" parent="Camera2D"]
 
 [node name="swipe" type="CollisionShape2D" parent="Camera2D/swipe_area"]
 position = Vector2( 4, 2 )
-shape = SubResource( 7 )
+shape = SubResource( 5 )
 
 [node name="Accelerate_area" type="Area2D" parent="Camera2D"]
 visible = false
 
 [node name="accelerate" type="CollisionShape2D" parent="Camera2D/Accelerate_area"]
 position = Vector2( -156.67, 1.80081 )
-shape = SubResource( 7 )
+shape = SubResource( 5 )
 
 [node name="powerup" type="AudioStreamPlayer" parent="Camera2D"]
 stream = ExtResource( 12 )
@@ -361,7 +314,7 @@ visible = false
 position = Vector2( -3, -176 )
 
 [node name="Enemy" parent="Camera2D/path/path1" index="0"]
-frame = 1
+frame = 0
 
 [node name="crazy_enemies_path" type="Node2D" parent="Camera2D"]
 
@@ -387,8 +340,8 @@ margin_bottom = 345.131
 rect_rotation = -90.0
 rect_scale = Vector2( 1, 0.2 )
 mouse_filter = 2
-custom_styles/fg = SubResource( 8 )
-custom_styles/bg = SubResource( 9 )
+custom_styles/fg = SubResource( 6 )
+custom_styles/bg = SubResource( 7 )
 custom_colors/font_color = Color( 1, 1, 1, 0 )
 value = 30.0
 rounded = true
@@ -402,9 +355,9 @@ wait_time = 0.1
 [node name="health_progress" type="ProgressBar" parent="Control"]
 margin_right = 120.0
 margin_bottom = 14.0
-custom_styles/fg = SubResource( 10 )
-custom_styles/bg = SubResource( 11 )
-custom_fonts/font = SubResource( 12 )
+custom_styles/fg = SubResource( 8 )
+custom_styles/bg = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 step = 20.0
 value = 100.0
 __meta__ = {
@@ -417,7 +370,7 @@ margin_top = -6.0
 margin_right = 9.0
 margin_bottom = 19.0
 rect_scale = Vector2( 1.5, 1.5 )
-texture = SubResource( 13 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -440,7 +393,7 @@ visible = false
 margin_left = 82.0
 margin_right = 99.0
 margin_bottom = 25.0
-texture = SubResource( 13 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -450,7 +403,7 @@ visible = false
 margin_left = 103.0
 margin_right = 120.0
 margin_bottom = 25.0
-texture = SubResource( 13 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -460,7 +413,7 @@ visible = false
 margin_left = 124.0
 margin_right = 141.0
 margin_bottom = 25.0
-texture = SubResource( 13 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -470,7 +423,7 @@ visible = false
 margin_left = 145.0
 margin_right = 162.0
 margin_bottom = 25.0
-texture = SubResource( 13 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -480,7 +433,7 @@ visible = false
 margin_left = 166.0
 margin_right = 183.0
 margin_bottom = 25.0
-texture = SubResource( 13 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -491,7 +444,7 @@ margin_left = 161.0
 margin_top = 1.0
 margin_right = 183.0
 margin_bottom = 18.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 12 )
 text = "100"
 
 [node name="score" type="Label" parent="Control/MarginContainer/header"]
@@ -499,7 +452,7 @@ margin_left = 187.0
 margin_top = 1.0
 margin_right = 240.0
 margin_bottom = 18.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 12 )
 text = "Score:0"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
@@ -537,10 +490,10 @@ __meta__ = {
 }
 
 [node name="announcement_panel" type="Panel" parent="Control/center_container"]
-material = SubResource( 15 )
+material = SubResource( 13 )
 margin_right = 275.0
 margin_bottom = 20.0
-custom_styles/panel = SubResource( 16 )
+custom_styles/panel = SubResource( 14 )
 
 [node name="announcement" type="Label" parent="Control/center_container/announcement_panel"]
 anchor_left = 0.5
@@ -551,7 +504,7 @@ margin_left = -119.5
 margin_top = -8.0
 margin_right = 122.5
 margin_bottom = 9.0
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 15 )
 text = "In a galaxy far far away "
 align = 1
 __meta__ = {
@@ -568,6 +521,7 @@ __meta__ = {
 [connection signal="tween_all_completed" from="Camera2D/Tween" to="Camera2D" method="_on_Tween_tween_all_completed"]
 [connection signal="tween_completed" from="Camera2D/Tween" to="Camera2D" method="_on_Tween_tween_completed"]
 [connection signal="timeout" from="Control/PowerupEnergy/powerup_timer" to="Camera2D" method="_on_powerup_timer_timeout"]
-[connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/HSlider" to="Camera2D/ParallaxBackground/NightSky" method="_on_HSlider_value_changed"]
+
+[editable path="Camera2D/ParallaxBackground"]
 
 [editable path="Camera2D/path"]

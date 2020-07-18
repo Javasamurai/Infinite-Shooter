@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/maximum_overdrive.wav-b8948f54dfe2675f55e13cb113a8f8a2.sample"
+
+[deps]
+
+source_file="res://SFX/maximum_overdrive.wav"
+dest_files=[ "res://.import/maximum_overdrive.wav-b8948f54dfe2675f55e13cb113a8f8a2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

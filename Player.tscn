@@ -50,9 +50,9 @@ frame_8/delay_sec = 0.0
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 23 ) ],
+"frames": [ ExtResource( 20 ) ],
 "loop": true,
-"name": "3",
+"name": "2",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],
@@ -60,14 +60,14 @@ animations = [ {
 "name": "1",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 20 ) ],
+"frames": [ ExtResource( 23 ) ],
 "loop": true,
-"name": "2",
+"name": "3",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 27 ) ],
+"frames": [ ExtResource( 26 ) ],
 "loop": true,
-"name": "2_muzzle",
+"name": "3_muzzle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 28 ) ],
@@ -75,9 +75,9 @@ animations = [ {
 "name": "1_muzzle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 26 ) ],
+"frames": [ ExtResource( 27 ) ],
 "loop": true,
-"name": "3_muzzle",
+"name": "2_muzzle",
 "speed": 5.0
 } ]
 

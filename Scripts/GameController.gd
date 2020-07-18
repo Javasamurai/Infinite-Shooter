@@ -197,8 +197,8 @@ func check_powerup():
 	pass
 
 func _input(event):
+	return
 	if event is InputEventScreenDrag:
-		return
 # warning-ignore:unreachable_code
 		temp_position = event.get("position")
 		if $Player != null:
