@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
 [ext_resource path="res://Images/UI_Level_1_Plane.png" type="Texture" id=2]
@@ -43,6 +43,7 @@
 [ext_resource path="res://Images/Meteor_01.png" type="Texture" id=41]
 [ext_resource path="res://Nodes/ParallaxBackground.tscn" type="PackedScene" id=42]
 [ext_resource path="res://SFX/maximum_overdrive.wav" type="AudioStream" id=43]
+[ext_resource path="res://Plane_Flame.tscn" type="PackedScene" id=44]
 
 [sub_resource type="Animation" id=1]
 resource_name = "cloud_movement"
@@ -167,6 +168,8 @@ font_data = ExtResource( 25 )
 
 [sub_resource type="DynamicFont" id=13]
 size = 27
+outline_size = 2
+outline_color = Color( 0.815686, 0.435294, 0.0509804, 0.615686 )
 font_data = ExtResource( 25 )
 
 [sub_resource type="AnimatedTexture" id=14]
@@ -185,6 +188,7 @@ frame_1/delay_sec = 0.0
 
 [sub_resource type="DynamicFont" id=16]
 size = 12
+outline_color = Color( 0.854902, 0.776471, 0.776471, 1 )
 font_data = ExtResource( 35 )
 
 [sub_resource type="StyleBoxFlat" id=17]
@@ -337,6 +341,7 @@ margin_top = 74.5
 margin_right = 76.5
 margin_bottom = 200.5
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -394,6 +399,7 @@ margin_top = 8.0
 margin_right = -11.0
 margin_bottom = 20.0
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -455,6 +461,7 @@ margin_top = 2.0
 margin_right = 243.0
 margin_bottom = 30.0
 custom_fonts/font = SubResource( 13 )
+custom_colors/font_color = Color( 0.831373, 0.682353, 0.168627, 1 )
 text = "Galaxy Gladiator"
 align = 1
 valign = 2
@@ -462,10 +469,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer6"]
+[node name="title2" type="Label" parent="MarginContainer6"]
+visible = false
+margin_top = 2.0
 margin_right = 243.0
-margin_bottom = 32.0
-alignment = 2
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 13 )
+custom_colors/font_color = Color( 0.815686, 0.682353, 0.176471, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.756863, 0.419608, 0.0745098, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 2
+text = "Galaxy Gladiator"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 0.5
@@ -477,6 +496,7 @@ margin_top = -202.5
 margin_right = 128.5
 margin_bottom = 202.5
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -485,6 +505,7 @@ margin_right = 257.0
 margin_bottom = 405.0
 alignment = 1
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -615,6 +636,9 @@ __meta__ = {
 
 [node name="Tween" type="Tween" parent="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship"]
 
+[node name="flame" parent="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship" instance=ExtResource( 44 )]
+position = Vector2( 32, 60 )
+
 [node name="left_arrow" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 visible = false
 modulate = Color( 1, 1, 1, 0.490196 )
@@ -659,6 +683,7 @@ modulate = Color( 0.815686, 0.686275, 0.180392, 1 )
 margin_right = 257.0
 margin_bottom = 15.0
 custom_fonts/font = SubResource( 16 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 0.458824 )
 text = "Choose your fighter"
 align = 1
 __meta__ = {
@@ -765,7 +790,7 @@ environment = SubResource( 21 )
 [node name="game_over" parent="." instance=ExtResource( 30 )]
 
 [node name="AnimatedSprite" parent="game_over" index="1"]
-frame = 2
+frame = 0
 
 [node name="home_btn" parent="game_over" index="3"]
 texture_normal = ExtResource( 36 )

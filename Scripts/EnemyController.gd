@@ -55,7 +55,7 @@ var enemy_config = {
 		"canShoot": false,
 		"speed": 100,
 		"chaseDelay": 2.0,
-		"fireDelayMin": 0.1,
+		"fireDelayMin": 2,
 		"fireDelayMax": 3,
 		"bullet_speed": 75,
 		"health": 50,
@@ -71,7 +71,7 @@ var enemy_config = {
 		"canShoot": false,
 		"speed": 50,
 		"chaseDelay": 2.0,
-		"fireDelayMin": 0.1,
+		"fireDelayMin": 2,
 		"fireDelayMax": 3,
 		"bullet_speed": 250,
 		"health": 50,
@@ -135,8 +135,8 @@ var enemy_config = {
 		"canShoot": true,
 		"speed": 200,
 		"chaseDelay": 2.0,
-		"fireDelayMin": 0.1,
-		"fireDelayMax": 3,
+		"fireDelayMin": 2.5,
+		"fireDelayMax": 2.7,
 		"bullet_speed": 250,
 		"health": 80,
 		"chaseX": false,
@@ -237,7 +237,8 @@ func move_to(_pos):
 func hit():
 	tween.interpolate_property(self, "modulate", Color.white, Color(0,0,0,0.5), 0.25,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
 	tween.interpolate_property(self, "position", position, Vector2(position.x, position.y - 6), 0.1,Tween.TRANS_BOUNCE, Tween.EASE_IN_OUT)
-	tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 1.5,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$AnimationPlayer.play("hit")
+	#tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 1.5,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 200, 1.25,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 	health = health - 10

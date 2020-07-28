@@ -1,8 +1,8 @@
 extends Node2D
 
 var speed = 3
-var fire_speed = 300
-var fire_delay = 0.25
+var fire_speed = 600
+var fire_delay = 0.15
 var canMoveUp = false
 var canFire
 var bullet 
@@ -185,7 +185,7 @@ func fire():
 				create_bullet(3, false)
 
 		if current_powerup == "Machine gun":
-			fire_delay = 0.001
+			fire_delay = 0.01
 			create_bullet(2, true)
 			create_bullet(3, true)
 
@@ -254,7 +254,7 @@ func clear_powerup():
 	current_powerup = null
 	modulate = Color.white
 	speed_damping = 0.9
-	fire_delay = 0.25
+	fire_delay = 0.15
 
 func powerup(which_one):
 	$powerup.visible = true

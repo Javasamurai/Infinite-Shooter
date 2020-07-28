@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Images/Players/UFO_02.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/EnemyController.gd" type="Script" id=2]
@@ -39,19 +39,19 @@ animations = [ {
 "name": "3",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 5 ) ],
+"frames": [ ExtResource( 22 ) ],
 "loop": true,
-"name": "1",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 23 ) ],
-"loop": true,
-"name": "hit_2",
+"name": "hit_1",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 18 ), ExtResource( 19 ) ],
+"frames": [  ],
 "loop": true,
-"name": "7",
+"name": "hit_3",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 13 ) ],
+"loop": true,
+"name": "4",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 20 ), ExtResource( 21 ) ],
@@ -59,29 +59,19 @@ animations = [ {
 "name": "8",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 13 ) ],
+"frames": [ ExtResource( 17 ), ExtResource( 16 ) ],
 "loop": true,
-"name": "4",
+"name": "6",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 22 ) ],
+"frames": [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 5 ) ],
 "loop": true,
-"name": "hit_1",
-"speed": 5.0
+"name": "1",
+"speed": 10.0
 }, {
 "frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
 "loop": true,
 "name": "9",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 14 ), ExtResource( 15 ) ],
-"loop": true,
-"name": "5",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 17 ), ExtResource( 16 ) ],
-"loop": true,
-"name": "6",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
@@ -89,14 +79,24 @@ animations = [ {
 "name": "100",
 "speed": 10.0
 }, {
+"frames": [ ExtResource( 18 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "7",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "2",
 "speed": 10.0
 }, {
-"frames": [  ],
+"frames": [ ExtResource( 14 ), ExtResource( 15 ) ],
 "loop": true,
-"name": "hit_3",
+"name": "5",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 23 ) ],
+"loop": true,
+"name": "hit_2",
 "speed": 5.0
 } ]
 
@@ -139,6 +139,22 @@ frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 11 )
 frame_3/delay_sec = 0.0
 frame_4/delay_sec = 0.0
+
+[sub_resource type="Animation" id=7]
+resource_name = "hit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.329412 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="Enemy" type="AnimatedSprite"]
 frames = SubResource( 1 )
@@ -189,6 +205,9 @@ stream = ExtResource( 25 )
 
 [node name="explosion_particle" parent="." instance=ExtResource( 31 )]
 visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/hit = SubResource( 7 )
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="on_enemy_invisible"]
 [connection signal="tween_completed" from="Tween" to="." method="on_chase_compelete"]
 [connection signal="animation_finished" from="explosion" to="." method="_on_explosion_animation_finished"]
