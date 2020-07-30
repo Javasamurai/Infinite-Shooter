@@ -1,0 +1,74 @@
+[gd_scene load_steps=13 format=2]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0.0015456, 0.0540958, 0.714065, 1 )
+colors = PoolColorArray( 0.857226, 0.883962, 0.933594, 1, 0.05, 0.414507, 4, 1, 0.922932, 0.0603964, 0.611691, 1, 0.704979, 0.132262, 0.829182, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+max_value = 3.0
+_data = [ Vector2( 0.0057554, 2.86445 ), 0.0, -1.27544, 0, 0, Vector2( 1, 0 ), -2.76069, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 1.0
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="Gradient" id=6]
+colors = PoolColorArray( 0.274252, 0.387641, 0.8542, 1, 0.901075, 0.0571234, 0.505643, 1 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
+
+[sub_resource type="Curve" id=8]
+min_value = 0.99
+max_value = 3.0
+_data = [ Vector2( 0.0028777, 1.96836 ), 0.0, 4.25174, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
+
+[sub_resource type="Curve" id=10]
+min_value = 1.0
+max_value = 3.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 3 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+trail_size_modifier = SubResource( 11 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 3.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 7 )
+
+[node name="Shooting_Star" type="Particles2D"]
+modulate = Color( 1.3, 1, 1.3, 1 )
+amount = 64
+process_material = SubResource( 5 )
+
+[node name="Neucleus" type="Particles2D" parent="."]
+amount = 16
+lifetime = 2.0
+speed_scale = 4.0
+explosiveness = 1.0
+process_material = SubResource( 12 )
