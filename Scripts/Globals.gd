@@ -13,8 +13,8 @@ var saved_data = {
 }
 
 func _ready():
-	var file = File.new()
-	var current_data = null
+	#var _file = File.new()
+	#var current_data = null
 
 	#file.open(save_file_path, File.READ)
 	#current_data = parse_json(file.get_as_text())

@@ -22,6 +22,8 @@ enum DIRECTION {
 	DOWN
 }
 
+
+var drone_object
 var current_powerup
 var is_pressed = false
 var curr_pos = Vector2.ZERO
@@ -43,6 +45,7 @@ signal right
 func _ready():
 	global = get_node("/root/Globals")
 	#var tex = load("res://Images/Players/Level_" + str(global.selected_plane) + "_Player.png")
+	drone_object = preload("res://Nodes/drone.tscn")
 	$Player_bg.play(str(global.selected_plane))
 	tween = get_node("Tween")
 	
@@ -114,8 +117,8 @@ func _input(event):
 				tween.interpolate_property(get_node("."), "rotation_degrees", 0,5,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 				tween.start()
 			translate(event.relative * speed_damping)
-	if event.is_pressed():
-		is_pressed = true
+	#if event.is_pressed():
+	#	is_pressed = true
 	elif !(event is InputEventScreenDrag) and !(event is InputEventMouseMotion):
 		is_pressed = false
 	pass
@@ -131,6 +134,10 @@ func movement(_direction = null, _acc = null):
 			
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().change_scene("./MainMenu.tscn")
+	if Input.is_key_pressed(KEY_SPACE):
+		is_pressed = true
+	#if Input.is_key_pressed(KEY_0):
+	#	drone()
 	if Input.is_key_pressed(KEY_LEFT) || _direction == DIRECTION.LEFT:
 		if self.position.x > -window_size.x:
 			emit_signal("left")
@@ -152,6 +159,38 @@ func movement(_direction = null, _acc = null):
 	if Input.is_key_pressed(KEY_SPACE):
 		fire()
 
+func spawnDrone():
+	var drone1 = drone_object.instance()
+	var drone2 = drone_object.instance()
+	
+	$drone1_parent.add_child(drone1)
+	$drone2_parent.add_child(drone2)
+	
+	drone1.name = "drone"
+	drone2.name = "drone2"
+
+	drone1.position = Vector2.ZERO
+
+	drone2.position = Vector2.ZERO
+	pass
+
+func drone(target):
+	if !is_instance_valid($drone1_parent/drone):
+		spawnDrone()
+	var drone1 = $drone1_parent/drone
+	var drone2 = $drone2_parent/drone2
+
+	if drone1 != null && drone2 != null:
+		drone1.target = target
+		drone2.target = target
+		drone1.activated = true
+		drone2.activated = true
+	pass
+
+func chooseTarget():
+	return get_node("/Root/Camera2D").getRandomEnemy()
+	pass
+	
 func create_bullet(pos, rotate = false):
 	var bullet_clone_1 = bullet.instance()
 	var extra_space = 0
@@ -225,7 +264,7 @@ func hit():
 		$Player_bg.visible = false
 		$explosion.visible = true
 
-func _on_Fire(viewport, _event, _shape_idx):
+func _on_Fire(_viewport, _event, _shape_idx):
 	fire()
 
 func _on_Accelerate(_viewport, event, shape_idx):
@@ -266,7 +305,7 @@ func powerup(which_one):
 	current_powerup = which_one
 	if which_one == "sonic boom":
 		sonic_boom()
-	elif which_one == "Minify":
+	elif which_one == "minify":
 		minify()
 	elif which_one == "potion":
 		healthpotion()
@@ -278,7 +317,7 @@ func sheild():
 	modulate = Color(1,1,1, 0.25)
 	pass
 
-func hit_complete(object, path):
+func hit_complete(_object, _path):
 	self.modulate = Color.white
 	#$muzzles.visible = false
 	#$muzzles1.visible = false

@@ -47,7 +47,7 @@ func _ready():
 	initial_plane_pos = plane_node.get_position_in_parent()
 	fill_values()
 	$anim.play("cloud_movement")
-	$anim.play("fade")
+	#$anim.play("fade")
 
 	var rot_tween = earth_node.get_node("Tween")
 	rot_tween.interpolate_property(earth_node, "rotation_degrees", 0, 36000, 1500,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -186,11 +186,13 @@ func fill_values():
 
 	music = false
 	
+	if current_data == null:
+		return
 	music = current_data["music"]
 	global.saved_data["music"] = music
 	
 	if music:
-		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF.png"))
+		music_btn.set_normal_texture(load("res://Images/NewAssets/Sound_OFF.png"))
 	else:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_ON.png"))
 

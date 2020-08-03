@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Images/fire_btn.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://SFX/Laser_Shoot7.wav" type="AudioStream" id=5]
 [ext_resource path="res://fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=6]
 [ext_resource path="res://Nodes/ParallaxBackground.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Images/NewAssets/space.png" type="Texture" id=8]
 [ext_resource path="res://SFX/bgm.wav" type="AudioStream" id=11]
 [ext_resource path="res://SFX/Powerup.wav" type="AudioStream" id=12]
 [ext_resource path="res://Images/Pink_Gradient.png" type="Texture" id=13]
@@ -42,7 +43,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -10, 0 ), Vector2( -5, 0 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( -5, 0 ), Vector2( 0, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("ParallaxBackground/NightSky/Space:position")
@@ -69,7 +70,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -10, 0 ), Vector2( 5, 2 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 5, 0 ), Vector2( 0, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("ParallaxBackground/NightSky/Space:position")
@@ -145,7 +146,6 @@ __meta__ = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 0.567, 0 )
 current = true
 script = ExtResource( 1 )
 health_label = NodePath("../Control/MarginContainer/header/health")
@@ -256,10 +256,17 @@ stream = ExtResource( 11 )
 mix_target = 2
 
 [node name="ParallaxBackground" parent="Camera2D" instance=ExtResource( 7 )]
+follow_viewport_enable = true
+
+[node name="ParallaxLayer2" parent="Camera2D/ParallaxBackground" index="0"]
+motion_mirroring = Vector2( 1, 1400 )
 
 [node name="bg" parent="Camera2D/ParallaxBackground/ParallaxLayer2" index="0"]
-position = Vector2( -10, 0 )
-scale = Vector2( 1, 1.4 )
+texture = ExtResource( 8 )
+centered = true
+
+[node name="NightSky" parent="Camera2D/ParallaxBackground" index="1"]
+visible = false
 
 [node name="heading" type="Label" parent="Camera2D"]
 visible = false
@@ -313,9 +320,6 @@ autostart = true
 visible = false
 position = Vector2( -3, -176 )
 
-[node name="Enemy" parent="Camera2D/path/path1" index="0"]
-frame = 0
-
 [node name="crazy_enemies_path" type="Node2D" parent="Camera2D"]
 
 [node name="Control" type="Control" parent="."]
@@ -324,9 +328,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -120.0
-margin_top = -201.0
+margin_top = -202.0
 margin_right = 120.0
-margin_bottom = 204.0
+margin_bottom = 203.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -353,8 +357,10 @@ __meta__ = {
 wait_time = 0.1
 
 [node name="health_progress" type="ProgressBar" parent="Control"]
-margin_right = 120.0
-margin_bottom = 14.0
+margin_left = 6.0
+margin_top = 15.0
+margin_right = 140.0
+margin_bottom = 29.0
 custom_styles/fg = SubResource( 8 )
 custom_styles/bg = SubResource( 9 )
 custom_fonts/font = SubResource( 10 )
@@ -377,8 +383,9 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="Control"]
 anchor_right = 0.5
+margin_top = 13.0
 margin_right = 120.0
-margin_bottom = 20.0
+margin_bottom = 33.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

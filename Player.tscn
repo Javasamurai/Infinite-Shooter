@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Images/Powerup_anim/P_Up_02.png" type="Texture" id=1]
 [ext_resource path="res://Images/Players/Flame_01.png" type="Texture" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://Images/Side_Flame_01.png" type="Texture" id=22]
 [ext_resource path="res://Images/New-Planes/Type_A_Level_03_Plane/05.png" type="Texture" id=23]
 [ext_resource path="res://Plane_Flame.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Nodes/drone.tscn" type="PackedScene" id=25]
 [ext_resource path="res://Images/New-Planes/Type_A_Level_03_Plane/Level_03_Muzzle.png" type="Texture" id=26]
 [ext_resource path="res://Images/New-Planes/Type_A_Level_02_Palne/Level_02_Plane_Muzzle.png" type="Texture" id=27]
 [ext_resource path="res://Images/New-Planes/Type_A_Level_01_Plane/Level_01_Plane_Muzzle.png" type="Texture" id=28]
@@ -96,7 +97,7 @@ frame_4/texture = ExtResource( 9 )
 frame_4/delay_sec = 0.0
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 13.3643, 16.2326 )
+extents = Vector2( 17.6816, 24.8719 )
 
 [sub_resource type="AnimatedTexture" id=5]
 frames = 2
@@ -119,6 +120,16 @@ animations = [ {
 "name": "default",
 "speed": 7.0
 } ]
+
+[sub_resource type="Curve2D" id=8]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -24.6467, 1.23268, -1.65225, 12.4053, 1.65225, -12.4053, -19.5383, -7.79217, -1.50206, 6.75927, 1.50206, -6.75927, -17.0008, -33.1702, 0, 0, 0, 0, -3.65149, -59.5087, 0, 0, 0, 0, -1.66542, -62.885 )
+}
+
+[sub_resource type="Curve2D" id=9]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 24.9462, 1.45517, 0.643914, 4.29276, -0.643914, -4.29276, 23.2824, -24.789, 3.90341, 6.01168, -3.90341, -6.01168, 10.5114, -43.1793, 0, 0, 0, 0, 1.14595, -63.1021 )
+}
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 3 )
@@ -168,12 +179,12 @@ texture = ExtResource( 19 )
 [node name="player_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_area"]
-position = Vector2( -0.196144, 0 )
+position = Vector2( 0, 8.462 )
 shape = SubResource( 4 )
+one_way_collision = true
 
 [node name="Plane_Flame" parent="player_area" instance=ExtResource( 24 )]
 position = Vector2( 1.1228, 22.1212 )
-rotation = 1.5708
 
 [node name="flame" type="Sprite" parent="player_area"]
 visible = false
@@ -198,8 +209,46 @@ texture = SubResource( 6 )
 visible = false
 frames = SubResource( 7 )
 
+[node name="drone1_parent" type="Node2D" parent="."]
+position = Vector2( -28, 0 )
+
+[node name="drone" parent="drone1_parent" instance=ExtResource( 25 )]
+position = Vector2( 0, 0 )
+
+[node name="drone2_parent" type="Node2D" parent="."]
+position = Vector2( 19, 0 )
+
+[node name="drone2" parent="drone2_parent" instance=ExtResource( 25 )]
+position = Vector2( 0, 0 )
+
+[node name="Tween" type="Tween" parent="drone2_parent"]
+
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="Path2D_left2" type="Path2D" parent="."]
+visible = false
+position = Vector2( -1.21481, 0 )
+curve = SubResource( 8 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D_left2"]
+position = Vector2( -24.6467, 1.23268 )
+rotation = -0.630727
+
+[node name="drone_left" type="Node2D" parent="Path2D_left2/PathFollow2D"]
+position = Vector2( 1.90735e-06, 0 )
+
+[node name="Path2D_right" type="Path2D" parent="."]
+visible = false
+curve = SubResource( 9 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D_right"]
+position = Vector2( 24.9462, 1.45517 )
+rotation = -1.61945
+
+[node name="drone_right" type="Node2D" parent="Path2D_right/PathFollow2D"]
+position = Vector2( 2.66681, -24.8459 )
+rotation = 1.61945
 [connection signal="frame_changed" from="powerup_1" to="." method="_on_powerup_frame_changed"]
 [connection signal="timeout" from="Player_bg/muzzle_timer" to="." method="_on_muzzle_timer_timeout"]
 [connection signal="area_entered" from="player_area" to="." method="_on_player_area_area_entered"]

@@ -234,14 +234,19 @@ func move_to(_pos):
 		tween.start()
 	pass
 
-func hit():
+func hit(full = false):
 	tween.interpolate_property(self, "modulate", Color.white, Color(0,0,0,0.5), 0.25,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
 	tween.interpolate_property(self, "position", position, Vector2(position.x, position.y - 6), 0.1,Tween.TRANS_BOUNCE, Tween.EASE_IN_OUT)
 	$AnimationPlayer.play("hit")
 	#tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 1.5,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 200, 1.25,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
+	
 	health = health - 10
+
+	if full:
+		health = -1000
+
 	if health <= 0 && !dead:
 		dead = true
 		if global.saved_data["music"]:
@@ -252,6 +257,7 @@ func hit():
 			$hit_sfx.play()
 
 	if key == 1 or key == 2:
+		$Timer.wait_time = 0.15
 		$Timer.start()
 		play("hit_"+ str(key))
 	pass
@@ -265,6 +271,7 @@ func die():
 	score_lbl.visible = true
 	$explosion.visible = true
 	$explosion_particle.visible = true
+	$death_timer.start()
 	if global.saved_data["music"]:
 		$explosion.play("explosion")
 
@@ -295,6 +302,7 @@ func fire_side():
 	create_bullet("RIGHT")
 	create_bullet("DOWN")
 	pass
+
 func fire_spiral():
 	create_bullet("LEFT")
 	create_bullet("UP")
@@ -331,9 +339,9 @@ func _on_explosion_animation_finished():
 	queue_free()
 	pass
 
-func on_chase_compelete(object, key):
-	if key == ":modulate":
+func on_chase_compelete(_object, _key):
+	if _key == ":modulate":
 		self.modulate = Color.white
-	if canFire && key == ":position" && canShoot:
+	if canFire && _key == ":position" && canShoot:
 		fire()
 	pass

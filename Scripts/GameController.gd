@@ -125,7 +125,7 @@ func _ready():
 	enemy_list = []
 	last_spawned_time = 0
 	enemy = preload("res://Nodes/Enemy.tscn")
-	player = preload("res://Nodes/Player.tscn")
+	player = $Player
 	crazy_path = preload("res://Nodes/spiral_path.tscn")
 	circular_path = preload("res://Nodes/circular_path.tscn")
 	coin_wave_node = preload("res://Nodes/coin_wave_linear.tscn")
@@ -146,13 +146,13 @@ func _ready():
 	#announce_something("In a galaxy far far away. There was a gladiator.", 5)
 
 func left():
-	$anim.play("left_camera_lerp")
+	#$anim.play("left_camera_lerp")
 	#tween.interpolate_property(self, "position",self.position,Vector2(-10, 0),0.5,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	#tween.start()
 	pass
 
 func right():
-	$anim.play("right_camera_lerp")
+	#$anim.play("right_camera_lerp")
 	#tween.interpolate_property(self, "position", self.position, Vector2(10, 0),0.5,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	#tween.start()
 	pass
@@ -163,6 +163,10 @@ func game_over():
 	pass
 
 func _process(delta):
+	
+	if Input.is_key_pressed(KEY_ALT):
+		$Player.drone(getRandomEnemy())
+
 	time_elapsed+=delta
 	last_spawned_time+= delta
 
@@ -341,6 +345,14 @@ func spawnEnemiesWAVE1():
 
 	pass
 
+func getRandomEnemy():
+	var random_enemy = null
+	
+	if $enemy_container.get_child_count() > 0:
+		randomize()
+		random_enemy = $enemy_container.get_child(rand_range(0, $enemy_container.get_child_count() - 1))
+	return random_enemy
+
 func crazy_wave():
 	if $"crazy_enemies_path".get_child_count() <= max_enemies && canSpawn:
 		var crazy_enemy =  circular_path.instance()
@@ -393,7 +405,7 @@ func save_score():
 	pass
 
 
-func _on_Tween_tween_completed(object, key):
+func _on_Tween_tween_completed(object):
 	if object.name == "Camera2D":
 		$".".position = Vector2.ZERO
 	pass

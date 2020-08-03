@@ -14,11 +14,9 @@ func _ready():
 	set_physics_process(true)
 	global = get_node("/root/Globals")
 	area_2d = $bullet_area
-	area_2d.connect("area_entered",self,"_on_bullet_hit")
+	area_2d.connect("body_entered",self,"_on_bullet_hit")
 	Bullets = get_parent().get("Bullets")
 	tween = get_node("Tween")
-	#var tex = load("res://Images/Level_01_Bullet.png")
-	#set_texture(tex)
 	fade_again()
 	pass
 
@@ -31,8 +29,6 @@ func set_bullet_texture(path):
 	pass
 
 func _process(delta):
-	var extra = Vector2.ZERO
-
 	if is_firing:	
 		if self.rotation != 0:
 			if self.rotation > 0:
@@ -69,29 +65,28 @@ func fire(_direction, _fire_speed):
 	DIRECTION = _direction
 	fire_speed = _fire_speed
 
-func _on_bullet_hit(areas):
+func _on_bullet_hit(body):
+	if body == $bullet_body:
+		return
 	var node_name = self.name
-	var area_name = areas.name
-	var isPlayer_bullet = area_name.find("enemy_area") != -1
+	var area_name = body.name
+	var isPlayer_bullet = area_name.find("enemy_body") != -1
 	var isEnemy_bullet = area_name.find("player_area") != -1
-	var hitPlayer_bullet = (node_name.find("enemy_bullet") != -1 && isPlayer_bullet)
+	var hitPlayer_bullet = (node_name.find("enemy_body") != -1 && isPlayer_bullet)
 	var hitEnemy_bullet = (node_name.find("player_bullet") != -1 && isEnemy_bullet)
 	# some flashy animation of destroying
-	
-	#if hitEnemy_bullet:
-	#	queue_free()
-	#if hitPlayer_bullet:
-	#	queue_free()
 
 	if !hitPlayer_bullet && !hitEnemy_bullet && (isPlayer_bullet or isEnemy_bullet):
 		if isPlayer_bullet and already_hit == false:
-			areas.get_node("../").hit()
+			body.get_node("../").hit()
 			already_hit = true
 
 		$bullet_area.hide()
+		$bullet_area.disconnect("body_entered",self, "_on_bullet_hit")
+		queue_free()
 		if isEnemy_bullet and already_hit == false:
 			already_hit = true
-			areas.get_node("../").hit()
+			body.get_node("../").hit()
 			queue_free()
 	pass
 
