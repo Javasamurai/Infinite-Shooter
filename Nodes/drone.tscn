@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://drone.gd" type="Script" id=1]
 [ext_resource path="res://Images/Drone/Drone_A/Level_01/Drone_A_level_01.png" type="Texture" id=2]
+[ext_resource path="res://Nodes/explosion.tscn" type="PackedScene" id=3]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -25,3 +26,10 @@ script = ExtResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 4.78926, 7.22932 )
 shape = SubResource( 2 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Explosion" parent="." instance=ExtResource( 3 )]
+visible = false
+[connection signal="timeout" from="Timer" to="." method="explosion_done"]

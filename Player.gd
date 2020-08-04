@@ -180,11 +180,9 @@ func drone(target):
 	var drone1 = $drone1_parent/drone
 	var drone2 = $drone2_parent/drone2
 
-	if drone1 != null && drone2 != null:
-		drone1.target = target
-		drone2.target = target
-		drone1.activated = true
-		drone2.activated = true
+	if drone1 != null && drone2 != null:		
+		drone1.activate(target)
+		drone2.activate(target)
 	pass
 
 func chooseTarget():
