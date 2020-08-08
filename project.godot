@@ -12,10 +12,10 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "AdMob",
 "language": "GDScript",
-"path": "res://admob.gd"
+"path": "res://admob-lib/admob.gd"
 } ]
 _global_script_class_icons={
-"AdMob": ""
+"AdMob": "res://admob-lib/icon.png"
 }
 
 [application]

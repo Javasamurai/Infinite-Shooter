@@ -162,33 +162,32 @@ func movement(_direction = null, _acc = null):
 func spawnDrone():
 	var drone1 = drone_object.instance()
 	var drone2 = drone_object.instance()
+
+	drone1.name = "drone1"
+	drone2.name = "drone2"
 	
+	drone1.position = Vector2.ZERO
+	drone2.position = Vector2.ZERO
 	$drone1_parent.add_child(drone1)
 	$drone2_parent.add_child(drone2)
 	
-	drone1.name = "drone"
-	drone2.name = "drone2"
-
-	drone1.position = Vector2.ZERO
-
-	drone2.position = Vector2.ZERO
+	print($drone1_parent.get_child(0))
 	pass
 
-func drone(target):
-	if !is_instance_valid($drone1_parent/drone):
+func drone(target1, target2):
+	var first_drone_child = $drone1_parent.get_child_count()
+	var second_drone_child = $drone2_parent.get_child_count()
+	if first_drone_child == 0 && second_drone_child == 0:
 		spawnDrone()
-	var drone1 = $drone1_parent/drone
+
+	var drone1 = $drone1_parent/drone1
 	var drone2 = $drone2_parent/drone2
 
-	if drone1 != null && drone2 != null:		
-		drone1.activate(target)
-		drone2.activate(target)
+	if drone1 != null && drone2 != null:
+		drone1.activate(target1)
+		drone2.activate(target2)
 	pass
 
-func chooseTarget():
-	return get_node("/Root/Camera2D").getRandomEnemy()
-	pass
-	
 func create_bullet(pos, rotate = false):
 	var bullet_clone_1 = bullet.instance()
 	var extra_space = 0
@@ -200,7 +199,7 @@ func create_bullet(pos, rotate = false):
 	if rotate:
 		bullet_clone_1.rotation = -20
 	bullet_clone_1.name = "player_bullet_1"
-	
+
 	var bullet_clone_2 = bullet.instance()
 	if rotate:
 		bullet_clone_2.rotation = 20
@@ -217,9 +216,9 @@ func fire():
 		canFire = false
 		create_bullet(1)
 		if global.selected_plane >= 2:
-			create_bullet(2, false)
+			create_bullet(2, true)
 			if global.selected_plane == 3:
-				create_bullet(3, false)
+				create_bullet(3, true)
 
 		if current_powerup == "Machine gun":
 			fire_delay = 0.01

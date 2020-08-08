@@ -85,12 +85,17 @@ func _on_arrow_pressed(_direction):
 		button_click.play()
 	if _direction == direction.LEFT:
 		right_arrow.modulate = Color.white
+		right_arrow.disabled = false
+		print(global.selected_plane)
 		if global.selected_plane > 1:
 			left_arrow.modulate = Color.white
 			global.selected_plane = global.selected_plane - 1
+		else:
+			left_arrow.disabled = true
 
 	if _direction == direction.RIGHT:
 		left_arrow.modulate = Color.white
+		left_arrow.disabled = false
 		if global.selected_plane < 3:
 			right_arrow.disabled = false
 			right_arrow.modulate = Color.white
@@ -152,12 +157,15 @@ func switching_finished(_object, _key):
 	pass
 
 func _on_right_arrow_pressed():
-	$anim.play("right")
+	if !right_arrow.disabled:
+		$anim.play("right")
 	#_on_arrow_pressed(direction.RIGHT)
 	#switch_plane(false)
 
 func _on_left_arrow_pressed():
-	$anim.play("left")
+	print(left_arrow.disabled)
+	if !left_arrow.disabled:
+		$anim.play("left")
 	#_on_arrow_pressed(direction.LEFT)
 	#switch_plane(true)
 	pass

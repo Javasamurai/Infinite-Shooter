@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Images/fire_btn.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=6]
 [ext_resource path="res://Nodes/ParallaxBackground.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Images/NewAssets/space.png" type="Texture" id=8]
+[ext_resource path="res://Images/UI/Next_Wave.png" type="Texture" id=9]
 [ext_resource path="res://SFX/bgm.wav" type="AudioStream" id=11]
 [ext_resource path="res://SFX/Powerup.wav" type="AudioStream" id=12]
 [ext_resource path="res://Images/Pink_Gradient.png" type="Texture" id=13]
@@ -88,9 +89,6 @@ tracks/1/keys = {
 [sub_resource type="CanvasItemMaterial" id=4]
 blend_mode = 2
 
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 190.69, 306.174 )
-
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.337255, 0.847059, 0.372549, 1 )
 corner_radius_top_left = 5
@@ -139,6 +137,47 @@ bg_color = Color( 0.117647, 0.105882, 0.105882, 1 )
 size = 15
 extra_spacing_space = 2
 font_data = ExtResource( 17 )
+
+[sub_resource type="Animation" id=16]
+resource_name = "to_up"
+length = 1.5
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:margin_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 0.75 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 332.0, -26.5, -0.5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("..:margin_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 0.75 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 356.5, -2.5, 23.5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("..:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [node name="Root" type="Control"]
 __meta__ = {
@@ -262,11 +301,15 @@ follow_viewport_enable = true
 motion_mirroring = Vector2( 1, 1400 )
 
 [node name="bg" parent="Camera2D/ParallaxBackground/ParallaxLayer2" index="0"]
+position = Vector2( -4.56, 0 )
 texture = ExtResource( 8 )
 centered = true
 
 [node name="NightSky" parent="Camera2D/ParallaxBackground" index="1"]
 visible = false
+
+[node name="Space" parent="Camera2D/ParallaxBackground/NightSky" index="1"]
+position = Vector2( -4, 0 )
 
 [node name="heading" type="Label" parent="Camera2D"]
 visible = false
@@ -278,27 +321,6 @@ text = "Game Over"
 
 [node name="MusicManager" type="Node2D" parent="Camera2D"]
 
-[node name="Fire_area" type="Area2D" parent="Camera2D"]
-visible = false
-
-[node name="fire" type="CollisionShape2D" parent="Camera2D/Fire_area"]
-visible = false
-position = Vector2( 152.802, -5.60253 )
-shape = SubResource( 5 )
-
-[node name="swipe_area" type="Area2D" parent="Camera2D"]
-
-[node name="swipe" type="CollisionShape2D" parent="Camera2D/swipe_area"]
-position = Vector2( 4, 2 )
-shape = SubResource( 5 )
-
-[node name="Accelerate_area" type="Area2D" parent="Camera2D"]
-visible = false
-
-[node name="accelerate" type="CollisionShape2D" parent="Camera2D/Accelerate_area"]
-position = Vector2( -156.67, 1.80081 )
-shape = SubResource( 5 )
-
 [node name="powerup" type="AudioStreamPlayer" parent="Camera2D"]
 stream = ExtResource( 12 )
 
@@ -309,11 +331,6 @@ stream = ExtResource( 16 )
 
 [node name="enemy_container" type="Node2D" parent="Camera2D"]
 
-[node name="Timer" type="Timer" parent="Camera2D"]
-wait_time = 3.0
-one_shot = true
-autostart = true
-
 [node name="Tween" type="Tween" parent="Camera2D"]
 
 [node name="path" parent="Camera2D" instance=ExtResource( 24 )]
@@ -322,15 +339,23 @@ position = Vector2( -3, -176 )
 
 [node name="crazy_enemies_path" type="Node2D" parent="Camera2D"]
 
+[node name="wave_timer" type="Timer" parent="Camera2D"]
+wait_time = 3.0
+
+[node name="powerup_timer" type="Timer" parent="Camera2D"]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
 [node name="Control" type="Control" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -120.0
-margin_top = -202.0
+margin_top = -26.5
 margin_right = 120.0
-margin_bottom = 203.0
+margin_bottom = -2.5
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -358,9 +383,9 @@ wait_time = 0.1
 
 [node name="health_progress" type="ProgressBar" parent="Control"]
 margin_left = 6.0
-margin_top = 15.0
+margin_top = -166.0
 margin_right = 140.0
-margin_bottom = 29.0
+margin_bottom = -152.0
 custom_styles/fg = SubResource( 8 )
 custom_styles/bg = SubResource( 9 )
 custom_fonts/font = SubResource( 10 )
@@ -383,9 +408,9 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="Control"]
 anchor_right = 0.5
-margin_top = 13.0
+margin_top = -170.0
 margin_right = 120.0
-margin_bottom = 33.0
+margin_bottom = -150.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -488,10 +513,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -137.64
-margin_top = -10.0
-margin_right = 137.64
-margin_bottom = 10.0
+margin_left = -140.0
+margin_top = 332.0
+margin_right = 135.0
+margin_bottom = 356.5
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -499,7 +524,7 @@ __meta__ = {
 [node name="announcement_panel" type="Panel" parent="Control/center_container"]
 material = SubResource( 13 )
 margin_right = 275.0
-margin_bottom = 20.0
+margin_bottom = 24.0
 custom_styles/panel = SubResource( 14 )
 
 [node name="announcement" type="Label" parent="Control/center_container/announcement_panel"]
@@ -517,17 +542,32 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="next_wave" type="TextureRect" parent="Control/center_container/announcement_panel"]
+visible = false
+margin_left = 105.64
+margin_top = 7.5
+margin_right = 237.64
+margin_bottom = 23.5
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="announcement_anim" type="AnimationPlayer" parent="Control/center_container/announcement_panel"]
+anims/to_up = SubResource( 16 )
 [connection signal="button_down" from="Camera2D/Fire_button" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/left" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/right" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/up" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/down" to="Camera2D/Player" method="fire"]
-[connection signal="input_event" from="Camera2D/Fire_area" to="Camera2D/Player" method="_on_Fire"]
-[connection signal="input_event" from="Camera2D/Accelerate_area" to="Camera2D/Player" method="_on_Accelerate"]
-[connection signal="timeout" from="Camera2D/Timer" to="Camera2D" method="check_powerup"]
 [connection signal="tween_all_completed" from="Camera2D/Tween" to="Camera2D" method="_on_Tween_tween_all_completed"]
 [connection signal="tween_completed" from="Camera2D/Tween" to="Camera2D" method="_on_Tween_tween_completed"]
+[connection signal="timeout" from="Camera2D/wave_timer" to="Camera2D" method="_on_wave_timer_timeout"]
+[connection signal="timeout" from="Camera2D/powerup_timer" to="Camera2D" method="check_powerup"]
 [connection signal="timeout" from="Control/PowerupEnergy/powerup_timer" to="Camera2D" method="_on_powerup_timer_timeout"]
+[connection signal="animation_finished" from="Control/center_container/announcement_panel/announcement_anim" to="Camera2D" method="_on_Tween_tween_all_completed"]
 
 [editable path="Camera2D/ParallaxBackground"]
 

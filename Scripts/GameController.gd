@@ -51,14 +51,18 @@ var crazy_path
 var circular_path
 var wave_range = range(4, 3000, 5)
 
-
 var waves = {
 	1: 100,
 	2: 800,
 	3: 1000,
 	4: 1200,
 	5: 3000,
-	6: 10000
+	6: 10000,
+	7: 15000,
+	8: 25000,
+	9: 40000,
+	10: 55000,
+	11: 75000
 }
 
 var enemies_waves = {
@@ -112,7 +116,7 @@ func _ready():
 	#global.saved_data["coins"] = 0
 	load_score()
 	tween = get_node("Tween")
-	timer = get_node("Timer")
+	timer = get_node("powerup_timer")
 	powerup_enengy = get_node("../Control/PowerupEnergy")
 	powerup_timer = powerup_enengy.get_node("powerup_timer")
 	health_progress = get_node(health_progress_path)
@@ -142,7 +146,7 @@ func _ready():
 	announcement_lbl = get_node(announcement_lbl_path)
 	announcement_panel = get_node(announcement_panel_path)
 	announce_something("WAVE " + str(current_wave))
-
+	
 	#announce_something("In a galaxy far far away. There was a gladiator.", 5)
 
 func left():
@@ -165,9 +169,9 @@ func game_over():
 func _process(delta):
 	
 	if Input.is_key_pressed(KEY_ALT):
-		$Player.drone(getRandomEnemy())
+		$Player.drone(getRandomEnemy(), getRandomEnemy())
 
-	time_elapsed+=delta
+	time_elapsed += delta
 	last_spawned_time+= delta
 
 	#if time_elapsed > 2:
@@ -179,8 +183,8 @@ func _process(delta):
 
 	if last_spawned_time > rand_range(1, spawnDelay):
 		last_spawned_time = 0
-		canSpawn = true
-		
+		#canSpawn = true
+
 		if !wave_range.has(current_wave):
 			spawnEnemiesWAVE1()
 		else:
@@ -223,14 +227,23 @@ func check_wave():
 	if score > score_range:
 		current_wave = current_wave + 1
 		announce_something("WAVE " + str(current_wave))
+		
+		canSpawn = false
+		print("Can't spawn")
+		$wave_timer.start()
+
 		if spawnDelay > 0.1:
 			spawnDelay = spawnDelay - 0.1
 		#spawnEnemiesWAVE1()
 	
-	if (coin_range.has(score)):
+	if (coin_range.has(score)) && allEnemiesDead():
 		coin_wave()
 	pass
 	
+	
+func allEnemiesDead():
+	return $enemy_container.get_child_count() == 0
+	pass
 func coin_removed():
 	if coin_wave_clone != null:
 		coin_wave_clone = null
@@ -261,7 +274,8 @@ func enemy_hit(which_one):
 		score += 200
 	else:
 		score += 100
-
+	
+	print("Shakeee")
 	$ScreenShake.shake(0.75, 500, 5)
 	get_node(score_label).text = "Score:" + str(score) 
 	check_wave()
@@ -297,6 +311,7 @@ func announce_something(what, time = 2):
 	tween.interpolate_property(announcement_lbl, "margin_left",250, -119,0.5,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.interpolate_property(announcement_lbl, "modulate", Color.transparent,Color.white,time,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
+	announcement_panel.get_node("announcement_anim").play("to_up")
 	pass
 
 func _on_powerup_got(areas):
@@ -409,4 +424,10 @@ func save_score():
 func _on_Tween_tween_completed(object):
 	if object.name == "Camera2D":
 		$".".position = Vector2.ZERO
+	pass
+
+
+func _on_wave_timer_timeout():
+	print("Timeout")
+	canSpawn = true
 	pass

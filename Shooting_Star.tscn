@@ -1,4 +1,6 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Scripts/Shooting_Star.gd" type="Script" id=1]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.0015456, 0.0540958, 0.714065, 1 )
@@ -61,14 +63,25 @@ orbit_velocity_random = 0.0
 scale_curve = SubResource( 9 )
 color_ramp = SubResource( 7 )
 
-[node name="Shooting_Star" type="Particles2D"]
+[node name="Sprite" type="Sprite"]
+offset = Vector2( -4.72984, -6.10249 )
+script = ExtResource( 1 )
+
+[node name="Shooting_Star" type="Particles2D" parent="."]
 modulate = Color( 1.3, 1, 1.3, 1 )
+rotation = 0.767945
 amount = 64
 process_material = SubResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Neucleus" type="Particles2D" parent="."]
+[node name="Neucleus" type="Particles2D" parent="Shooting_Star"]
 amount = 16
 lifetime = 2.0
 speed_scale = 4.0
 explosiveness = 1.0
 process_material = SubResource( 12 )
+__meta__ = {
+"_edit_lock_": true
+}

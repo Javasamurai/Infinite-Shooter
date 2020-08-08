@@ -67,6 +67,7 @@ color_ramp = SubResource( 8 )
 [node name="Plane_Flame" type="Node2D"]
 material = SubResource( 1 )
 rotation = 1.5708
+
 [node name="Particles2D" type="Particles2D" parent="."]
 modulate = Color( 1.5, 1, 1, 1 )
 amount = 64

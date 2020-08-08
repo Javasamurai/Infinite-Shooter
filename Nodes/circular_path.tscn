@@ -21,6 +21,5 @@ loop = false
 position = Vector2( -0.392227, -7.0602 )
 rotation = -0.197395
 animation = "100"
-frame = 1
 playing = true
 script = ExtResource( 2 )

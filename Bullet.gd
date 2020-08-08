@@ -29,12 +29,12 @@ func set_bullet_texture(path):
 	pass
 
 func _process(delta):
-	if is_firing:	
+	if is_firing:
 		if self.rotation != 0:
 			if self.rotation > 0:
-				self.position.x = self.position.x + (10 * delta)
+				self.position.x = self.position.x + (75 * delta)
 			else:
-				self.position.x = self.position.x - (10 * delta)
+				self.position.x = self.position.x - (75 * delta)
 			pass
 
 		if DIRECTION == "UP":
@@ -70,24 +70,20 @@ func _on_bullet_hit(body):
 		return
 	var node_name = self.name
 	var area_name = body.name
-	var isPlayer_bullet = area_name.find("enemy_body") != -1
-	var isEnemy_bullet = area_name.find("player_area") != -1
-	var hitPlayer_bullet = (node_name.find("enemy_body") != -1 && isPlayer_bullet)
-	var hitEnemy_bullet = (node_name.find("player_bullet") != -1 && isEnemy_bullet)
+		
+	var isPlayer_bullet = self.name.find("player_bullet") != -1
+	var isEnemy_bullet = self.name.find("enemy_bullet") != -1
+	var hitPlayer_body = (area_name.find("player_body") != -1)
+	var hitEnemy_body = (area_name.find("enemy_body") != -1)
 	# some flashy animation of destroying
 
-	if !hitPlayer_bullet && !hitEnemy_bullet && (isPlayer_bullet or isEnemy_bullet):
-		if isPlayer_bullet and already_hit == false:
-			body.get_node("../").hit()
-			already_hit = true
+	if (isPlayer_bullet && hitEnemy_body) || (isEnemy_bullet && hitPlayer_body):
+		body.get_node("../").hit()
+		already_hit = true
 
 		$bullet_area.hide()
 		$bullet_area.disconnect("body_entered",self, "_on_bullet_hit")
 		queue_free()
-		if isEnemy_bullet and already_hit == false:
-			already_hit = true
-			body.get_node("../").hit()
-			queue_free()
 	pass
 
 func _on_music_finished():
