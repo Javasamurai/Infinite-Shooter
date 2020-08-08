@@ -70,6 +70,10 @@ func _ready():
 func game_over():
 	$game_over/AnimatedSprite.play()
 	pass
+	
+func toInventory():
+	get_tree().change_scene("res://Nodes/Inventory.tscn")
+	pass
 
 func _process(delta):
 	time_spent+= delta
@@ -269,6 +273,7 @@ func spawnMeteor():
 	pass
 
 func _on_anim_animation_finished(anim_name):
+	$anim.play("cloud_movement")
 	$anim.play("fade")
 	if (anim_name == "left"):
 		_on_arrow_pressed(direction.LEFT)
