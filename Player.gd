@@ -191,6 +191,10 @@ func drone(target1, target2):
 func create_bullet(pos, rotate = false):
 	var bullet_clone_1 = bullet.instance()
 	var extra_space = 0
+	if current_powerup == "missile":
+		bullet_clone_1.current_type = bullet_clone_1.type.MISSILE
+	else:
+		bullet_clone_1.current_type = bullet_clone_1.type.NORMAL
 	#if pos <= 3:
 	#	yield (get_tree().create_timer((pos - 3) / 4), "timeout")
 	if pos >= 2:
@@ -220,6 +224,7 @@ func fire():
 			if global.selected_plane == 3:
 				create_bullet(3, true)
 
+		current_powerup = ""
 		if current_powerup == "Machine gun":
 			fire_delay = 0.01
 			create_bullet(2, true)

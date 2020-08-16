@@ -229,7 +229,7 @@ func check_wave():
 		announce_something("WAVE " + str(current_wave))
 		
 		canSpawn = false
-		print("Can't spawn")
+		#print("Can't spawn")
 		$wave_timer.start()
 
 		if spawnDelay > 0.1:
@@ -275,7 +275,7 @@ func enemy_hit(which_one):
 	else:
 		score += 100
 	
-	print("Shakeee")
+	#print("Shakeee")
 	$ScreenShake.shake(0.75, 500, 5)
 	get_node(score_label).text = "Score:" + str(score) 
 	check_wave()
@@ -428,6 +428,6 @@ func _on_Tween_tween_completed(object):
 
 
 func _on_wave_timer_timeout():
-	print("Timeout")
+	#print("Timeout")
 	canSpawn = true
 	pass

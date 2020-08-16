@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Level_02_Plane.png-f99b0a036e35fae0454dd80ef0a36e6d.stex"
+path="res://.import/Level_02_Plane.png-e8ac2630afd9ddfce2bf65ce425623dd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/New-Planes/Type_A_Level_02_Palne/Level_02_Plane.png"
-dest_files=[ "res://.import/Level_02_Plane.png-f99b0a036e35fae0454dd80ef0a36e6d.stex" ]
+source_file="res://Images/New-Planes/Type_A_Level_02_Plane/Level_02_Plane.png"
+dest_files=[ "res://.import/Level_02_Plane.png-e8ac2630afd9ddfce2bf65ce425623dd.stex" ]
 
 [params]
 

@@ -1,8 +1,8 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Images/Inventory/Space_Yard.png" type="Texture" id=1]
 [ext_resource path="res://Images/NewAssets/space.png" type="Texture" id=2]
-[ext_resource path="res://Images/New-Planes/Type_A_Level_02_Palne/Level_02_Plane.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/CustomScroll.gd" type="Script" id=3]
 [ext_resource path="res://Images/Inventory/Inventory_Strap.png" type="Texture" id=4]
 [ext_resource path="res://Images/Inventory/Store_Back_Button__off.png" type="Texture" id=5]
 [ext_resource path="res://Images/Inventory/Store_Back_Button__on.png" type="Texture" id=6]
@@ -17,57 +17,49 @@
 [ext_resource path="res://Images/UI/Coin_01_1.png" type="Texture" id=16]
 [ext_resource path="res://Scripts/Inventory.gd" type="Script" id=17]
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 12 )
 
-[sub_resource type="StyleBoxEmpty" id=12]
+[sub_resource type="StyleBoxEmpty" id=2]
 
-[sub_resource type="StyleBoxEmpty" id=13]
+[sub_resource type="StyleBoxEmpty" id=3]
 
-[sub_resource type="Theme" id=1]
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="Theme" id=10]
 HScrollBar/icons/decrement = null
 HScrollBar/icons/decrement_highlight = null
 HScrollBar/icons/increment = null
 HScrollBar/icons/increment_highlight = null
-HScrollBar/styles/grabber = null
-HScrollBar/styles/grabber_highlight = null
-HScrollBar/styles/grabber_pressed = null
-HScrollBar/styles/scroll = null
+HScrollBar/styles/grabber = SubResource( 2 )
+HScrollBar/styles/grabber_highlight = SubResource( 3 )
+HScrollBar/styles/grabber_pressed = SubResource( 4 )
+HScrollBar/styles/scroll = SubResource( 5 )
 HScrollBar/styles/scroll_focus = null
 VScrollBar/icons/decrement = null
 VScrollBar/icons/decrement_highlight = null
 VScrollBar/icons/increment = null
 VScrollBar/icons/increment_highlight = null
-VScrollBar/styles/grabber = SubResource( 12 )
-VScrollBar/styles/grabber_highlight = SubResource( 13 )
+VScrollBar/styles/grabber = SubResource( 6 )
+VScrollBar/styles/grabber_highlight = SubResource( 7 )
 VScrollBar/styles/grabber_pressed = null
-VScrollBar/styles/scroll = null
-VScrollBar/styles/scroll_focus = null
+VScrollBar/styles/scroll = SubResource( 8 )
+VScrollBar/styles/scroll_focus = SubResource( 9 )
 
-[sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 16, 16 )
-
-[sub_resource type="Animation" id=15]
-resource_name = "rotation_infinite"
-length = 15.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:rect_rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 14.7 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 720.0 ]
-}
-
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=11]
 font_data = ExtResource( 12 )
 
-[sub_resource type="SpriteFrames" id=9]
+[sub_resource type="SpriteFrames" id=12]
 animations = [ {
 "frames": [ ExtResource( 16 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ],
 "loop": true,
@@ -75,12 +67,13 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 20, 32 )
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 4, 32 )
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 17 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -102,6 +95,8 @@ texture = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Tween" type="Tween" parent="."]
 
 [node name="inventory_strap" type="TextureRect" parent="."]
 modulate = Color( 1, 1, 1, 0.533333 )
@@ -140,8 +135,14 @@ margin_left = -20.0
 margin_top = -46.0
 margin_right = 20.0
 margin_bottom = -32.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 1 )
 text = "Level 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Node" type="Control" parent="."]
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -151,259 +152,26 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -275.5
+margin_left = -233.5
 margin_top = -27.5
-margin_right = 519.5
+margin_right = 318.5
 margin_bottom = 28.5
 grow_horizontal = 0
 size_flags_horizontal = 6
-theme = SubResource( 1 )
+theme = SubResource( 10 )
+follow_focus = true
 scroll_vertical_enabled = false
-script = ExtResource( 17 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-price_path = NodePath("../buy_button/price")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
-margin_right = 789.0
-margin_bottom = 46.0
-custom_constants/separation = 25
-
-[node name="plane8" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-modulate = Color( 1, 1, 1, 0 )
-margin_right = 49.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane8"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane8/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane9" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-modulate = Color( 1, 1, 1, 0 )
-margin_left = 74.0
-margin_right = 123.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
+[node name="Control" type="Control" parent="ScrollContainer"]
+margin_right = 700.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 700, 50 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane9"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane9/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane11" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-margin_left = 148.0
-margin_right = 197.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane11"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane11/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane2" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-margin_left = 222.0
-margin_right = 271.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane2/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane3" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-margin_left = 296.0
-margin_right = 345.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane3"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane3/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane4" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-margin_left = 370.0
-margin_right = 419.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane4"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane4/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane5" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-margin_left = 444.0
-margin_right = 493.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane5"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane5/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane6" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-margin_left = 518.0
-margin_right = 567.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane6"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane6/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane7" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-margin_left = 592.0
-margin_right = 641.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane7"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane7/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane10" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-modulate = Color( 1, 1, 1, 0 )
-margin_left = 666.0
-margin_right = 715.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane10"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane10/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane12" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-modulate = Color( 1, 1, 1, 0 )
-margin_left = 740.0
-margin_right = 789.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane12"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane12/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane13" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-visible = false
-modulate = Color( 1, 1, 1, 0 )
-margin_left = 814.0
-margin_right = 863.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane13"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane13/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane14" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-visible = false
-modulate = Color( 1, 1, 1, 0 )
-margin_left = 888.0
-margin_right = 937.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane14"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane14/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="plane" type="TextureRect" parent="ScrollContainer/HBoxContainer"]
-visible = false
-modulate = Color( 1, 1, 1, 0 )
-margin_left = 962.0
-margin_right = 1011.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="plane_area" type="Area2D" parent="ScrollContainer/HBoxContainer/plane"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollContainer/HBoxContainer/plane/plane_area"]
-position = Vector2( 22.9, 25.5 )
-shape = SubResource( 11 )
-
-[node name="Tween" type="Tween" parent="ScrollContainer/HBoxContainer"]
 
 [node name="moon" type="TextureRect" parent="."]
 anchor_left = 0.5
@@ -420,9 +188,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="moon"]
-autoplay = "rotation_infinite"
-anims/rotation_infinite = SubResource( 15 )
+[node name="moon_tween" type="Tween" parent="moon"]
 
 [node name="buy_button" type="TextureButton" parent="."]
 anchor_left = 0.5
@@ -445,7 +211,7 @@ margin_left = 31.5
 margin_top = -17.0
 margin_right = 71.5
 margin_bottom = -3.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 11 )
 text = "5000"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -453,8 +219,8 @@ __meta__ = {
 
 [node name="coins" type="AnimatedSprite" parent="buy_button/price"]
 position = Vector2( 41, 8 )
-frames = SubResource( 9 )
-frame = 1
+frames = SubResource( 12 )
+frame = 2
 playing = true
 
 [node name="ParallaxBackground" parent="." instance=ExtResource( 8 )]
@@ -463,7 +229,7 @@ playing = true
 position = Vector2( 140, 216 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 10 )
-[connection signal="pressed" from="back_btn" to="ScrollContainer" method="toMainMenu"]
-[connection signal="area_entered" from="Area2D" to="ScrollContainer" method="onPlaneEntered"]
-[connection signal="area_exited" from="Area2D" to="ScrollContainer" method="onPlaneExited"]
+shape = SubResource( 13 )
+[connection signal="pressed" from="back_btn" to="." method="toMainMenu"]
+[connection signal="area_entered" from="Area2D" to="." method="onPlaneEntered"]
+[connection signal="area_exited" from="Area2D" to="." method="onPlaneExited"]

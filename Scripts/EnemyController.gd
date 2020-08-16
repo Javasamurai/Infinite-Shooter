@@ -28,6 +28,7 @@ var current_wave = 1
 #var selected_color
 var is_active = false
 signal enemy_hit(which_one)
+var coin_node
 
 var enemy_config = {
 	1: {
@@ -173,6 +174,54 @@ var enemy_config = {
 		"health": 250,
 		"chaseX": true,
 		"chaseY": false
+	},
+	10: {
+		"key": 10,
+		"name": "new_enemy_1",
+		"bullet_type": "sided",
+		"canRotate": false,
+		"smart": true,
+		"canShoot": true,
+		"speed": 5,
+		"chaseDelay": 2.0,
+		"fireDelayMin": 2,
+		"fireDelayMax": 2,
+		"bullet_speed": 250,
+		"health": 250,
+		"chaseX": true,
+		"chaseY": false
+	},
+	11: {
+		"key": 11,
+		"name": "new_enemy_2",
+		"bullet_type": "sided",
+		"canRotate": false,
+		"smart": true,
+		"canShoot": true,
+		"speed": 5,
+		"chaseDelay": 2.0,
+		"fireDelayMin": 2,
+		"fireDelayMax": 2,
+		"bullet_speed": 250,
+		"health": 500,
+		"chaseX": false,
+		"chaseY": false
+	},
+	12: {
+		"key": 12,
+		"name": "new_enemy_3",
+		"bullet_type": "sided",
+		"canRotate": false,
+		"smart": true,
+		"canShoot": true,
+		"speed": 5,
+		"chaseDelay": 2.0,
+		"fireDelayMin": 2,
+		"fireDelayMax": 2,
+		"bullet_speed": 250,
+		"health": 750,
+		"chaseX": false,
+		"chaseY": false
 	}
 }
 
@@ -185,7 +234,9 @@ func _ready():
 	set_process_input(true)
 	global = get_node("/root/Globals")
 	bullet = preload("res://Nodes/Bullet.tscn")
+	coin_node = preload("res://coin.tscn")
 	path_node = find_node("path")
+
 	score_lbl = $score
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
@@ -272,6 +323,12 @@ func die():
 	$explosion.visible = true
 	$explosion_particle.visible = true
 	$death_timer.start()
+	
+	var coin_clone = coin_node.instance()
+	coin_clone.position = self.global_position
+	coin_clone.move = true
+	
+	get_node("../..").add_child(coin_clone)
 	if global.saved_data["music"]:
 		$explosion.play("explosion")
 
@@ -323,7 +380,12 @@ func create_bullet(direction):
 
 	bullet_clone.position = Vector2(self.position.x, self.position.y)
 	bullet_clone.name = "enemy_bullet"
-	bullet_clone.set_bullet_texture("res://Images/Enemy_Level_02_Bullets.png")
+	
+	if key > 3:
+		bullet_clone.set_bullet_texture("res://Images/Enemy_Level_02_Bullets.png")
+	else:
+		bullet_clone.set_bullet_texture("res://Images/Enemy_Level_01_Bullets.png")
+		
 	get_parent().get_parent().add_child(bullet_clone)
 	bullet_clone.fire(direction, enemy_selected_config["bullet_speed"])
 	pass

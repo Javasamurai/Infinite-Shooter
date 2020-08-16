@@ -5,7 +5,10 @@ var activated = false
 var exploded = false
 var target = null
 var tween
+var	bullet
+
 func _ready():
+	bullet = preload("res://Nodes/Bullet.tscn")
 	tween = get_node("../../Tween")
 	$Area2D.connect("area_entered", self, "drone_hit")
 	set_physics_process(true)
@@ -47,9 +50,17 @@ func explode():
 	$Timer.start()
 	pass
 
-func explosion_done():
-	if !exploded:
-		explode()
-	else:
-		queue_free()
+func fire():
+	var bullet_clone = bullet.instance()
+	#bullet_clone.position = Vector2(get_node("..").position.x, get_node("..").position.y)
+	bullet_clone.position = self.global_position
+	bullet_clone.fire("UP", 500)
+	bullet_clone.name = "player_bullet_drone"
+	get_node("../..").add_child(bullet_clone)
 	pass
+#func explosion_done():
+#	if !exploded:
+#		explode()
+#	else:
+#		queue_free()
+#	pass

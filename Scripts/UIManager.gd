@@ -116,13 +116,12 @@ func _on_arrow_pressed(_direction):
 	if global.selected_plane == 3:
 		right_arrow.modulate = Color(0,0.0, 0.75)
 		time_spent = 0
-		var texture = {
-			1: load("res://Images/level_" + str(global.selected_plane) + "_01.png"),
-			2: load("res://Images/level_" + str(global.selected_plane) + "_02.png"),
-			3: load("res://Images/level_" + str(global.selected_plane) + "_03.png"),
-			4: load("res://Images/level_" + str(global.selected_plane) + "_04.png"),
-			5: load("res://Images/level_" + str(global.selected_plane) + "_05.png")
-		}
+		
+		var texture = {}
+
+		for i in range(6):
+			texture[i] = load("res://Images/level_" + str(global.selected_plane) + "_0" + str(i) + ".png")
+		
 		flames_lvl_3_left.visible = false
 		flames_lvl_3_right.visible = false
 

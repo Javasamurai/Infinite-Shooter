@@ -102,7 +102,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "left"
-length = 0.75
+length = 0.5
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship:margin_left")
 tracks/0/interp = 1
@@ -111,7 +111,7 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "points": PoolRealArray( 96, -0.25, 0, 0.25, 0, -342, -0.25, 0, 0.25, 0, 400, -0.25, 0, 0.25, 0, 96, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.4, 0.5, 0.7 )
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4 )
 }
 
 [sub_resource type="Animation" id=4]
@@ -120,7 +120,7 @@ length = 15.0
 loop = true
 
 [sub_resource type="Animation" id=5]
-length = 0.75
+length = 0.5
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship:margin_left")
 tracks/0/interp = 1
@@ -129,7 +129,7 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "points": PoolRealArray( 96, -0.25, 0, 0.25, 0, 342, -0.25, 0, 0.25, 0, -400, -0.25, 0, 0.25, 0, 96, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.4, 0.5, 0.7 )
+"times": PoolRealArray( 0, 0.2, 0.3, 0.5 )
 }
 
 [sub_resource type="CanvasItemMaterial" id=6]
@@ -149,6 +149,7 @@ frame_3/delay_sec = 0.0
 blend_mode = 1
 
 [sub_resource type="AnimatedTexture" id=9]
+flags = 4
 fps = 5.0
 frame_0/texture = ExtResource( 46 )
 
@@ -176,7 +177,7 @@ outline_size = 2
 outline_color = Color( 0.815686, 0.435294, 0.0509804, 0.615686 )
 font_data = ExtResource( 25 )
 
-[sub_resource type="StyleBoxFlat" id=17]
+[sub_resource type="StyleBoxFlat" id=14]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 2.0
@@ -191,7 +192,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=18]
+[sub_resource type="StyleBoxFlat" id=15]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 2.0
@@ -207,7 +208,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=19]
+[sub_resource type="StyleBoxFlat" id=16]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 2.0
@@ -224,26 +225,26 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="DynamicFont" id=20]
+[sub_resource type="DynamicFont" id=17]
 extra_spacing_top = 3
 extra_spacing_bottom = 3
 font_data = ExtResource( 25 )
 
-[sub_resource type="AnimatedTexture" id=14]
+[sub_resource type="AnimatedTexture" id=18]
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 13 )
 frame_1/texture = ExtResource( 12 )
 frame_1/delay_sec = 0.0
 
-[sub_resource type="AnimatedTexture" id=15]
+[sub_resource type="AnimatedTexture" id=19]
 frames = 2
 fps = 30.0
 frame_0/texture = ExtResource( 3 )
 frame_1/texture = ExtResource( 19 )
 frame_1/delay_sec = 0.0
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="DynamicFont" id=20]
 size = 12
 outline_color = Color( 0.854902, 0.776471, 0.776471, 1 )
 font_data = ExtResource( 35 )
@@ -328,9 +329,6 @@ __meta__ = {
 }
 
 [node name="ParallaxBackground" parent="MarginContainer4" instance=ExtResource( 42 )]
-
-[node name="ParallaxLayer2" parent="MarginContainer4/ParallaxBackground" index="0"]
-motion_mirroring = Vector2( 1, 1400 )
 
 [node name="bg" type="Sprite" parent="MarginContainer4"]
 visible = false
@@ -528,10 +526,10 @@ visible = false
 margin_left = 91.0
 margin_right = 166.0
 margin_bottom = 405.0
-custom_styles/hover = SubResource( 17 )
-custom_styles/pressed = SubResource( 18 )
-custom_styles/normal = SubResource( 19 )
-custom_fonts/font = SubResource( 20 )
+custom_styles/hover = SubResource( 14 )
+custom_styles/pressed = SubResource( 15 )
+custom_styles/normal = SubResource( 16 )
+custom_fonts/font = SubResource( 17 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Purchase"
 
@@ -580,7 +578,7 @@ margin_left = -39.0
 margin_top = -59.5891
 margin_right = 39.0
 margin_bottom = 18.4109
-texture = SubResource( 14 )
+texture = SubResource( 18 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -596,7 +594,7 @@ margin_left = -71.0
 margin_top = -46.0
 margin_right = 18.0
 margin_bottom = 32.0
-texture = SubResource( 15 )
+texture = SubResource( 19 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -612,7 +610,7 @@ margin_left = -7.0
 margin_top = -46.0
 margin_right = 82.0
 margin_bottom = 32.0
-texture = SubResource( 15 )
+texture = SubResource( 19 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -679,7 +677,7 @@ margin_left = 33.0
 margin_top = 9.0
 margin_right = 223.0
 margin_bottom = 24.0
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 20 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 0.458824 )
 text = "Choose your fighter"
 align = 1
@@ -810,6 +808,9 @@ visible = false
 wait_time = 3.0
 
 [node name="game_over" parent="." instance=ExtResource( 30 )]
+
+[node name="AnimatedSprite" parent="game_over" index="1"]
+frame = 3
 
 [node name="home_btn" parent="game_over" index="3"]
 texture_normal = ExtResource( 36 )

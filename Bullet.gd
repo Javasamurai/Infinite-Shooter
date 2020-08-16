@@ -6,9 +6,14 @@ var Bullets
 var DIRECTION = "DOWN"
 var is_firing = false
 var fire_speed = 0
+enum type {
+	NORMAL,
+	MISSILE
+}
 var global
 var tween
 var already_hit = false
+var current_type
 
 func _ready():
 	set_physics_process(true)
