@@ -65,6 +65,17 @@ func _ready():
 		$game_over.visible=true
 		
 		$Timer.start(3)
+	
+	var texture = {}
+	var anim_tex = AnimatedTexture.new()
+	anim_tex.set_frames(4)
+	anim_tex.set_fps(3)
+
+	for i in range(6):
+		texture[i+1] = load("res://Images/UI_Planes/UI_Level_" + str(global.selected_plane) + "_0" + str(i) + ".png")
+		anim_tex.set_frame_texture(i, texture[i+1])
+	plane_node.set_texture(anim_tex)
+
 	pass
 
 func game_over():
@@ -78,11 +89,10 @@ func toInventory():
 func _process(delta):
 	time_spent+= delta
 	if global.selected_plane == 3:
-		#print(time_spent)
 		if time_spent > 1.25 and flames_lvl_3_left.visible == false:
 			flames_lvl_3_left.visible = true
 			flames_lvl_3_right.visible = true
-			plane_node.set_texture(load("res://Images/level_" + str(global.selected_plane) + "_05.png"))
+			plane_node.set_texture(load("res://Images/UI_Planes/level_" + str(global.selected_plane) + "_05.png"))
 
 func _on_arrow_pressed(_direction):
 	if !music:
@@ -90,7 +100,7 @@ func _on_arrow_pressed(_direction):
 	if _direction == direction.LEFT:
 		right_arrow.modulate = Color.white
 		right_arrow.disabled = false
-		print(global.selected_plane)
+		
 		if global.selected_plane > 1:
 			left_arrow.modulate = Color.white
 			global.selected_plane = global.selected_plane - 1
@@ -116,26 +126,11 @@ func _on_arrow_pressed(_direction):
 	if global.selected_plane == 3:
 		right_arrow.modulate = Color(0,0.0, 0.75)
 		time_spent = 0
-		
-		var texture = {}
 
-		for i in range(6):
-			texture[i] = load("res://Images/level_" + str(global.selected_plane) + "_0" + str(i) + ".png")
-		
 		flames_lvl_3_left.visible = false
 		flames_lvl_3_right.visible = false
-
-		var anim_tex = AnimatedTexture.new()
-		anim_tex.set_frames(4)
-		anim_tex.set_fps(3)
-		anim_tex.set_frame_texture(0, texture[1])
-		anim_tex.set_frame_texture(1, texture[2])
-		anim_tex.set_frame_texture(2, texture[3])
-		anim_tex.set_frame_texture(3, texture[4])
-		anim_tex.set_frame_texture(4, texture[5])
-		plane_node.set_texture(anim_tex)
 	else:
-		tex = load("res://Images/UI_Level_" + str(global.selected_plane) + "_Plane.png")
+		tex = load("res://Images/UI_Planes/UI_Level_" + str(global.selected_plane) + "_Plane.png")
 		plane_node.set_texture(tex)
 		flames_lvl_3_left.visible = false
 		flames_lvl_3_right.visible = false
@@ -203,7 +198,7 @@ func fill_values():
 	global.saved_data["music"] = music
 	
 	if music:
-		music_btn.set_normal_texture(load("res://Images/NewAssets/Sound_OFF.png"))
+		music_btn.set_normal_texture(load("res://Images/NewAssets/Sound_OFF_01.png"))
 	else:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_ON.png"))
 
@@ -249,13 +244,11 @@ func _on_music_button_up(_toogle = true):
 		get_node("/root/Control/AudioManager/bgm").stop()
 	else:
 		get_node("/root/Control/AudioManager/bgm").play()
-
-
 	
 	file.close()
 	
 	if !off:
-		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF.png"))
+		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF_01.png"))
 		music = false
 	else:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_ON.png"))
