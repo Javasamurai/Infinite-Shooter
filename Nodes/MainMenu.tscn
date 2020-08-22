@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=2]
+[gd_scene load_steps=114 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
 [ext_resource path="res://Images/UI_Planes/UI_Level_2_Plane.png" type="Texture" id=2]
@@ -45,11 +45,10 @@
 [ext_resource path="res://SFX/maximum_overdrive.wav" type="AudioStream" id=43]
 [ext_resource path="res://Plane_Flame.tscn" type="PackedScene" id=44]
 [ext_resource path="res://Images/UI/Inventory_ON.png" type="Texture" id=45]
-[ext_resource path="res://Images/NewAssets/earth.png" type="Texture" id=46]
+[ext_resource path="res://Images/UI/Earth.png" type="Texture" id=46]
 [ext_resource path="res://Images/left_arrow-selected.png" type="Texture" id=47]
 [ext_resource path="res://Images/right_arrow_selected.png" type="Texture" id=48]
 [ext_resource path="res://Images/NewAssets/hamburger.png" type="Texture" id=49]
-[ext_resource path="res://admob-lib/admob.gd" type="Script" id=50]
 [ext_resource path="res://Images/UI/Play_btn_pressed.png" type="Texture" id=51]
 [ext_resource path="res://Images/UI/Play_Button.png" type="Texture" id=52]
 [ext_resource path="res://Shooting_Star.tscn" type="PackedScene" id=53]
@@ -183,10 +182,10 @@ frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 17 )
 frame_3/delay_sec = 0.0
 
-[sub_resource type="CanvasItemMaterial" id=8]
+[sub_resource type="CanvasItemMaterial" id=9]
 blend_mode = 1
 
-[sub_resource type="CanvasItemMaterial" id=9]
+[sub_resource type="CanvasItemMaterial" id=8]
 blend_mode = 1
 
 [sub_resource type="AnimatedTexture" id=10]
@@ -426,20 +425,18 @@ margin_bottom = 288.0
 rect_pivot_offset = Vector2( 81, 144 )
 texture = SubResource( 7 )
 
-[node name="rotating_earth2" type="Sprite" parent="MarginContainer2"]
-material = SubResource( 8 )
-position = Vector2( 84, 110 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 46 )
-
-[node name="overlay_2" type="Sprite" parent="MarginContainer2/rotating_earth2"]
-visible = false
+[node name="overlay_2" type="Sprite" parent="MarginContainer2"]
 modulate = Color( 1, 1, 1, 0.482353 )
 material = SubResource( 9 )
-position = Vector2( -113.458, -349.716 )
-scale = Vector2( 0.9975, 0.94352 )
+position = Vector2( -52, -277 )
+scale = Vector2( 1.15226, 1.23115 )
 texture = ExtResource( 20 )
 centered = false
+
+[node name="rotating_earth2" type="Sprite" parent="MarginContainer2"]
+material = SubResource( 8 )
+position = Vector2( 84, 107 )
+texture = ExtResource( 46 )
 
 [node name="Tween" type="Tween" parent="MarginContainer2/rotating_earth2"]
 
@@ -508,9 +505,9 @@ __meta__ = {
 }
 
 [node name="title_bg" type="AnimatedSprite" parent="MarginContainer6"]
-position = Vector2( 114, 119 )
+position = Vector2( 119, 119 )
 frames = SubResource( 12 )
-frame = 30
+frame = 20
 playing = true
 
 [node name="title" type="Label" parent="MarginContainer6"]
@@ -612,6 +609,7 @@ __meta__ = {
 }
 
 [node name="flames" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship"]
+visible = false
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -856,7 +854,7 @@ wait_time = 3.0
 [node name="game_over" parent="." instance=ExtResource( 30 )]
 
 [node name="AnimatedSprite" parent="game_over" index="1"]
-frame = 0
+frame = 1
 
 [node name="home_btn" parent="game_over" index="3"]
 texture_normal = ExtResource( 36 )
@@ -892,10 +890,8 @@ __meta__ = {
 }
 
 [node name="Shooting_Star" parent="." instance=ExtResource( 53 )]
-position = Vector2( 106.5, 1000 )
-
-[node name="AdMob" type="Node" parent="."]
-script = ExtResource( 50 )
+position = Vector2( 241, -25 )
+rotation = -1.36834
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
 [connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/left_btn" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]

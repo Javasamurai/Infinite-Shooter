@@ -8,16 +8,18 @@ func _ready():
 	#startTween()
 	set_process(true)
 	
-	position.x = rand_range(10, global.screen_width - 10)
-	position.y = 500
-	rotation = rand_range(30, 90)
+	#position.x = rand_range(10, global.screen_width - 10)
+	position.x = 241
+	position.y = -50
+	rotation_degrees = -78
 	pass
 	
 func _process(delta):
 	if position.y < global.screen_height && position.y > 0:
 		position.x = (position.x - 1 * delta * 100)
-	elif position.y <= -1000:
-		position.y = rand_range(500, 1000)
+		
+	elif position.y > 1000:
+		position.y = rand_range(-50, 100)
 		position.x = rand_range(10, global.screen_width - 10)
-	position.y = (position.y - 1 * delta * 100)
+	position.y = (position.y + 1 * delta * 100)
 pass

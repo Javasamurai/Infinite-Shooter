@@ -2,6 +2,8 @@ extends Path2D
 
 var fired = false
 var fire_speed  = 10
+
+
 func _ready():
 	set_process(true)
 	pass

@@ -66,16 +66,6 @@ func _ready():
 		
 		$Timer.start(3)
 	
-	var texture = {}
-	var anim_tex = AnimatedTexture.new()
-	anim_tex.set_frames(4)
-	anim_tex.set_fps(3)
-
-	for i in range(6):
-		texture[i+1] = load("res://Images/UI_Planes/UI_Level_" + str(global.selected_plane) + "_0" + str(i) + ".png")
-		anim_tex.set_frame_texture(i, texture[i+1])
-	plane_node.set_texture(anim_tex)
-
 	pass
 
 func game_over():
@@ -97,6 +87,8 @@ func _process(delta):
 func _on_arrow_pressed(_direction):
 	if !music:
 		button_click.play()
+	
+	print(global.selected_plane)
 	if _direction == direction.LEFT:
 		right_arrow.modulate = Color.white
 		right_arrow.disabled = false
@@ -110,7 +102,7 @@ func _on_arrow_pressed(_direction):
 	if _direction == direction.RIGHT:
 		left_arrow.modulate = Color.white
 		left_arrow.disabled = false
-		if global.selected_plane < 3:
+		if global.selected_plane < 6:
 			right_arrow.disabled = false
 			right_arrow.modulate = Color.white
 			global.selected_plane = global.selected_plane + 1
@@ -122,10 +114,21 @@ func _on_arrow_pressed(_direction):
 
 	if global.selected_plane == 1:
 		left_arrow.modulate = Color(0,0.0, 0.75)
-
-	if global.selected_plane == 3:
+	if global.selected_plane == 5:
 		right_arrow.modulate = Color(0,0.0, 0.75)
+		
+	if global.selected_plane == 3:
 		time_spent = 0
+		
+		var texture = {}
+		var anim_tex = AnimatedTexture.new()
+		anim_tex.set_frames(4)
+		anim_tex.set_fps(3)
+
+		for i in range(6):
+			texture[i+1] = load("res://Images/UI_Planes/level_" + str(global.selected_plane) + "_0" + str(i + 1) + ".png")
+			anim_tex.set_frame_texture(i, texture[i+1])
+		plane_node.set_texture(anim_tex)
 
 		flames_lvl_3_left.visible = false
 		flames_lvl_3_right.visible = false
@@ -198,7 +201,7 @@ func fill_values():
 	global.saved_data["music"] = music
 	
 	if music:
-		music_btn.set_normal_texture(load("res://Images/NewAssets/Sound_OFF_01.png"))
+		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF_01.png"))
 	else:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_ON.png"))
 

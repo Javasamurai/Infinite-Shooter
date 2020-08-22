@@ -44,7 +44,6 @@ centered = false
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.29383, 1 )
 frames = SubResource( 1 )
-frame = 1
 playing = true
 centered = false
 
@@ -52,21 +51,27 @@ centered = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -41.5
-margin_top = 304.0
+margin_top = 336.0
 margin_right = -1.5
-margin_bottom = 344.0
+margin_bottom = 376.0
 texture_normal = ExtResource( 1 )
 texture_pressed = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="home_btn" type="TextureButton" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = 30.5
-margin_top = 304.0
+margin_top = 336.0
 margin_right = 70.5
-margin_bottom = 344.0
+margin_bottom = 376.0
 texture_normal = ExtResource( 1 )
 texture_pressed = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="waves" type="Label" parent="."]
 anchor_left = 0.5
@@ -96,3 +101,9 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 8.0
+margin_top = 256.0
+margin_right = 243.0
+margin_bottom = 296.0

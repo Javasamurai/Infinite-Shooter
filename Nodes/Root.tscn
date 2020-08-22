@@ -1,7 +1,6 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
-[ext_resource path="res://Images/fire_btn.png" type="Texture" id=2]
 [ext_resource path="res://Images/arrow.png" type="Texture" id=3]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=6]
@@ -201,18 +200,6 @@ anims/right_camera_lerp = SubResource( 3 )
 [node name="ScreenShake" type="Node2D" parent="Camera2D"]
 script = ExtResource( 14 )
 cam = NodePath("..")
-
-[node name="Fire_button" type="Button" parent="Camera2D"]
-visible = false
-margin_left = 39.6079
-margin_top = 113.414
-margin_right = 83.6079
-margin_bottom = 151.414
-toggle_mode = true
-shortcut_in_tooltip = false
-icon = ExtResource( 2 )
-flat = true
-clip_text = true
 
 [node name="left" type="Button" parent="Camera2D"]
 visible = false
@@ -544,7 +531,6 @@ __meta__ = {
 
 [node name="announcement_anim" type="AnimationPlayer" parent="Control/center_container/announcement_panel"]
 anims/to_up = SubResource( 15 )
-[connection signal="button_down" from="Camera2D/Fire_button" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/left" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/right" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/up" to="Camera2D/Player" method="fire"]

@@ -20,5 +20,5 @@ position = Vector2( 2.05272, 0.388407 )
 rotation = -1.0076
 
 [node name="player_bullet" parent="PathFollow2D" instance=ExtResource( 3 )]
-modulate = Color( 0.639216, 0.141176, 0.443137, 1 )
+modulate = Color( 0.819608, 0.380392, 0.647059, 1 )
 rotation = 1.01185

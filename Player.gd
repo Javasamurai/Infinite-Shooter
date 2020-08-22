@@ -199,6 +199,10 @@ func create_bullet(pos, rotate = false, missile = false):
 	if missile:
 		bullet_clone_1 = curvy_bullet.instance()
 		bullet_clone_2 = curvy_bullet.instance()
+		
+		bullet_clone_1.modulate = Color("#d161a5")
+		bullet_clone_2.modulate = Color("#d161a5")
+
 		bullet_clone_2.scale.x = -1
 	else:
 		bullet_clone_1 = bullet.instance()
