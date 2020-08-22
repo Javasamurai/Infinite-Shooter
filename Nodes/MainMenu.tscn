@@ -1,7 +1,7 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=115 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
-[ext_resource path="res://Images/UI_Level_1_Plane.png" type="Texture" id=2]
+[ext_resource path="res://Images/UI_Planes/UI_Level_2_Plane.png" type="Texture" id=2]
 [ext_resource path="res://Images/Side_Flame_01.png" type="Texture" id=3]
 [ext_resource path="res://SFX/Death Screams/Robot/sfx_deathscream_robot1.wav" type="AudioStream" id=4]
 [ext_resource path="res://Images/UI/About_ON.png" type="Texture" id=5]
@@ -25,7 +25,7 @@
 [ext_resource path="res://Images/UI/Play_OFF (1).png" type="Texture" id=23]
 [ext_resource path="res://Images/UI/Play_ON.png" type="Texture" id=24]
 [ext_resource path="res://fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=25]
-[ext_resource path="res://Images/UI/Text_BoX.png" type="Texture" id=26]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0020.png" type="Texture" id=26]
 [ext_resource path="res://Scripts/Score_saving.gd" type="Script" id=27]
 [ext_resource path="res://Images/UI/Coin_03_1.png" type="Texture" id=28]
 [ext_resource path="res://Images/UI/Sound_OFF.png" type="Texture" id=29]
@@ -33,7 +33,7 @@
 [ext_resource path="res://Images/UI/Coin_02_1.png" type="Texture" id=31]
 [ext_resource path="res://Images/UI/Coin_04_1.png" type="Texture" id=32]
 [ext_resource path="res://Nodes/stars.tscn" type="PackedScene" id=33]
-[ext_resource path="res://Images/Players/Level_1_Player.png" type="Texture" id=34]
+[ext_resource path="res://Images/UI/Inventory_OFF.png" type="Texture" id=34]
 [ext_resource path="res://fonts/joystix monospace.ttf" type="DynamicFontData" id=35]
 [ext_resource path="res://Images/UI/Home_OFF.png" type="Texture" id=36]
 [ext_resource path="res://Images/UI/Home_ON.png" type="Texture" id=37]
@@ -41,7 +41,56 @@
 [ext_resource path="res://Images/Cloud_02.png" type="Texture" id=39]
 [ext_resource path="res://Images/Meteor_02.png" type="Texture" id=40]
 [ext_resource path="res://Images/Meteor_01.png" type="Texture" id=41]
-[ext_resource path="res://Plane_Flame.tscn" type="PackedScene" id=42]
+[ext_resource path="res://Nodes/ParallaxBackground.tscn" type="PackedScene" id=42]
+[ext_resource path="res://SFX/maximum_overdrive.wav" type="AudioStream" id=43]
+[ext_resource path="res://Plane_Flame.tscn" type="PackedScene" id=44]
+[ext_resource path="res://Images/UI/Inventory_ON.png" type="Texture" id=45]
+[ext_resource path="res://Images/NewAssets/earth.png" type="Texture" id=46]
+[ext_resource path="res://Images/left_arrow-selected.png" type="Texture" id=47]
+[ext_resource path="res://Images/right_arrow_selected.png" type="Texture" id=48]
+[ext_resource path="res://Images/NewAssets/hamburger.png" type="Texture" id=49]
+[ext_resource path="res://admob-lib/admob.gd" type="Script" id=50]
+[ext_resource path="res://Images/UI/Play_btn_pressed.png" type="Texture" id=51]
+[ext_resource path="res://Images/UI/Play_Button.png" type="Texture" id=52]
+[ext_resource path="res://Shooting_Star.tscn" type="PackedScene" id=53]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0026.png" type="Texture" id=54]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0024.png" type="Texture" id=55]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0029.png" type="Texture" id=56]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0021.png" type="Texture" id=57]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0019.png" type="Texture" id=58]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0030.png" type="Texture" id=59]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0031.png" type="Texture" id=60]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0034.png" type="Texture" id=61]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0011.png" type="Texture" id=62]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0017.png" type="Texture" id=63]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0022.png" type="Texture" id=64]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0008.png" type="Texture" id=65]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0015.png" type="Texture" id=66]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0033.png" type="Texture" id=67]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0038.png" type="Texture" id=68]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0012.png" type="Texture" id=69]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0013.png" type="Texture" id=70]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0007.png" type="Texture" id=71]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0010.png" type="Texture" id=72]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0023.png" type="Texture" id=73]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0018.png" type="Texture" id=74]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0027.png" type="Texture" id=75]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0037.png" type="Texture" id=76]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0002.png" type="Texture" id=77]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0001.png" type="Texture" id=78]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0003.png" type="Texture" id=79]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0009.png" type="Texture" id=80]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0025.png" type="Texture" id=81]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0006.png" type="Texture" id=82]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0014.png" type="Texture" id=83]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0028.png" type="Texture" id=84]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0032.png" type="Texture" id=85]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0000.png" type="Texture" id=86]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0016.png" type="Texture" id=87]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0004.png" type="Texture" id=88]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0005.png" type="Texture" id=89]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0035.png" type="Texture" id=90]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0036.png" type="Texture" id=91]
 
 [sub_resource type="Animation" id=1]
 resource_name = "cloud_movement"
@@ -91,6 +140,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "left"
+length = 0.5
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship:margin_left")
 tracks/0/interp = 1
@@ -99,63 +149,16 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "points": PoolRealArray( 96, -0.25, 0, 0.25, 0, -342, -0.25, 0, 0.25, 0, 400, -0.25, 0, 0.25, 0, 96, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.5, 0.6, 1 )
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4 )
 }
 
 [sub_resource type="Animation" id=4]
 resource_name = "meteor"
 length = 15.0
 loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("MarginContainer4/meteor_1:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 4.5, 4.6, 9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 59, 920 ), Vector2( 59, -50 ), Vector2( 89, 1000 ), Vector2( 89, -50 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("MarginContainer4/meteor_1:rotation_degrees")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 4.5, 4.6, 9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, 180.0, 66.6, -180.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("MarginContainer4/meteor_2:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 8.4, 8.5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 216, 1160 ), Vector2( 216, -100 ), Vector2( 216, 1000 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("MarginContainer4/meteor_2:rotation_degrees")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 8.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 72.0, 0.0 ]
-}
 
 [sub_resource type="Animation" id=5]
+length = 0.5
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship:margin_left")
 tracks/0/interp = 1
@@ -164,7 +167,7 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "points": PoolRealArray( 96, -0.25, 0, 0.25, 0, 342, -0.25, 0, 0.25, 0, -400, -0.25, 0, 0.25, 0, 96, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.5, 0.6, 1 )
+"times": PoolRealArray( 0, 0.2, 0.3, 0.5 )
 }
 
 [sub_resource type="CanvasItemMaterial" id=6]
@@ -181,45 +184,12 @@ frame_3/texture = ExtResource( 17 )
 frame_3/delay_sec = 0.0
 
 [sub_resource type="CanvasItemMaterial" id=8]
-particles_animation = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="AnimatedTexture" id=9]
-frames = 4
-fps = 5.0
-frame_0/texture = ExtResource( 14 )
-frame_1/texture = ExtResource( 15 )
-frame_1/delay_sec = 0.0
-frame_2/texture = ExtResource( 16 )
-frame_2/delay_sec = 0.0
-frame_3/texture = ExtResource( 17 )
-frame_3/delay_sec = 0.0
-
-[sub_resource type="CanvasItemMaterial" id=10]
 blend_mode = 1
 
-[sub_resource type="Curve" id=11]
-min_value = 1.0
-max_value = 5.0
-_data = [ Vector2( 0, 2.41067 ), 0.0, 0.0, 0, 0, Vector2( 1, 1.4377 ), 0.0, 0.0, 0, 0 ]
+[sub_resource type="CanvasItemMaterial" id=9]
+blend_mode = 1
 
-[sub_resource type="CurveTexture" id=12]
-curve = SubResource( 11 )
-
-[sub_resource type="ParticlesMaterial" id=13]
-emission_shape = 1
-emission_sphere_radius = 180.0
-flag_disable_z = true
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 96.69
-angular_velocity = 107.4
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale_curve = SubResource( 12 )
-
-[sub_resource type="AnimatedTexture" id=14]
+[sub_resource type="AnimatedTexture" id=10]
 frames = 4
 fps = 10.0
 frame_0/texture = ExtResource( 10 )
@@ -230,33 +200,25 @@ frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 32 )
 frame_3/delay_sec = 0.0
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=11]
 size = 10
 font_data = ExtResource( 25 )
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="SpriteFrames" id=12]
+animations = [ {
+"frames": [ ExtResource( 86 ), ExtResource( 78 ), ExtResource( 77 ), ExtResource( 79 ), ExtResource( 88 ), ExtResource( 89 ), ExtResource( 82 ), ExtResource( 71 ), ExtResource( 65 ), ExtResource( 80 ), ExtResource( 72 ), ExtResource( 62 ), ExtResource( 69 ), ExtResource( 70 ), ExtResource( 83 ), ExtResource( 66 ), ExtResource( 87 ), ExtResource( 63 ), ExtResource( 74 ), ExtResource( 58 ), ExtResource( 26 ), ExtResource( 57 ), ExtResource( 64 ), ExtResource( 73 ), ExtResource( 55 ), ExtResource( 81 ), ExtResource( 54 ), ExtResource( 75 ), ExtResource( 84 ), ExtResource( 56 ), ExtResource( 59 ), ExtResource( 60 ), ExtResource( 85 ), ExtResource( 67 ), ExtResource( 61 ), ExtResource( 90 ), ExtResource( 91 ), ExtResource( 76 ), ExtResource( 68 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="DynamicFont" id=13]
 size = 27
+outline_size = 2
+outline_color = Color( 0.815686, 0.435294, 0.0509804, 0.615686 )
 font_data = ExtResource( 25 )
 
-[sub_resource type="AnimatedTexture" id=17]
-frames = 2
-fps = 30.0
-frame_0/texture = ExtResource( 13 )
-frame_1/texture = ExtResource( 12 )
-frame_1/delay_sec = 0.0
-
-[sub_resource type="AnimatedTexture" id=18]
-frames = 2
-fps = 30.0
-frame_0/texture = ExtResource( 3 )
-frame_1/texture = ExtResource( 19 )
-frame_1/delay_sec = 0.0
-
-[sub_resource type="DynamicFont" id=19]
-size = 12
-font_data = ExtResource( 35 )
-
-[sub_resource type="StyleBoxFlat" id=20]
+[sub_resource type="StyleBoxFlat" id=14]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 2.0
@@ -271,7 +233,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=21]
+[sub_resource type="StyleBoxFlat" id=15]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 2.0
@@ -287,7 +249,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=22]
+[sub_resource type="StyleBoxFlat" id=16]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 2.0
@@ -304,77 +266,52 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="DynamicFont" id=23]
+[sub_resource type="DynamicFont" id=17]
 extra_spacing_top = 3
 extra_spacing_bottom = 3
 font_data = ExtResource( 25 )
 
-[sub_resource type="Gradient" id=24]
-offsets = PoolRealArray( 0, 0.202473 )
-colors = PoolColorArray( 2.18, 0.53, 0.09, 1, 1, 1, 1, 0.878431 )
+[sub_resource type="AnimatedTexture" id=18]
+frames = 2
+fps = 30.0
+frame_0/texture = ExtResource( 13 )
+frame_1/texture = ExtResource( 12 )
+frame_1/delay_sec = 0.0
 
-[sub_resource type="GradientTexture" id=25]
-gradient = SubResource( 24 )
+[sub_resource type="AnimatedTexture" id=19]
+frames = 2
+fps = 30.0
+frame_0/texture = ExtResource( 3 )
+frame_1/texture = ExtResource( 19 )
+frame_1/delay_sec = 0.0
 
-[sub_resource type="Curve" id=26]
-min_value = 1.0
-max_value = 3.0
-_data = [ Vector2( 0, 1.56982 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+[sub_resource type="DynamicFont" id=20]
+size = 12
+outline_color = Color( 0.854902, 0.776471, 0.776471, 1 )
+font_data = ExtResource( 35 )
 
-[sub_resource type="CurveTexture" id=27]
-curve = SubResource( 26 )
+[sub_resource type="DynamicFontData" id=21]
+font_path = "res://fonts/joystix monospace.ttf"
 
-[sub_resource type="ParticlesMaterial" id=28]
-emission_shape = 1
-emission_sphere_radius = 180.0
-flag_disable_z = true
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 60.0
-initial_velocity_random = 1.0
-angular_velocity = 60.0
-orbit_velocity = 0.1
-orbit_velocity_random = 0.0
-scale = 2.0
-scale_curve = SubResource( 27 )
-color_ramp = SubResource( 25 )
+[sub_resource type="DynamicFont" id=22]
+size = 20
+font_data = SubResource( 21 )
 
-[sub_resource type="Gradient" id=29]
-offsets = PoolRealArray( 0.0015456, 0.0958269, 1 )
-colors = PoolColorArray( 0.869218, 0.858212, 0.821224, 1, 4, 0.72, 0.05, 1, 1, 0, 0, 1 )
-
-[sub_resource type="GradientTexture" id=30]
-gradient = SubResource( 29 )
-
-[sub_resource type="Curve" id=31]
-max_value = 3.0
-_data = [ Vector2( 0.0057554, 2.86445 ), 0.0, -1.27544, 0, 0, Vector2( 1, 0 ), -2.76069, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=32]
-curve = SubResource( 31 )
-
-[sub_resource type="ParticlesMaterial" id=33]
-flag_disable_z = true
-direction = Vector3( 0, 0, 0 )
-spread = 5.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 50.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-radial_accel = 7.77
-scale_curve = SubResource( 32 )
-color_ramp = SubResource( 30 )
-
-[sub_resource type="ProceduralSky" id=34]
-sky_top_color = Color( 0.0941176, 0.572549, 0.839216, 1 )
-sky_horizon_color = Color( 0.533333, 0.239216, 0.556863, 1 )
-
-[sub_resource type="Environment" id=35]
-background_mode = 4
-background_sky = SubResource( 34 )
-fog_enabled = true
-glow_enabled = true
-glow_blend_mode = 0
-adjustment_enabled = true
+[sub_resource type="Animation" id=23]
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0.494118 ), Color( 0, 0, 0, 1 ) ]
+}
 
 [node name="Control" type="Control"]
 modulate = Color( 1, 1, 1, 0.905882 )
@@ -406,8 +343,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="bgm" type="AudioStreamPlayer2D" parent="AudioManager"]
+stream = ExtResource( 43 )
+autoplay = true
+
 [node name="anim" type="AnimationPlayer" parent="."]
-autoplay = "fade"
+autoplay = "cloud_movement"
 method_call_mode = 1
 anims/cloud_movement = SubResource( 1 )
 anims/fade = SubResource( 2 )
@@ -428,23 +369,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ParallaxBackground" parent="MarginContainer4" instance=ExtResource( 42 )]
+
 [node name="bg" type="Sprite" parent="MarginContainer4"]
+visible = false
 position = Vector2( -97.5428, -366.215 )
 scale = Vector2( 1.49625, 1.41528 )
 texture = ExtResource( 18 )
 centered = false
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="meteor_1" type="Sprite" parent="MarginContainer4"]
-position = Vector2( 89, 192.501 )
-rotation = -2.14757
+position = Vector2( 59, 920 )
 texture = ExtResource( 41 )
 
 [node name="meteor_2" type="Sprite" parent="MarginContainer4"]
-position = Vector2( 216, -37.5708 )
-rotation = 0.0763141
+position = Vector2( 216, 1160 )
+rotation = 1.25664
 texture = ExtResource( 40 )
 
 [node name="overlay_1" type="Sprite" parent="MarginContainer4"]
@@ -469,6 +409,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="cloud_2" type="Sprite" parent="MarginContainer2"]
+position = Vector2( -250, 126 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 39 )
+
+[node name="cloud_1" type="Sprite" parent="MarginContainer2"]
+position = Vector2( 276, 83 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 38 )
+
 [node name="rotating_earth_1" type="TextureRect" parent="MarginContainer2"]
 visible = false
 margin_right = 272.0
@@ -476,33 +426,16 @@ margin_bottom = 288.0
 rect_pivot_offset = Vector2( 81, 144 )
 texture = SubResource( 7 )
 
-[node name="cloud_1" type="Sprite" parent="MarginContainer2"]
-position = Vector2( 276, 83 )
-scale = Vector2( 1.5, 1.5 )
-texture = ExtResource( 38 )
-
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="MarginContainer2/cloud_1"]
-
-[node name="cloud_2" type="Sprite" parent="MarginContainer2"]
-position = Vector2( -250, 126 )
-scale = Vector2( 1.5, 1.5 )
-texture = ExtResource( 39 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer2/cloud_2"]
-
 [node name="rotating_earth2" type="Sprite" parent="MarginContainer2"]
-modulate = Color( 1.2, 1.2, 1.2, 1 )
 material = SubResource( 8 )
-position = Vector2( 84, 171 )
-scale = Vector2( 1.5, 1.5 )
-texture = SubResource( 9 )
-__meta__ = {
-"_edit_lock_": true
-}
+position = Vector2( 84, 110 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 46 )
 
 [node name="overlay_2" type="Sprite" parent="MarginContainer2/rotating_earth2"]
 visible = false
-material = SubResource( 10 )
+modulate = Color( 1, 1, 1, 0.482353 )
+material = SubResource( 9 )
 position = Vector2( -113.458, -349.716 )
 scale = Vector2( 0.9975, 0.94352 )
 texture = ExtResource( 20 )
@@ -512,18 +445,9 @@ centered = false
 
 [node name="earth_overlay" type="Sprite" parent="MarginContainer2/rotating_earth2"]
 visible = false
+self_modulate = Color( 1, 1, 1, 0.745098 )
 position = Vector2( 0, 0.666687 )
 texture = ExtResource( 22 )
-
-[node name="Particles2D2" type="Particles2D" parent="MarginContainer2"]
-show_behind_parent = true
-light_mask = 0
-position = Vector2( -202.832, -45.3796 )
-amount = 2
-lifetime = 5.0
-explosiveness = 0.5
-process_material = SubResource( 13 )
-texture = ExtResource( 40 )
 
 [node name="MarginContainer3" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -532,6 +456,7 @@ margin_top = 8.0
 margin_right = -11.0
 margin_bottom = 20.0
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -543,7 +468,7 @@ columns = 3
 [node name="TextureRect" type="TextureRect" parent="MarginContainer3/GridContainer"]
 margin_right = 10.0
 margin_bottom = 12.0
-texture = SubResource( 14 )
+texture = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -552,7 +477,7 @@ __meta__ = {
 margin_left = 14.0
 margin_right = 68.0
 margin_bottom = 11.0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 11 )
 text = "Coins: 10000"
 valign = 1
 script = ExtResource( 27 )
@@ -563,7 +488,7 @@ __meta__ = {
 [node name="max_score" type="Label" parent="MarginContainer3"]
 margin_right = 222.0
 margin_bottom = 11.0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 11 )
 text = "Max Score: 10000"
 align = 2
 script = ExtResource( 27 )
@@ -582,16 +507,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="title_bg" type="Sprite" parent="MarginContainer6"]
-position = Vector2( 120.5, 20 )
-scale = Vector2( 1.32, 1 )
-texture = ExtResource( 26 )
+[node name="title_bg" type="AnimatedSprite" parent="MarginContainer6"]
+position = Vector2( 114, 119 )
+frames = SubResource( 12 )
+frame = 30
+playing = true
 
 [node name="title" type="Label" parent="MarginContainer6"]
+visible = false
 margin_top = 2.0
 margin_right = 243.0
 margin_bottom = 30.0
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 13 )
+custom_colors/font_color = Color( 0.831373, 0.682353, 0.168627, 1 )
 text = "Galaxy Gladiator"
 align = 1
 valign = 2
@@ -599,10 +527,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer6"]
+[node name="title2" type="Label" parent="MarginContainer6"]
+visible = false
+margin_top = 2.0
 margin_right = 243.0
-margin_bottom = 32.0
-alignment = 2
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 13 )
+custom_colors/font_color = Color( 0.815686, 0.682353, 0.176471, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.756863, 0.419608, 0.0745098, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 2
+text = "Galaxy Gladiator"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 0.5
@@ -618,9 +558,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_right = 257.0
+margin_bottom = 405.0
+alignment = 1
+
+[node name="buy_button" type="Button" parent="MarginContainer/HBoxContainer"]
+visible = false
+margin_left = 91.0
+margin_right = 166.0
+margin_bottom = 405.0
+custom_styles/hover = SubResource( 14 )
+custom_styles/pressed = SubResource( 15 )
+custom_styles/normal = SubResource( 16 )
+custom_fonts/font = SubResource( 17 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Purchase"
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
 margin_right = 257.0
 margin_bottom = 405.0
+custom_constants/separation = 50
 alignment = 1
 __meta__ = {
 "_edit_lock_": true,
@@ -628,72 +586,20 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 159.0
+margin_top = 128.0
 margin_right = 257.0
-margin_bottom = 223.0
+margin_bottom = 192.0
 mouse_filter = 2
+custom_constants/separation = 10
 alignment = 1
 
 [node name="left_btn" type="TextureButton" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
-margin_left = 66.0
-margin_right = 92.0
+margin_left = 60.0
+margin_right = 86.0
 margin_bottom = 64.0
 keep_pressed_outside = true
-texture_normal = ExtResource( 7 )
-
-[node name="plane" type="Sprite" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
-visible = false
-position = Vector2( 131, 14 )
-scale = Vector2( 2.21429, 2.21429 )
-texture = ExtResource( 34 )
-
-[node name="flames2" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer/plane"]
-visible = false
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -28.2097
-margin_top = -25.3306
-margin_right = 49.7903
-margin_bottom = 52.6694
-texture = SubResource( 17 )
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="flames_lvl_3_left2" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer/plane"]
-visible = false
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -42.6613
-margin_top = -19.1936
-margin_right = 46.3387
-margin_bottom = 58.8064
-texture = SubResource( 18 )
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="flames_lvl_3_right2" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer/plane"]
-visible = false
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -13.7581
-margin_top = -19.1936
-margin_right = 75.2419
-margin_bottom = 58.8064
-texture = SubResource( 18 )
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
+texture_normal = ExtResource( 47 )
+texture_pressed = ExtResource( 47 )
 
 [node name="Selected_ship" type="TextureRect" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 margin_left = 96.0
@@ -714,7 +620,7 @@ margin_left = -39.0
 margin_top = -59.5891
 margin_right = 39.0
 margin_bottom = 18.4109
-texture = SubResource( 17 )
+texture = SubResource( 18 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -730,7 +636,7 @@ margin_left = -71.0
 margin_top = -46.0
 margin_right = 18.0
 margin_bottom = 32.0
-texture = SubResource( 18 )
+texture = SubResource( 19 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -746,13 +652,16 @@ margin_left = -7.0
 margin_top = -46.0
 margin_right = 82.0
 margin_bottom = 32.0
-texture = SubResource( 18 )
+texture = SubResource( 19 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="Tween" type="Tween" parent="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship"]
+
+[node name="flame" parent="MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship" instance=ExtResource( 44 )]
+position = Vector2( 32, 60 )
 
 [node name="left_arrow" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 visible = false
@@ -773,72 +682,87 @@ icon = ExtResource( 9 )
 flat = true
 
 [node name="right_btn" type="TextureButton" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
-margin_left = 164.0
-margin_right = 190.0
+margin_left = 170.0
+margin_right = 196.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 48 )
 
-[node name="VerticalContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 227.0
+[node name="VerticalContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer2"]
+margin_top = 242.0
 margin_right = 257.0
-margin_bottom = 246.0
-alignment = 2
+margin_bottom = 276.0
+
+[node name="inventory_button" type="TextureButton" parent="MarginContainer/VBoxContainer2/VerticalContainer"]
+margin_left = 113.0
+margin_right = 144.0
+margin_bottom = 34.0
+texture_normal = ExtResource( 34 )
+texture_pressed = ExtResource( 45 )
+texture_hover = ExtResource( 45 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Watch Ad" type="Button" parent="MarginContainer/VBoxContainer2/VerticalContainer"]
 visible = false
-margin_right = 257.0
-margin_bottom = 20.0
+margin_left = 91.0
+margin_top = 7.0
+margin_right = 166.0
+margin_bottom = 27.0
 text = "Buy Plane"
 
 [node name="choose_lbl" type="Label" parent="MarginContainer/VBoxContainer2/VerticalContainer"]
-modulate = Color( 0.909804, 0.843137, 0.592157, 0.556863 )
-margin_right = 257.0
-margin_bottom = 15.0
-custom_fonts/font = SubResource( 19 )
+visible = false
+modulate = Color( 0.815686, 0.686275, 0.180392, 1 )
+margin_left = 33.0
+margin_top = 9.0
+margin_right = 223.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 20 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 0.458824 )
 text = "Choose your fighter"
 align = 1
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/VerticalContainer"]
-margin_top = 19.0
-margin_right = 257.0
-margin_bottom = 19.0
-alignment = 1
-
-[node name="buy_button" type="Button" parent="MarginContainer/VBoxContainer2/VerticalContainer/HBoxContainer"]
-visible = false
-margin_left = 91.0
-margin_right = 166.0
-margin_bottom = 27.0
-custom_styles/hover = SubResource( 20 )
-custom_styles/pressed = SubResource( 21 )
-custom_styles/normal = SubResource( 22 )
-custom_fonts/font = SubResource( 23 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "Purchase"
-
 [node name="MarginContainer5" type="MarginContainer" parent="."]
-anchor_left = 0.494
-anchor_top = 0.778
-anchor_right = 0.494
-anchor_bottom = 0.778
-margin_left = 79.958
-margin_top = -0.0900269
-margin_right = 110.958
-margin_bottom = 33.91
+anchor_top = 1.0
+anchor_right = 0.75
+anchor_bottom = 1.0
+margin_top = -47.0
+margin_right = 84.75
+margin_bottom = -13.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="music_btn" type="TextureButton" parent="MarginContainer5"]
-margin_right = 31.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer5"]
+margin_right = 267.0
+margin_bottom = 34.0
+custom_constants/separation = 150
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="music_btn" type="TextureButton" parent="MarginContainer5/HBoxContainer"]
+margin_left = 27.0
+margin_right = 58.0
 margin_bottom = 34.0
 texture_normal = ExtResource( 29 )
+
+[node name="credits" type="TextureButton" parent="MarginContainer5/HBoxContainer"]
+margin_left = 208.0
+margin_right = 239.0
+margin_bottom = 34.0
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Container" type="MarginContainer" parent="."]
 anchor_left = 0.5
@@ -853,14 +777,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="credits" type="TextureButton" parent="Container"]
-margin_right = 31.0
-margin_bottom = 34.0
-texture_normal = ExtResource( 8 )
-texture_pressed = ExtResource( 5 )
+[node name="bottom_container" type="MarginContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -15.0
+margin_top = -69.0
+margin_right = 15.0
+margin_bottom = -30.0
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
+
+[node name="play_btn" type="TextureButton" parent="bottom_container"]
+margin_right = 30.0
+margin_bottom = 39.0
+texture_normal = ExtResource( 52 )
+texture_pressed = ExtResource( 51 )
+texture_hover = ExtResource( 51 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="tap_play" type="Label" parent="bottom_container/play_btn"]
+visible = false
+margin_top = 10.0
+margin_right = 243.0
+margin_bottom = 34.0
+custom_fonts/font = SubResource( 22 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "TAP TO PLAY"
+align = 1
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="bottom_container/play_btn/tap_play"]
+anims/fancy_fade = SubResource( 23 )
 
 [node name="GUI" type="MarginContainer" parent="."]
 anchor_left = 0.494
@@ -882,10 +837,10 @@ margin_bottom = 34.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI/VBoxContainer"]
 margin_right = 243.0
-margin_bottom = 34.0
 alignment = 1
 
 [node name="play" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
+visible = false
 margin_left = 106.0
 margin_right = 137.0
 margin_bottom = 34.0
@@ -893,6 +848,7 @@ texture_normal = ExtResource( 23 )
 texture_pressed = ExtResource( 24 )
 
 [node name="Particles2D" parent="." instance=ExtResource( 33 )]
+visible = false
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
@@ -900,44 +856,63 @@ wait_time = 3.0
 [node name="game_over" parent="." instance=ExtResource( 30 )]
 
 [node name="AnimatedSprite" parent="game_over" index="1"]
-frame = 3
+frame = 0
 
 [node name="home_btn" parent="game_over" index="3"]
 texture_normal = ExtResource( 36 )
 texture_pressed = ExtResource( 37 )
 
-[node name="Nebula" type="Node2D" parent="."]
+[node name="TextureButton" type="TextureButton" parent="."]
 visible = false
+margin_left = 217.5
+margin_top = 8.0
+margin_right = 237.5
+margin_bottom = 28.0
+texture_normal = ExtResource( 49 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Particles2D" type="Particles2D" parent="Nebula"]
-modulate = Color( 1.3, 1, 1, 1 )
-amount = 16
-explosiveness = 0.1
-process_material = SubResource( 28 )
+[node name="music_btn2" type="TextureButton" parent="TextureButton"]
+margin_left = -217.5
+margin_top = 388.0
+margin_right = -186.5
+margin_bottom = 422.0
+texture_normal = ExtResource( 29 )
 
-[node name="Shooting_Star" parent="." instance=ExtResource( 42 )]
+[node name="credits2" type="TextureButton" parent="TextureButton"]
+margin_left = 18.5
+margin_top = 388.0
+margin_right = 49.5
+margin_bottom = 422.0
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Node2D2" type="Node2D" parent="."]
-visible = false
-position = Vector2( 238.729, -265.53 )
+[node name="Shooting_Star" parent="." instance=ExtResource( 53 )]
+position = Vector2( 106.5, 1000 )
 
-[node name="Particles2D" type="Particles2D" parent="Node2D2"]
-explosiveness = 1.0
-process_material = SubResource( 33 )
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 35 )
+[node name="AdMob" type="Node" parent="."]
+script = ExtResource( 50 )
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
 [connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/left_btn" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]
 [connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/right_btn" to="." method="_on_right_arrow_pressed"]
-[connection signal="button_up" from="MarginContainer5/music_btn" to="." method="_on_music_button_up"]
-[connection signal="button_up" from="Container/credits" to="." method="_on_credits_button_up"]
-[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/VerticalContainer/inventory_button" to="." method="toInventory"]
+[connection signal="button_up" from="MarginContainer5/HBoxContainer/music_btn" to="." method="_on_music_button_up"]
+[connection signal="button_up" from="MarginContainer5/HBoxContainer/credits" to="." method="_on_credits_button_up"]
+[connection signal="pressed" from="bottom_container/play_btn" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="GUI/VBoxContainer/HBoxContainer/play" method="switch_scene"]
+[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
 [connection signal="timeout" from="Timer" to="." method="game_over"]
 [connection signal="animation_finished" from="game_over/AnimatedSprite" to="." method="game_over_animation_finished"]
 [connection signal="button_up" from="game_over/retry_btn" to="." method="switch_scene"]
 [connection signal="button_up" from="game_over/home_btn" to="." method="hide_game_over"]
+[connection signal="button_up" from="TextureButton/music_btn2" to="." method="_on_music_button_up"]
+[connection signal="button_up" from="TextureButton/credits2" to="." method="_on_credits_button_up"]
+
+[editable path="MarginContainer4/ParallaxBackground"]
 
 [editable path="game_over"]

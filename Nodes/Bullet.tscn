@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Images/player_bullet.png" type="Texture" id=1]
 [ext_resource path="res://Bullet.gd" type="Script" id=2]
 [ext_resource path="res://SFX/Explosion.wav" type="AudioStream" id=3]
-[ext_resource path="res://Images/Bullet_01.png" type="Texture" id=4]
 
 [sub_resource type="AnimatedTexture" id=1]
 fps = 15.0
@@ -11,16 +10,6 @@ frame_0/texture = ExtResource( 1 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 1.51391, 4.10431 )
-
-[sub_resource type="Curve2D" id=3]
-_data = {
-"points": PoolVector2Array(  )
-}
-
-[sub_resource type="Curve2D" id=4]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 2.05272, 0.388407, -3.53222, 8.34006, 3.53222, -8.34006, 35.33, -23.9463, 18.0329, 3.99866, -18.0329, -3.99866, 2.79634, -51.1372 )
-}
 
 [node name="Bullet" type="Sprite"]
 texture = SubResource( 1 )
@@ -51,29 +40,5 @@ __meta__ = {
 }
 
 [node name="Tween" type="Tween" parent="."]
-
-[node name="Path2DLeft" type="Path2D" parent="."]
-visible = false
-position = Vector2( -1.48168, -1.51527 )
-scale = Vector2( 0.656119, 0.730236 )
-curve = SubResource( 3 )
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2DLeft"]
-position = Vector2( 2.2158, 2.17628 )
-
-[node name="Path2DRight" type="Path2D" parent="."]
-visible = false
-position = Vector2( -1.16353, -1.51527 )
-scale = Vector2( 0.44876, 0.730236 )
-curve = SubResource( 4 )
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2DRight"]
-position = Vector2( 2.05272, 0.388407 )
-rotation = -0.507513
-
-[node name="Sprite" type="Sprite" parent="Path2DRight/PathFollow2D"]
-position = Vector2( 1.8161, -0.285555 )
-rotation = 2.40219
-texture = ExtResource( 4 )
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="tween_all_completed" from="Tween" to="." method="fade_again"]

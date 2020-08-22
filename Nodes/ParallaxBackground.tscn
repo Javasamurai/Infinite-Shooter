@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Images/NewAssets/space.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/stars.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Parallax.gd" type="Script" id=3]
 [ext_resource path="res://Images/stars_bg.png" type="Texture" id=4]
-[ext_resource path="res://Images/Layers/Layer_0010_1.png" type="Texture" id=5]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -61,16 +60,3 @@ centered = false
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="ParallaxLayer4" type="ParallaxLayer" parent="."]
-visible = false
-motion_scale = Vector2( 0.5, 1 )
-motion_mirroring = Vector2( 1024, 1 )
-
-[node name="Sprite" type="Sprite" parent="ParallaxLayer4"]
-position = Vector2( 7.59375, -182.25 )
-z_as_relative = false
-texture = ExtResource( 5 )
-centered = false
-region_enabled = true
-region_rect = Rect2( 244, 56, 0, 0 )

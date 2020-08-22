@@ -37,24 +37,9 @@ animations = [ {
 "name": "sonic_boom",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 22 ), ExtResource( 24 ), ExtResource( 23 ) ],
-"loop": true,
-"name": "machine_gun",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "potion",
-"speed": 15.0
-}, {
 "frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
 "loop": true,
 "name": "shield",
-"speed": 15.0
-}, {
-"frames": [ ExtResource( 14 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
-"loop": true,
-"name": "coins_create",
 "speed": 15.0
 }, {
 "frames": [ ExtResource( 21 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 25 ) ],
@@ -62,15 +47,30 @@ animations = [ {
 "name": "minify",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 14 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
+"frames": [ ExtResource( 22 ), ExtResource( 24 ), ExtResource( 23 ) ],
 "loop": true,
-"name": "coins",
-"speed": 15.0
+"name": "machine_gun",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 2 ), ExtResource( 1 ), ExtResource( 8 ), ExtResource( 9 ) ],
 "loop": true,
 "name": "missile",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "potion",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "coins_create",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "coins",
+"speed": 15.0
 } ]
 
 [sub_resource type="CanvasItemMaterial" id=2]

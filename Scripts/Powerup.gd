@@ -22,8 +22,7 @@ func _ready():
 	set_process(true)
 	time_elapsed = 0
 	var random_int = randi()
-	#powerup = powerup_names[random_int % powerup_names.size() + 1]
-	powerup = "missile"
+	powerup = powerup_names[random_int % powerup_names.size() + 1]
 	play(powerup)
 	pass
 

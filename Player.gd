@@ -6,6 +6,7 @@ var fire_delay = 0.15
 var canMoveUp = false
 var canFire
 var bullet 
+var curvy_bullet
 var isSheilded = false
 
 var time_elapsed = 0
@@ -56,6 +57,9 @@ func _ready():
 	is_sonic_boom = false
 	
 	bullet = preload("res://Nodes/Bullet.tscn")
+	curvy_bullet = preload("res://Nodes/CurvyBullet.tscn")
+
+
 	set_process_input(true)
 	window_size = get_viewport_rect().size / 2
 	$Timer.connect("timeout", self, "clear_powerup")
@@ -188,13 +192,22 @@ func drone(target1, target2):
 		drone2.activate(target2)
 	pass
 
-func create_bullet(pos, rotate = false):
-	var bullet_clone_1 = bullet.instance()
-	var extra_space = 0
-	if current_powerup == "missile":
-		bullet_clone_1.current_type = bullet_clone_1.type.MISSILE
+func create_bullet(pos, rotate = false, missile = false):
+	var bullet_clone_1
+	var bullet_clone_2
+	
+	if missile:
+		bullet_clone_1 = curvy_bullet.instance()
+		bullet_clone_2 = curvy_bullet.instance()
+		bullet_clone_2.scale.x = -1
 	else:
-		bullet_clone_1.current_type = bullet_clone_1.type.NORMAL
+		bullet_clone_1 = bullet.instance()
+		bullet_clone_2 = bullet.instance()
+
+	bullet_clone_1.name = "player_bullet_1"
+	bullet_clone_2.name = "player_bullet_2"
+
+	var extra_space = 0
 	#if pos <= 3:
 	#	yield (get_tree().create_timer((pos - 3) / 4), "timeout")
 	if pos >= 2:
@@ -202,13 +215,10 @@ func create_bullet(pos, rotate = false):
 	bullet_clone_1.position = Vector2(self.position.x - (pos * 5), self.position.y + extra_space)
 	if rotate:
 		bullet_clone_1.rotation = -20
-	bullet_clone_1.name = "player_bullet_1"
 
-	var bullet_clone_2 = bullet.instance()
 	if rotate:
 		bullet_clone_2.rotation = 20
 	bullet_clone_2.position = Vector2(self.position.x + (pos * 5), self.position.y + extra_space)
-	bullet_clone_2.name = "player_bullet_2"
 	bullet_clone_1.fire("UP", fire_speed)
 	get_parent().add_child(bullet_clone_1)
 	bullet_clone_2.fire("UP", fire_speed)
@@ -218,13 +228,15 @@ func create_bullet(pos, rotate = false):
 func fire():
 	if canFire and health > 0:
 		canFire = false
+		if current_powerup == "missile":
+			create_bullet(1, false, true)
 		create_bullet(1)
 		if global.selected_plane >= 2:
 			create_bullet(2, true)
 			if global.selected_plane == 3:
 				create_bullet(3, true)
 
-		current_powerup = ""
+		#current_powerup = ""
 		if current_powerup == "Machine gun":
 			fire_delay = 0.01
 			create_bullet(2, true)

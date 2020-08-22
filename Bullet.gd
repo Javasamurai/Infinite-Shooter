@@ -2,7 +2,7 @@ extends Sprite
 
 var area_2d
 var time_elapsed = 0
-var Bullets
+#var Bullets
 var DIRECTION = "DOWN"
 var is_firing = false
 var fire_speed = 0
@@ -20,7 +20,7 @@ func _ready():
 	global = get_node("/root/Globals")
 	area_2d = $bullet_area
 	area_2d.connect("body_entered",self,"_on_bullet_hit")
-	Bullets = get_parent().get("Bullets")
+	#Bullets = get_parent().get("Bullets")
 	tween = get_node("Tween")
 	fade_again()
 	pass
