@@ -60,19 +60,19 @@ frame_8/delay_sec = 0.0
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 34 ) ],
+"frames": [ ExtResource( 23 ) ],
 "loop": true,
-"name": "4_muzzle",
+"name": "3",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 32 ) ],
+"frames": [ ExtResource( 33 ) ],
 "loop": true,
-"name": "6",
+"name": "5",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 37 ) ],
+"frames": [ ExtResource( 20 ) ],
 "loop": true,
-"name": "4",
+"name": "2",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],
@@ -80,9 +80,19 @@ animations = [ {
 "name": "1",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 23 ) ],
+"frames": [ ExtResource( 37 ) ],
 "loop": true,
-"name": "3",
+"name": "4",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 32 ) ],
+"loop": true,
+"name": "6",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 34 ) ],
+"loop": true,
+"name": "4_muzzle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 28 ) ],
@@ -95,21 +105,6 @@ animations = [ {
 "name": "2_muzzle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 20 ) ],
-"loop": true,
-"name": "2",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 26 ) ],
-"loop": true,
-"name": "3_muzzle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 33 ) ],
-"loop": true,
-"name": "5",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 36 ) ],
 "loop": true,
 "name": "6_muzzle",
@@ -118,6 +113,11 @@ animations = [ {
 "frames": [ ExtResource( 35 ) ],
 "loop": true,
 "name": "5_muzzle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 26 ) ],
+"loop": true,
+"name": "3_muzzle",
 "speed": 5.0
 } ]
 

@@ -168,6 +168,8 @@ func game_over():
 
 func _process(delta):
 	
+	$ParallaxBackground/ParallaxLayer2/bg.position.x = $Player.position.x / 10
+
 	if Input.is_key_pressed(KEY_ALT):
 		$Player.drone(getRandomEnemy(), getRandomEnemy())
 

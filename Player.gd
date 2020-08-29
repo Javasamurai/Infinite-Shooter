@@ -339,7 +339,10 @@ func hit_complete(_object, _path):
 	self.modulate = Color.white
 	#$muzzles.visible = false
 	#$muzzles1.visible = false
-	rotation_degrees = 0
+	
+	if rotation_degrees !=0:
+		tween.interpolate_property(get_node("."), "rotation_degrees", rotation_degrees,0,0.075,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+		tween.start()
 	pass
 
 func _on_powerup_animation_finished():
