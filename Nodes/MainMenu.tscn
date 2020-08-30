@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=86 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
 [ext_resource path="res://Images/UI_Level_1_Plane.png" type="Texture" id=2]
@@ -42,6 +42,8 @@
 [ext_resource path="res://Images/Meteor_02.png" type="Texture" id=40]
 [ext_resource path="res://Images/Meteor_01.png" type="Texture" id=41]
 [ext_resource path="res://Plane_Flame.tscn" type="PackedScene" id=42]
+[ext_resource path="res://Images/UI/Main_Title/Main_Title0000.png" type="Texture" id=43]
+[ext_resource path="res://Images/Shield/Layer 101.png" type="Texture" id=44]
 
 [sub_resource type="Animation" id=1]
 resource_name = "cloud_movement"
@@ -375,6 +377,40 @@ fog_enabled = true
 glow_enabled = true
 glow_blend_mode = 0
 adjustment_enabled = true
+
+[sub_resource type="Curve" id=36]
+_data = [ Vector2( 0, 0.981832 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.990923 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=37]
+curve = SubResource( 36 )
+
+[sub_resource type="ParticlesMaterial" id=38]
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+angular_velocity = 720.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 37 )
+
+[sub_resource type="Curve" id=39]
+_data = [ Vector2( 0.00168919, 0.871422 ), 0.0, 0.0, 0, 0, Vector2( 0.498311, 0.988379 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.862331 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=40]
+curve = SubResource( 39 )
+
+[sub_resource type="ParticlesMaterial" id=41]
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+angular_velocity = 393.16
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 40 )
 
 [node name="Control" type="Control"]
 modulate = Color( 1, 1, 1, 0.905882 )
@@ -916,6 +952,12 @@ explosiveness = 0.1
 process_material = SubResource( 28 )
 
 [node name="Shooting_Star" parent="." instance=ExtResource( 42 )]
+position = Vector2( 174.82, 132.65 )
+rotation = -0.715585
+
+[node name="Shooting_Star2" parent="." instance=ExtResource( 42 )]
+position = Vector2( 117.169, 258.36 )
+rotation = -0.715585
 
 [node name="Node2D2" type="Node2D" parent="."]
 visible = false
@@ -927,6 +969,26 @@ process_material = SubResource( 33 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 35 )
+
+[node name="Main_Title0000" type="Sprite" parent="."]
+position = Vector2( 122.74, 187.838 )
+texture = ExtResource( 43 )
+
+[node name="Particles2D2" type="Particles2D" parent="."]
+modulate = Color( 1, 1, 1.5, 1 )
+position = Vector2( 133.888, -101.822 )
+scale = Vector2( 1.5, 1.5 )
+explosiveness = 1.0
+process_material = SubResource( 38 )
+texture = ExtResource( 44 )
+
+[node name="Particles2D3" type="Particles2D" parent="."]
+modulate = Color( 1, 1, 1.5, 1 )
+amount = 2
+lifetime = 2.5
+explosiveness = 0.98
+process_material = SubResource( 41 )
+texture = ExtResource( 44 )
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
 [connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/left_btn" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]
