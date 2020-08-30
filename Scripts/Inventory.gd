@@ -11,7 +11,7 @@ func _ready():
 	$moon/moon_tween.interpolate_property($moon, "rect_rotation", 0, 36000, 1500,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$moon/moon_tween.start()
 	plane_node = preload("res://Nodes/inventory_plane.tscn")
-	
+
 	for i in range(6):
 		plane_clone = plane_node.instance()
 		plane_clone.rect_position = Vector2.ZERO
@@ -19,12 +19,8 @@ func _ready():
 		plane_clone.name = "Plane " + str(i + 1)
 		plane_clone.texture = load("res://Images/UI_Planes/UI_Level_" + str(i + 1) + "_Plane.png")
 	
-		$ScrollContainer/Control.add_child(plane_clone)
-	#$ScrollContainer/Control.rect_size = Vector2($ScrollContainer/Control.get_child_count() * 80, 50)
-	pass
+		$Control.add_child(plane_clone)
 
-func scrollStarted():
-	#print(scroll_vertical)	
 	pass
 
 func toMainMenu():

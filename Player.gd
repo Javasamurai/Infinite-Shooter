@@ -90,26 +90,12 @@ func _process(delta):
 		emit_signal("player_die")
 	movement()
 
-	# Gyroscope movement logic
-	# var acc = int(Input.get_accelerometer().x)
-
-	#if acc < 0:
-	#	movement(DIRECTION.LEFT, acc)
-	#elif int (acc) > 0:
-	#	movement(DIRECTION.RIGHT, acc)
-
-	#if canMoveUp:
-	#	movement(DIRECTION.UP)
-	#else:
-	#	movement(DIRECTION.DOWN)
-	#pass
-
 func _input(event):
 	var extra_speed
 	var move_to = Vector2.ONE
 	if event is InputEventScreenDrag:
 		is_pressed = true
-			
+
 		#move_to.x = (position.x + event.relative.x) * 1 
 		#move_to.y = (position.y + event.relative.y) * 1
 		#position = move_to

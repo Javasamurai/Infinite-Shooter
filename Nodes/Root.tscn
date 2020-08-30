@@ -1,6 +1,7 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
+[ext_resource path="res://Nodes/dialogue.gd" type="Script" id=2]
 [ext_resource path="res://Images/arrow.png" type="Texture" id=3]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=6]
@@ -84,6 +85,9 @@ tracks/1/keys = {
 
 [sub_resource type="CanvasItemMaterial" id=4]
 blend_mode = 2
+
+[sub_resource type="DynamicFont" id=16]
+font_data = ExtResource( 6 )
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.337255, 0.847059, 0.372549, 1 )
@@ -332,6 +336,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="dialogue" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -120.0
+margin_top = 179.0
+margin_right = 120.0
+margin_bottom = 193.0
+custom_fonts/font = SubResource( 16 )
+text = "Once upon a time"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="dialogue_timer" type="Timer" parent="Control/dialogue"]
+
 [node name="PowerupEnergy" type="ProgressBar" parent="Control"]
 visible = false
 anchor_left = 0.5
@@ -514,6 +536,7 @@ custom_fonts/font = SubResource( 14 )
 text = "In a galaxy far far away "
 align = 1
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -539,6 +562,7 @@ anims/to_up = SubResource( 15 )
 [connection signal="tween_completed" from="Camera2D/Tween" to="Camera2D" method="_on_Tween_tween_completed"]
 [connection signal="timeout" from="Camera2D/wave_timer" to="Camera2D" method="_on_wave_timer_timeout"]
 [connection signal="timeout" from="Camera2D/powerup_timer" to="Camera2D" method="check_powerup"]
+[connection signal="timeout" from="Control/dialogue/dialogue_timer" to="Control/dialogue" method="_on_dialogue_timer_timeout"]
 [connection signal="timeout" from="Control/PowerupEnergy/powerup_timer" to="Camera2D" method="_on_powerup_timer_timeout"]
 [connection signal="animation_finished" from="Control/center_container/announcement_panel/announcement_anim" to="Camera2D" method="_on_Tween_tween_all_completed"]
 

@@ -13,9 +13,39 @@ _global_script_classes=[ {
 "class": "AdMob",
 "language": "GDScript",
 "path": "res://admob-lib/admob.gd"
+}, {
+"base": "InputEventAction",
+"class": "InputEventSwipe",
+"language": "GDScript",
+"path": "res://SwipeModule/InputEventSwipe.gd"
+}, {
+"base": "_SwipeEventCore",
+"class": "SwipeModule",
+"language": "GDScript",
+"path": "res://SwipeModule/SwipeModule.gd"
+}, {
+"base": "InputEventAction",
+"class": "ThrowedFooter",
+"language": "GDScript",
+"path": "res://SwipeModule/ThrowedFooter.gd"
+}, {
+"base": "InputEventAction",
+"class": "ThrowedHeader",
+"language": "GDScript",
+"path": "res://SwipeModule/ThrowedHeader.gd"
+}, {
+"base": "Node",
+"class": "_SwipeEventCore",
+"language": "GDScript",
+"path": "res://SwipeModule/_SwipeEventCore.gd"
 } ]
 _global_script_class_icons={
-"AdMob": "res://admob-lib/icon.png"
+"AdMob": "res://admob-lib/icon.png",
+"InputEventSwipe": "res://SwipeModule/SwipeEventCore.png",
+"SwipeModule": "",
+"ThrowedFooter": "res://SwipeModule/SwipeEventCore.png",
+"ThrowedHeader": "res://SwipeModule/SwipeEventCore.png",
+"_SwipeEventCore": "res://SwipeModule/SwipeEventCore.png"
 }
 
 [application]

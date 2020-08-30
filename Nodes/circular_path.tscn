@@ -18,7 +18,7 @@ rotation = 0.0565843
 loop = false
 
 [node name="Enemy" parent="path1" instance=ExtResource( 1 )]
-position = Vector2( -0.392227, -7.0602 )
+position = Vector2( -8.43963, -7.53476 )
 rotation = -0.197395
 animation = "100"
 playing = true

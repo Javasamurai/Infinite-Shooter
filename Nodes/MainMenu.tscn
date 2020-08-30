@@ -1,7 +1,7 @@
-[gd_scene load_steps=114 format=2]
+[gd_scene load_steps=113 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
-[ext_resource path="res://Images/UI_Planes/UI_Level_2_Plane.png" type="Texture" id=2]
+[ext_resource path="res://Images/UI_Planes/UI_Level_1_Plane.png" type="Texture" id=2]
 [ext_resource path="res://Images/Side_Flame_01.png" type="Texture" id=3]
 [ext_resource path="res://SFX/Death Screams/Robot/sfx_deathscream_robot1.wav" type="AudioStream" id=4]
 [ext_resource path="res://Images/UI/About_ON.png" type="Texture" id=5]
@@ -49,7 +49,6 @@
 [ext_resource path="res://Images/left_arrow-selected.png" type="Texture" id=47]
 [ext_resource path="res://Images/right_arrow_selected.png" type="Texture" id=48]
 [ext_resource path="res://Images/NewAssets/hamburger.png" type="Texture" id=49]
-[ext_resource path="res://Images/UI/Play_btn_pressed.png" type="Texture" id=51]
 [ext_resource path="res://Images/UI/Play_Button.png" type="Texture" id=52]
 [ext_resource path="res://Shooting_Star.tscn" type="PackedScene" id=53]
 [ext_resource path="res://Images/UI/Main_Title/Main_Title0026.png" type="Texture" id=54]
@@ -355,6 +354,18 @@ anims/left = SubResource( 3 )
 anims/meteor = SubResource( 4 )
 anims/right = SubResource( 5 )
 
+[node name="Shooting_Star" parent="." instance=ExtResource( 53 )]
+position = Vector2( 248.5, 298 )
+rotation = -1.36834
+
+[node name="Shooting_Star2" parent="." instance=ExtResource( 53 )]
+position = Vector2( 248.5, 82 )
+rotation = -1.36834
+
+[node name="Shooting_Star3" parent="." instance=ExtResource( 53 )]
+position = Vector2( 248.5, 82 )
+rotation = -1.36834
+
 [node name="MarginContainer4" type="MarginContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -435,7 +446,8 @@ centered = false
 
 [node name="rotating_earth2" type="Sprite" parent="MarginContainer2"]
 material = SubResource( 9 )
-position = Vector2( 84, 107 )
+position = Vector2( 84, 134 )
+scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 46 )
 
 [node name="Tween" type="Tween" parent="MarginContainer2/rotating_earth2"]
@@ -497,17 +509,18 @@ __meta__ = {
 anchor_left = 0.527
 anchor_right = 0.527
 margin_left = -128.061
-margin_top = 25.0
+margin_top = 43.0
 margin_right = 114.939
-margin_bottom = 57.0
+margin_bottom = 75.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="title_bg" type="AnimatedSprite" parent="MarginContainer6"]
-position = Vector2( 119, 119 )
+position = Vector2( 121.5, 119 )
+scale = Vector2( 0.9, 0.9 )
 frames = SubResource( 12 )
-frame = 26
+frame = 35
 playing = true
 
 [node name="title" type="Label" parent="MarginContainer6"]
@@ -551,7 +564,6 @@ margin_top = -202.5
 margin_right = 128.5
 margin_bottom = 202.5
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -583,9 +595,9 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 128.0
+margin_top = 145.0
 margin_right = 257.0
-margin_bottom = 192.0
+margin_bottom = 209.0
 mouse_filter = 2
 custom_constants/separation = 10
 alignment = 1
@@ -687,14 +699,16 @@ texture_normal = ExtResource( 9 )
 texture_pressed = ExtResource( 48 )
 
 [node name="VerticalContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 242.0
+margin_top = 259.0
 margin_right = 257.0
-margin_bottom = 276.0
+margin_bottom = 259.0
 
 [node name="inventory_button" type="TextureButton" parent="MarginContainer/VBoxContainer2/VerticalContainer"]
+visible = false
 margin_left = 113.0
+margin_top = -17.0
 margin_right = 144.0
-margin_bottom = 34.0
+margin_bottom = 17.0
 texture_normal = ExtResource( 34 )
 texture_pressed = ExtResource( 45 )
 texture_hover = ExtResource( 45 )
@@ -705,18 +719,18 @@ __meta__ = {
 [node name="Watch Ad" type="Button" parent="MarginContainer/VBoxContainer2/VerticalContainer"]
 visible = false
 margin_left = 91.0
-margin_top = 7.0
+margin_top = -10.0
 margin_right = 166.0
-margin_bottom = 27.0
+margin_bottom = 10.0
 text = "Buy Plane"
 
 [node name="choose_lbl" type="Label" parent="MarginContainer/VBoxContainer2/VerticalContainer"]
 visible = false
 modulate = Color( 0.815686, 0.686275, 0.180392, 1 )
 margin_left = 33.0
-margin_top = 9.0
+margin_top = -8.0
 margin_right = 223.0
-margin_bottom = 24.0
+margin_bottom = 7.0
 custom_fonts/font = SubResource( 20 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 0.458824 )
 text = "Choose your fighter"
@@ -726,6 +740,7 @@ __meta__ = {
 }
 
 [node name="MarginContainer5" type="MarginContainer" parent="."]
+visible = false
 anchor_top = 1.0
 anchor_right = 0.75
 anchor_bottom = 1.0
@@ -737,7 +752,7 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer5"]
-margin_right = 267.0
+margin_right = 574.0
 margin_bottom = 34.0
 custom_constants/separation = 150
 alignment = 1
@@ -746,14 +761,14 @@ __meta__ = {
 }
 
 [node name="music_btn" type="TextureButton" parent="MarginContainer5/HBoxContainer"]
-margin_left = 27.0
-margin_right = 58.0
+margin_left = 181.0
+margin_right = 212.0
 margin_bottom = 34.0
 texture_normal = ExtResource( 29 )
 
 [node name="credits" type="TextureButton" parent="MarginContainer5/HBoxContainer"]
-margin_left = 208.0
-margin_right = 239.0
+margin_left = 362.0
+margin_right = 393.0
 margin_bottom = 34.0
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 5 )
@@ -763,14 +778,54 @@ __meta__ = {
 }
 
 [node name="Container" type="MarginContainer" parent="."]
-anchor_left = 0.5
-anchor_top = 0.82
-anchor_right = 0.5
-anchor_bottom = 0.82
-margin_left = -106.5
-margin_top = -17.1
-margin_right = -75.5
-margin_bottom = 16.9
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_top = 23.0
+margin_right = -9.0
+margin_bottom = 57.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hamburger" type="TextureButton" parent="Container"]
+margin_right = 31.0
+margin_bottom = 34.0
+texture_normal = ExtResource( 49 )
+
+[node name="music_btn2" type="TextureButton" parent="Container/hamburger"]
+visible = false
+margin_left = -5.0
+margin_top = 33.0
+margin_right = 26.0
+margin_bottom = 67.0
+texture_normal = ExtResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="credits2" type="TextureButton" parent="Container/hamburger"]
+visible = false
+margin_left = -5.0
+margin_top = 81.0
+margin_right = 26.0
+margin_bottom = 115.0
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="inventory" type="TextureButton" parent="Container/hamburger"]
+visible = false
+margin_left = -5.0
+margin_top = 126.411
+margin_right = 26.0
+margin_bottom = 160.411
+texture_normal = ExtResource( 34 )
+texture_pressed = ExtResource( 45 )
+texture_hover = ExtResource( 45 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -793,11 +848,8 @@ __meta__ = {
 margin_right = 30.0
 margin_bottom = 39.0
 texture_normal = ExtResource( 52 )
-texture_pressed = ExtResource( 51 )
-texture_hover = ExtResource( 51 )
-__meta__ = {
-"_edit_lock_": true
-}
+texture_pressed = ExtResource( 24 )
+texture_hover = ExtResource( 24 )
 
 [node name="tap_play" type="Label" parent="bottom_container/play_btn"]
 visible = false
@@ -853,6 +905,9 @@ wait_time = 3.0
 
 [node name="game_over" parent="." instance=ExtResource( 30 )]
 
+[node name="AnimatedSprite" parent="game_over" index="1"]
+frame = 3
+
 [node name="home_btn" parent="game_over" index="3"]
 texture_normal = ExtResource( 36 )
 texture_pressed = ExtResource( 37 )
@@ -885,10 +940,6 @@ texture_pressed = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Shooting_Star" parent="." instance=ExtResource( 53 )]
-position = Vector2( 241, -25 )
-rotation = -1.36834
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
 [connection signal="button_up" from="MarginContainer/VBoxContainer2/VBoxContainer/left_btn" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/right_arrow" to="." method="_on_right_arrow_pressed"]
@@ -896,6 +947,9 @@ rotation = -1.36834
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VerticalContainer/inventory_button" to="." method="toInventory"]
 [connection signal="button_up" from="MarginContainer5/HBoxContainer/music_btn" to="." method="_on_music_button_up"]
 [connection signal="button_up" from="MarginContainer5/HBoxContainer/credits" to="." method="_on_credits_button_up"]
+[connection signal="button_up" from="Container/hamburger/music_btn2" to="." method="_on_music_button_up"]
+[connection signal="button_up" from="Container/hamburger/credits2" to="." method="_on_credits_button_up"]
+[connection signal="pressed" from="Container/hamburger/inventory" to="." method="toInventory"]
 [connection signal="pressed" from="bottom_container/play_btn" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="GUI/VBoxContainer/HBoxContainer/play" method="switch_scene"]
