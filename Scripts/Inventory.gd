@@ -12,10 +12,9 @@ func _ready():
 	$moon/moon_tween.start()
 	plane_node = preload("res://Nodes/inventory_plane.tscn")
 
-	for i in range(6):
+	for i in range(8):
 		plane_clone = plane_node.instance()
 		plane_clone.rect_position = Vector2.ZERO
-		#plane_clone.rect_position = Vector2( i * 70, 0)
 		plane_clone.name = "Plane " + str(i + 1)
 		plane_clone.texture = load("res://Images/UI_Planes/UI_Level_" + str(i + 1) + "_Plane.png")
 	

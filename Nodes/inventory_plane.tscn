@@ -1,17 +1,17 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Images/New-Planes/Type_A_Level_02_Plane/Level_02_Plane.png" type="Texture" id=1]
+[ext_resource path="res://Images/UI_Planes/UI_Level_1_Plane.png" type="Texture" id=1]
 [ext_resource path="res://SwipeModule/SwipeModule.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
 
 [node name="plane2" type="TextureRect"]
-anchor_left = 0.099
-anchor_right = 0.099
-margin_left = -24.057
-margin_right = 24.943
-margin_bottom = 46.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 0.5
+margin_right = 110.5
+margin_bottom = 110.0
 texture = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

@@ -185,9 +185,8 @@ func create_bullet(pos, rotate = false, missile = false):
 	if missile:
 		bullet_clone_1 = curvy_bullet.instance()
 		bullet_clone_2 = curvy_bullet.instance()
-		
-		bullet_clone_1.modulate = Color("#d161a5")
-		bullet_clone_2.modulate = Color("#d161a5")
+		bullet_clone_1.set_bullet_texture("res://Images/Bullet_purple.png")
+		bullet_clone_2.set_bullet_texture("res://Images/Bullet_purple.png")
 
 		bullet_clone_2.scale.x = -1
 	else:
@@ -204,10 +203,10 @@ func create_bullet(pos, rotate = false, missile = false):
 		extra_space = pos
 	bullet_clone_1.position = Vector2(self.position.x - (pos * 5), self.position.y + extra_space)
 	if rotate:
-		bullet_clone_1.rotation = -20
+		bullet_clone_1.rotation = -10
 
 	if rotate:
-		bullet_clone_2.rotation = 20
+		bullet_clone_2.rotation = 10
 	bullet_clone_2.position = Vector2(self.position.x + (pos * 5), self.position.y + extra_space)
 	bullet_clone_1.fire("UP", fire_speed)
 	get_parent().add_child(bullet_clone_1)
@@ -246,6 +245,7 @@ func fire():
 		#else:
 		#tween.interpolate_property($Player_bg, "modulate",Color.white, Color.transparent,0.075,Tween.TRANS_SINE,Tween.TRANS_LINEAR)
 		#tween.start()
+
 	pass
 	
 func sonic_boom():
@@ -333,10 +333,6 @@ func hit_complete(_object, _path):
 
 func _on_powerup_animation_finished():
 	$powerup.visible = false
-	pass
-
-func _on_swipe_area_mouse_entered():
-	print("Mouse entered")
 	pass
 
 func _on_muzzle_timer_timeout():

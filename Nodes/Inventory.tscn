@@ -19,6 +19,7 @@
 [ext_resource path="res://Nodes/inventory_strap.gd" type="Script" id=19]
 
 [sub_resource type="DynamicFont" id=1]
+size = 20
 font_data = ExtResource( 12 )
 
 [sub_resource type="DynamicFont" id=2]
@@ -130,9 +131,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -20.0
-margin_top = -46.0
-margin_right = 20.0
-margin_bottom = -32.0
+margin_top = -99.0
+margin_right = 40.0
+margin_bottom = -78.0
 custom_fonts/font = SubResource( 1 )
 text = "Level 1"
 __meta__ = {
@@ -140,11 +141,10 @@ __meta__ = {
 }
 
 [node name="Control" type="HBoxContainer" parent="."]
-margin_left = -44.0
-margin_top = 174.0
-margin_right = -44.0
-margin_bottom = 174.0
-custom_constants/separation = 25
+margin_top = 141.0
+margin_bottom = 141.0
+custom_constants/separation = 20
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -172,9 +172,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -49.0
-margin_top = 72.0
+margin_top = 87.0
 margin_right = 49.0
-margin_bottom = 112.0
+margin_bottom = 127.0
 texture_normal = ExtResource( 10 )
 texture_pressed = ExtResource( 9 )
 texture_hover = ExtResource( 9 )
@@ -196,15 +196,16 @@ __meta__ = {
 [node name="coins" type="AnimatedSprite" parent="buy_button/price"]
 position = Vector2( 41, 8 )
 frames = SubResource( 3 )
-frame = 3
+frame = 1
 playing = true
 
 [node name="ParallaxBackground" parent="." instance=ExtResource( 8 )]
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2( 140, 216 )
+position = Vector2( 129, 216 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, -22 )
 shape = SubResource( 4 )
 [connection signal="pressed" from="back_btn" to="." method="toMainMenu"]
 [connection signal="area_entered" from="Area2D" to="." method="onPlaneEntered"]

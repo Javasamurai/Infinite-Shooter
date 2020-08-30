@@ -22,6 +22,7 @@ var music_btn
 var score_lbl
 var music = false
 var coins_lbl
+var hamburger_visible = false
 
 export(NodePath) var earth
 
@@ -52,19 +53,20 @@ func _ready():
 	var rot_tween = earth_node.get_node("Tween")
 	rot_tween.interpolate_property(earth_node, "rotation_degrees", 0, 36000, 1500,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	rot_tween.start()
-
+	
 	if global.selected_plane == 1:
 		left_arrow.modulate = Color(0,0.0, 0.75)
+		left_arrow.disabled = true
 	if global.selected_plane == 3:
 		right_arrow.modulate = Color.white
 
-	if global.over:
-		if !music:
-			get_node("/root/Control/AudioManager/death").play()
-		global.over = false
-		$game_over.visible=true
-		
-		$Timer.start(3)
+	#if global.over:
+	#	if !music:
+	#		get_node("/root/Control/AudioManager/death").play()
+	#	global.over = false
+	#	$game_over.visible=true
+	#
+	#	$Timer.start(3)
 	
 	pass
 
@@ -82,7 +84,7 @@ func _process(delta):
 		if time_spent > 1.25 and flames_lvl_3_left.visible == false:
 			flames_lvl_3_left.visible = true
 			flames_lvl_3_right.visible = true
-			plane_node.set_texture(load("res://Images/UI_Planes/level_" + str(global.selected_plane) + "_05.png"))
+			plane_node.set_texture(load("res://Images/UI_Planes/UI_Level_" + str(global.selected_plane) + "_Plane_05.png"))
 
 func _on_arrow_pressed(_direction):
 	if !music:
@@ -102,7 +104,7 @@ func _on_arrow_pressed(_direction):
 	if _direction == direction.RIGHT:
 		left_arrow.modulate = Color.white
 		left_arrow.disabled = false
-		if global.selected_plane < 6:
+		if global.selected_plane < 8:
 			right_arrow.disabled = false
 			right_arrow.modulate = Color.white
 			global.selected_plane = global.selected_plane + 1
@@ -114,8 +116,11 @@ func _on_arrow_pressed(_direction):
 
 	if global.selected_plane == 1:
 		left_arrow.modulate = Color(0,0.0, 0.75)
-	if global.selected_plane == 5:
+		left_arrow.disabled = true
+	if global.selected_plane == 8:
 		right_arrow.modulate = Color(0,0.0, 0.75)
+		right_arrow.disabled = true
+
 		
 	if global.selected_plane == 3:
 		time_spent = 0
@@ -126,7 +131,7 @@ func _on_arrow_pressed(_direction):
 		anim_tex.set_fps(3)
 
 		for i in range(6):
-			texture[i+1] = load("res://Images/UI_Planes/level_" + str(global.selected_plane) + "_0" + str(i + 1) + ".png")
+			texture[i+1] = load("res://Images/UI_Planes/UI_Level_" + str(global.selected_plane) + "_Plane_0" + str(i + 1) + ".png")
 			anim_tex.set_frame_texture(i, texture[i+1])
 		plane_node.set_texture(anim_tex)
 
@@ -164,7 +169,7 @@ func _on_right_arrow_pressed():
 	#switch_plane(false)
 
 func _on_left_arrow_pressed():
-	print(left_arrow.disabled)
+
 	if !left_arrow.disabled:
 		$anim.play("left")
 	#_on_arrow_pressed(direction.LEFT)
@@ -213,6 +218,10 @@ func fill_values():
 	pass
 
 func _on_credits_button_up():
+	get_tree().change_scene("res://Nodes/Credits.tscn")
+	pass
+
+func _on_enemies_button_up():
 	get_tree().change_scene("res://Nodes/Info.tscn")
 	pass
 
@@ -274,4 +283,16 @@ func _on_anim_animation_finished(anim_name):
 		_on_arrow_pressed(direction.LEFT)
 	elif (anim_name == "right"):
 		_on_arrow_pressed(direction.RIGHT)
+	pass
+
+
+func _on_hamburger_pressed():
+	hamburger_visible = !hamburger_visible
+	
+	#$Container/hamburger/Control.visible = hamburger_visible
+	if !hamburger_visible:
+		$Container/hamburger/animation_player.play_backwards("slide_down")
+	else:
+		$Container/hamburger/animation_player.play("slide_down")
+	#$Container/hamburger/Control.visible = hamburger_visible
 	pass

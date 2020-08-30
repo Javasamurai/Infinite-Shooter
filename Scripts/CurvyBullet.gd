@@ -20,3 +20,8 @@ func fire(direction, _fire_speed):
 	fired = true
 	fire_speed = _fire_speed
 	pass
+	
+func set_bullet_texture(path):
+	$PathFollow2D/player_bullet.set_texture(load(str(path)))
+	pass
+

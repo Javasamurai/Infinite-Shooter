@@ -9,10 +9,9 @@ onready var powerup_names = {
 	2: "sonic boom",
 	3: "potion",
 	4: "shield",
-	5: "Coins",
-	6: "coins crate",
-	7: "Machine gun",
-	8: "missile"
+	5: "coins",
+	6: "Machine gun",
+	7: "missile"
 }
 
 var powerup = null

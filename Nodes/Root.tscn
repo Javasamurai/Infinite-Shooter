@@ -1,12 +1,15 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/dialogue.gd" type="Script" id=2]
 [ext_resource path="res://Images/arrow.png" type="Texture" id=3]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://game_over.tscn" type="PackedScene" id=5]
 [ext_resource path="res://fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=6]
 [ext_resource path="res://Nodes/ParallaxBackground.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Images/UI/Home_ON.png" type="Texture" id=8]
 [ext_resource path="res://Images/UI/Next_Wave.png" type="Texture" id=9]
+[ext_resource path="res://Images/UI/Home_OFF.png" type="Texture" id=10]
 [ext_resource path="res://SFX/Powerup.wav" type="AudioStream" id=12]
 [ext_resource path="res://Images/Pink_Gradient.png" type="Texture" id=13]
 [ext_resource path="res://Scripts/ScreenShake.gd" type="Script" id=14]
@@ -86,15 +89,15 @@ tracks/1/keys = {
 [sub_resource type="CanvasItemMaterial" id=4]
 blend_mode = 2
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 6 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.337255, 0.847059, 0.372549, 1 )
 corner_radius_top_left = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.235294, 0.231373, 0.231373, 0 )
 border_color = Color( 0, 0, 0, 1 )
 border_blend = true
@@ -103,17 +106,17 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxTexture" id=7]
+[sub_resource type="StyleBoxTexture" id=8]
 texture = ExtResource( 23 )
 region_rect = Rect2( 0, 0, 47, 5 )
 
-[sub_resource type="StyleBoxTexture" id=8]
+[sub_resource type="StyleBoxTexture" id=9]
 texture = ExtResource( 22 )
 region_rect = Rect2( 0, 0, 47, 5 )
 
-[sub_resource type="BitmapFont" id=9]
+[sub_resource type="BitmapFont" id=10]
 
-[sub_resource type="AnimatedTexture" id=10]
+[sub_resource type="AnimatedTexture" id=11]
 frames = 4
 fps = 10.0
 frame_0/texture = ExtResource( 15 )
@@ -124,22 +127,21 @@ frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 20 )
 frame_3/delay_sec = 0.0
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=12]
 font_data = ExtResource( 6 )
 
-[sub_resource type="CanvasItemMaterial" id=12]
+[sub_resource type="CanvasItemMaterial" id=13]
 blend_mode = 2
 
-[sub_resource type="StyleBoxFlat" id=13]
+[sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0.117647, 0.105882, 0.105882, 1 )
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=15]
 size = 15
 extra_spacing_space = 2
 font_data = ExtResource( 17 )
 
-[sub_resource type="Animation" id=15]
-resource_name = "to_up"
+[sub_resource type="Animation" id=16]
 length = 1.5
 step = 0.25
 tracks/0/type = "value"
@@ -310,9 +312,6 @@ stream = ExtResource( 16 )
 visible = false
 position = Vector2( -3, -176 )
 
-[node name="Enemy" parent="Camera2D/path/path1" index="0"]
-frame = 1
-
 [node name="crazy_enemies_path" type="Node2D" parent="Camera2D"]
 
 [node name="wave_timer" type="Timer" parent="Camera2D"]
@@ -345,8 +344,7 @@ margin_left = -120.0
 margin_top = 179.0
 margin_right = 120.0
 margin_bottom = 193.0
-custom_fonts/font = SubResource( 16 )
-text = "Once upon a time"
+custom_fonts/font = SubResource( 5 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -364,8 +362,8 @@ margin_right = 103.0
 margin_bottom = -128.0
 rect_scale = Vector2( 1, 0.2 )
 mouse_filter = 2
-custom_styles/fg = SubResource( 5 )
-custom_styles/bg = SubResource( 6 )
+custom_styles/fg = SubResource( 6 )
+custom_styles/bg = SubResource( 7 )
 custom_colors/font_color = Color( 1, 1, 1, 0 )
 value = 30.0
 rounded = true
@@ -381,9 +379,9 @@ margin_left = 6.0
 margin_top = -166.0
 margin_right = 140.0
 margin_bottom = -152.0
-custom_styles/fg = SubResource( 7 )
-custom_styles/bg = SubResource( 8 )
-custom_fonts/font = SubResource( 9 )
+custom_styles/fg = SubResource( 8 )
+custom_styles/bg = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 step = 20.0
 value = 100.0
 __meta__ = {
@@ -396,7 +394,7 @@ margin_top = -6.0
 margin_right = 9.0
 margin_bottom = 19.0
 rect_scale = Vector2( 1.5, 1.5 )
-texture = SubResource( 10 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -420,7 +418,7 @@ visible = false
 margin_left = 82.0
 margin_right = 99.0
 margin_bottom = 25.0
-texture = SubResource( 10 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -430,7 +428,7 @@ visible = false
 margin_left = 103.0
 margin_right = 120.0
 margin_bottom = 25.0
-texture = SubResource( 10 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -440,7 +438,7 @@ visible = false
 margin_left = 124.0
 margin_right = 141.0
 margin_bottom = 25.0
-texture = SubResource( 10 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -450,7 +448,7 @@ visible = false
 margin_left = 145.0
 margin_right = 162.0
 margin_bottom = 25.0
-texture = SubResource( 10 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -460,7 +458,7 @@ visible = false
 margin_left = 166.0
 margin_right = 183.0
 margin_bottom = 25.0
-texture = SubResource( 10 )
+texture = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -471,7 +469,7 @@ margin_left = 161.0
 margin_top = 1.0
 margin_right = 183.0
 margin_bottom = 18.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "100"
 
 [node name="score" type="Label" parent="Control/MarginContainer/header"]
@@ -479,7 +477,7 @@ margin_left = 187.0
 margin_top = 1.0
 margin_right = 240.0
 margin_bottom = 18.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Score:0"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
@@ -518,10 +516,10 @@ __meta__ = {
 }
 
 [node name="announcement_panel" type="Panel" parent="Control/center_container"]
-material = SubResource( 12 )
+material = SubResource( 13 )
 margin_right = 275.0
 margin_bottom = 24.0
-custom_styles/panel = SubResource( 13 )
+custom_styles/panel = SubResource( 14 )
 
 [node name="announcement" type="Label" parent="Control/center_container/announcement_panel"]
 anchor_left = 0.5
@@ -532,7 +530,7 @@ margin_left = -119.5
 margin_top = -8.0
 margin_right = 122.5
 margin_bottom = 9.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 15 )
 text = "In a galaxy far far away "
 align = 1
 __meta__ = {
@@ -553,7 +551,34 @@ __meta__ = {
 }
 
 [node name="announcement_anim" type="AnimationPlayer" parent="Control/center_container/announcement_panel"]
-anims/to_up = SubResource( 15 )
+anims/to_up = SubResource( 16 )
+
+[node name="game_over" parent="." instance=ExtResource( 5 )]
+pause_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="Sprite" parent="game_over" index="0"]
+position = Vector2( 3, 0 )
+scale = Vector2( 1.2, 1.2 )
+centered = true
+
+[node name="AnimatedSprite" parent="game_over" index="1"]
+position = Vector2( 23, 0 )
+frame = 3
+centered = true
+
+[node name="retry_btn" parent="game_over" index="2"]
+margin_top = 107.0
+margin_bottom = 147.0
+
+[node name="home_btn" parent="game_over" index="3"]
+margin_top = 107.0
+margin_bottom = 147.0
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 8 )
 [connection signal="button_down" from="Camera2D/left" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/right" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/up" to="Camera2D/Player" method="fire"]
@@ -565,7 +590,11 @@ anims/to_up = SubResource( 15 )
 [connection signal="timeout" from="Control/dialogue/dialogue_timer" to="Control/dialogue" method="_on_dialogue_timer_timeout"]
 [connection signal="timeout" from="Control/PowerupEnergy/powerup_timer" to="Camera2D" method="_on_powerup_timer_timeout"]
 [connection signal="animation_finished" from="Control/center_container/announcement_panel/announcement_anim" to="Camera2D" method="_on_Tween_tween_all_completed"]
+[connection signal="pressed" from="game_over/retry_btn" to="game_over" method="_on_retry_btn_pressed"]
+[connection signal="pressed" from="game_over/home_btn" to="game_over" method="_on_home_btn_pressed"]
 
 [editable path="Camera2D/ParallaxBackground"]
 
 [editable path="Camera2D/path"]
+
+[editable path="game_over"]

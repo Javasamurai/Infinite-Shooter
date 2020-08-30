@@ -162,8 +162,10 @@ func right():
 	pass
 
 func game_over():
-	global.over = true
+	$"../game_over".visible = true
+	#global.over = true
 	global.score = score
+	
 	pass
 
 func _process(delta):
@@ -419,7 +421,9 @@ func save_score():
 	if score > curr_score:
 		f.store_string(to_json(global.saved_data))
 		f.close()
-	get_tree().change_scene("res://Nodes/MainMenu.tscn")
+	get_tree().paused = true
+	$"../game_over".visible = true
+	#get_tree().change_scene("res://Nodes/MainMenu.tscn")
 	pass
 
 
@@ -433,5 +437,3 @@ func _on_wave_timer_timeout():
 	#print("Timeout")
 	canSpawn = true
 	pass
-
-

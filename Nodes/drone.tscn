@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://drone.gd" type="Script" id=1]
 [ext_resource path="res://Images/Drone/Drone_A/Level_01/Drone_A_level_01.png" type="Texture" id=2]
@@ -14,6 +14,21 @@ animations = [ {
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5.37885, 10 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "swing"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
 
 [node name="drone" type="AnimatedSprite"]
 position = Vector2( -24.8615, 1.23268 )
@@ -33,4 +48,7 @@ autostart = true
 
 [node name="Explosion" parent="." instance=ExtResource( 3 )]
 visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/swing = SubResource( 3 )
 [connection signal="timeout" from="Timer" to="." method="fire"]
