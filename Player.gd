@@ -45,11 +45,13 @@ signal right
 
 func _ready():
 	global = get_node("/root/Globals")
+	global.over = false 
 	#var tex = load("res://Images/Players/Level_" + str(global.selected_plane) + "_Player.png")
 	drone_object = preload("res://Nodes/drone.tscn")
 	$Player_bg.play(str(global.selected_plane))
 	tween = get_node("Tween")
-	
+	$drone1.positioning = "left"
+	$drone2.positioning = "right"
 	tween.interpolate_property(self, "position", Vector2(0,250),Vector2(0, 150),1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
 
@@ -59,7 +61,8 @@ func _ready():
 	bullet = preload("res://Nodes/Bullet.tscn")
 	curvy_bullet = preload("res://Nodes/CurvyBullet.tscn")
 
-
+	clear_powerup()
+	
 	set_process_input(true)
 	window_size = get_viewport_rect().size / 2
 	$Timer.connect("timeout", self, "clear_powerup")
@@ -74,6 +77,7 @@ func _ready():
 
 func _process(delta):
 	time_elapsed+=delta
+	
 	if time_elapsed > fire_delay && is_pressed:
 		canFire = true
 		fire()
@@ -154,7 +158,9 @@ func spawnDrone():
 	var drone2 = drone_object.instance()
 
 	drone1.name = "drone1"
+	drone1.positioning = "left"
 	drone2.name = "drone2"
+	drone1.positioning = "right"
 	
 	drone1.position = Vector2.ZERO
 	drone2.position = Vector2.ZERO
@@ -268,9 +274,6 @@ func hit():
 		$Player_bg.visible = false
 		$explosion.visible = true
 
-func _on_Fire(_viewport, _event, _shape_idx):
-	fire()
-
 func _on_Accelerate(_viewport, event, shape_idx):
 	if event is InputEventMouseButton or event is InputEventScreenTouch:
 		if !event.pressed:
@@ -291,6 +294,7 @@ func minify():
 	pass
 
 func clear_powerup():
+	time_elapsed = 0
 	tween.interpolate_property(self, "scale", get_scale(),Vector2.ONE,0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
 	isSheilded = false
@@ -298,6 +302,9 @@ func clear_powerup():
 	modulate = Color.white
 	speed_damping = 0.9
 	fire_delay = 0.15
+	is_sonic_boom = false
+	is_pressed = false
+	canFire = false
 
 func powerup(which_one):
 	$powerup.visible = true

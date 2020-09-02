@@ -9,9 +9,10 @@ extents = Vector2( 16, 16 )
 [node name="plane2" type="TextureRect"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 0.5
-margin_right = 110.5
-margin_bottom = 110.0
+margin_left = -55.0
+margin_top = -57.0
+margin_right = 55.0
+margin_bottom = 53.0
 texture = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

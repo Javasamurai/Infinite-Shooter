@@ -70,6 +70,16 @@ func _ready():
 	
 	pass
 
+func _input(event):
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_LEFT:
+			_on_left_arrow_pressed()
+		elif event.pressed and event.scancode == KEY_RIGHT:
+			_on_right_arrow_pressed()
+		elif event.pressed and event.scancode == KEY_P:
+			switch_scene()
+
+
 func game_over():
 	$game_over/AnimatedSprite.play()
 	pass
@@ -90,7 +100,6 @@ func _on_arrow_pressed(_direction):
 	if !music:
 		button_click.play()
 	
-	print(global.selected_plane)
 	if _direction == direction.LEFT:
 		right_arrow.modulate = Color.white
 		right_arrow.disabled = false
@@ -174,11 +183,6 @@ func _on_left_arrow_pressed():
 		$anim.play("left")
 	#_on_arrow_pressed(direction.LEFT)
 	#switch_plane(true)
-	pass
-
-func game_over_animation_finished():
-	if $game_over/AnimatedSprite.name != "last":
-		$game_over/AnimatedSprite.play("last")
 	pass
 
 
@@ -289,10 +293,10 @@ func _on_anim_animation_finished(anim_name):
 func _on_hamburger_pressed():
 	hamburger_visible = !hamburger_visible
 	
-	#$Container/hamburger/Control.visible = hamburger_visible
-	if !hamburger_visible:
-		$Container/hamburger/animation_player.play_backwards("slide_down")
-	else:
-		$Container/hamburger/animation_player.play("slide_down")
+	$Container/hamburger/Control.visible = hamburger_visible
+	#if !hamburger_visible:
+	#	$Container/hamburger/animation_player.play_backwards("slide_down")
+	#else:
+	#	$Container/hamburger/animation_player.play("slide_down")
 	#$Container/hamburger/Control.visible = hamburger_visible
 	pass

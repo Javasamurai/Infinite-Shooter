@@ -13,13 +13,8 @@
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 3 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 4 ) ],
-"loop": true,
+"loop": false,
 "name": "default",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "last",
 "speed": 5.0
 } ]
 
@@ -42,8 +37,10 @@ texture = ExtResource( 5 )
 centered = false
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -1, 0 )
 scale = Vector2( 1.29383, 1 )
 frames = SubResource( 1 )
+frame = 3
 playing = true
 centered = false
 
@@ -107,3 +104,4 @@ margin_left = 8.0
 margin_top = 256.0
 margin_right = 243.0
 margin_bottom = 296.0
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]

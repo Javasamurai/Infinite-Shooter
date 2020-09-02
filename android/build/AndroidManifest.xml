@@ -27,7 +27,7 @@
     <!-- Any tag in this line after android:icon will be erased when doing custom builds. -->
     <!-- If you want to add tags manually, do before it. -->
     <!-- WARNING: This should stay on a single line until the parsing code is improved. See GH-32414. -->
-    <application android:label="@string/godot_project_name_string" android:allowBackup="false" tools:ignore="GoogleAppIndexingWarning" android:icon="@mipmap/icon">
+    <application android:label="@string/godot_project_name_string" android:allowBackup="false" tools:ignore="GoogleAppIndexingWarning" android:icon="@mipmap/icon" >
 
         <!-- The following metadata values are replaced when Godot exports, modifying them here has no effect. -->
         <!-- Do these changes in the export preset. Adding new ones is fine. -->
@@ -54,11 +54,6 @@
 
             <!-- Focus awareness metadata populated at export time if the user enables it in the 'Xr Features' section. -->
             <meta-data android:name="com.oculus.vr.focusaware" android:value="oculus_focus_aware_value" />
-
-
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

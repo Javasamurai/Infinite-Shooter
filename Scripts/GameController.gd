@@ -233,7 +233,6 @@ func check_wave():
 		announce_something("WAVE " + str(current_wave))
 		
 		canSpawn = false
-		#print("Can't spawn")
 		$wave_timer.start()
 
 		if spawnDelay > 0.1:
@@ -401,7 +400,11 @@ func load_score():
 	var f = File.new()
 	var curr_score = 0
 	
+	if !f.file_exists(global.save_file_path):
+		print("does not Exists")
+		return 0
 	f.open(global.save_file_path, File.READ)
+	print(f.get_as_text())
 	var curr_data = parse_json(f.get_as_text())
 	if curr_data != null:
 		curr_score = curr_data["score"]
@@ -410,28 +413,19 @@ func load_score():
 	pass
 
 func save_score():
+	var curr_score = load_score()
 	var f = File.new()
 	f.open(global.save_file_path, File.WRITE)
-
-	var curr_score = load_score()
 	
 	global.saved_data["score"] = score
 	global.current_wave = current_wave
 
 	if score > curr_score:
 		f.store_string(to_json(global.saved_data))
-		f.close()
+	f.close()
 	get_tree().paused = true
 	$"../game_over".visible = true
-	#get_tree().change_scene("res://Nodes/MainMenu.tscn")
 	pass
-
-
-func _on_Tween_tween_completed(object):
-	if object.name == "Camera2D":
-		$".".position = Vector2.ZERO
-	pass
-
 
 func _on_wave_timer_timeout():
 	#print("Timeout")

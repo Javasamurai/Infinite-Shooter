@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=2]
+[gd_scene load_steps=119 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
 [ext_resource path="res://Images/UI_Planes/UI_Level_1_Plane.png" type="Texture" id=2]
@@ -93,6 +93,8 @@
 [ext_resource path="res://Images/UI/Main_Title/Main_Title0036.png" type="Texture" id=91]
 [ext_resource path="res://Images/UI/Menu_Button/Menu_UI_ON.png" type="Texture" id=92]
 [ext_resource path="res://Images/UI/Drone_Button_ON.png" type="Texture" id=93]
+[ext_resource path="res://Images/UI/Sound_Selected.png" type="Texture" id=94]
+[ext_resource path="res://Images/UI/Sound_OFF_01.png" type="Texture" id=95]
 
 [sub_resource type="Animation" id=1]
 resource_name = "cloud_movement"
@@ -143,17 +145,25 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=3]
 resource_name = "left"
 length = 0.3
-tracks/0/type = "value"
-tracks/0/path = NodePath("MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship:margin_left")
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship:rect_position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, -300.0, 200.0, 0.0 ]
+"points": PoolRealArray( 80, -0.25, 0, 0.25, 0, 300, -0.25, 0, 0.25, 0, 80, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.1, 0.3 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.1, 0.3 )
 }
 
 [sub_resource type="Animation" id=4]
@@ -163,17 +173,25 @@ loop = true
 
 [sub_resource type="Animation" id=5]
 length = 0.3
-tracks/0/type = "value"
-tracks/0/path = NodePath("MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship:margin_left")
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship:rect_position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, 200.0, -300.0, 0.0 ]
+"points": PoolRealArray( 80, -0.25, 0, 0.25, 0, 300, -0.25, 0, 0.25, 0, -300, -0.25, 0, 0.25, 0, 80, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("MarginContainer/VBoxContainer2/VBoxContainer/Selected_ship:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 )
 }
 
 [sub_resource type="CanvasItemMaterial" id=6]
@@ -467,12 +485,12 @@ position = Vector2( 0, 0.666687 )
 texture = ExtResource( 22 )
 
 [node name="cloud_2" type="Sprite" parent="MarginContainer2"]
-position = Vector2( -250, 126 )
+position = Vector2( -190.874, 126 )
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 39 )
 
 [node name="cloud_1" type="Sprite" parent="MarginContainer2"]
-position = Vector2( 276, 83 )
+position = Vector2( 223.605, 83 )
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 38 )
 
@@ -552,7 +570,7 @@ __meta__ = {
 [node name="title_bg" type="AnimatedSprite" parent="MarginContainer6"]
 position = Vector2( 121.5, 98 )
 frames = SubResource( 11 )
-frame = 20
+frame = 34
 playing = true
 
 [node name="title" type="Label" parent="MarginContainer6"]
@@ -827,9 +845,10 @@ texture_pressed = ExtResource( 92 )
 
 [node name="Control" type="VBoxContainer" parent="Container/hamburger"]
 visible = false
-margin_top = -184.0
-margin_right = 31.0
-margin_bottom = -36.0
+margin_left = -5.0
+margin_top = -155.0
+margin_right = 26.0
+margin_bottom = -7.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -870,7 +889,8 @@ __meta__ = {
 margin_top = 114.0
 margin_right = 31.0
 margin_bottom = 148.0
-texture_normal = ExtResource( 29 )
+texture_normal = ExtResource( 95 )
+texture_pressed = ExtResource( 94 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -998,8 +1018,8 @@ __meta__ = {
 [connection signal="pressed" from="Container/hamburger/Control/inventory" to="." method="toInventory"]
 [connection signal="pressed" from="Container/hamburger/Control/music_btn" to="." method="_on_music_button_up"]
 [connection signal="pressed" from="bottom_container/play_btn" to="." method="switch_scene"]
-[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="GUI/VBoxContainer/HBoxContainer/play" method="switch_scene"]
+[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
 [connection signal="timeout" from="Timer" to="." method="game_over"]
 [connection signal="animation_finished" from="game_over/AnimatedSprite" to="." method="game_over_animation_finished"]
 [connection signal="button_up" from="game_over/retry_btn" to="." method="switch_scene"]

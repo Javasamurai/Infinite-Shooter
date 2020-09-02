@@ -90,6 +90,7 @@ tracks/1/keys = {
 blend_mode = 2
 
 [sub_resource type="DynamicFont" id=5]
+size = 13
 font_data = ExtResource( 6 )
 
 [sub_resource type="StyleBoxFlat" id=6]
@@ -312,6 +313,9 @@ stream = ExtResource( 16 )
 visible = false
 position = Vector2( -3, -176 )
 
+[node name="Enemy" parent="Camera2D/path/path1" index="0"]
+frame = 1
+
 [node name="crazy_enemies_path" type="Node2D" parent="Camera2D"]
 
 [node name="wave_timer" type="Timer" parent="Camera2D"]
@@ -336,21 +340,28 @@ __meta__ = {
 }
 
 [node name="dialogue" type="Label" parent="Control"]
+visible = false
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -120.0
-margin_top = 179.0
-margin_right = 120.0
-margin_bottom = 193.0
+margin_top = 139.0
+margin_right = 170.0
+margin_bottom = 196.0
 custom_fonts/font = SubResource( 5 )
+align = 3
+valign = 3
+max_lines_visible = 3
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+dialogue_text = "Once there was a brave space soldier lost on his way to space, looking for his home he fought enemies on his way"
 
 [node name="dialogue_timer" type="Timer" parent="Control/dialogue"]
+wait_time = 0.25
+autostart = true
 
 [node name="PowerupEnergy" type="ProgressBar" parent="Control"]
 visible = false
@@ -567,7 +578,6 @@ centered = true
 
 [node name="AnimatedSprite" parent="game_over" index="1"]
 position = Vector2( 23, 0 )
-frame = 3
 centered = true
 
 [node name="retry_btn" parent="game_over" index="2"]
@@ -583,8 +593,6 @@ texture_pressed = ExtResource( 8 )
 [connection signal="button_down" from="Camera2D/right" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/up" to="Camera2D/Player" method="fire"]
 [connection signal="button_down" from="Camera2D/down" to="Camera2D/Player" method="fire"]
-[connection signal="tween_all_completed" from="Camera2D/Tween" to="Camera2D" method="_on_Tween_tween_all_completed"]
-[connection signal="tween_completed" from="Camera2D/Tween" to="Camera2D" method="_on_Tween_tween_completed"]
 [connection signal="timeout" from="Camera2D/wave_timer" to="Camera2D" method="_on_wave_timer_timeout"]
 [connection signal="timeout" from="Camera2D/powerup_timer" to="Camera2D" method="check_powerup"]
 [connection signal="timeout" from="Control/dialogue/dialogue_timer" to="Control/dialogue" method="_on_dialogue_timer_timeout"]
