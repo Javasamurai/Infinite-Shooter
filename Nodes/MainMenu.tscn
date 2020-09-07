@@ -976,7 +976,7 @@ texture = ExtResource( 43 )
 
 [node name="Particles2D2" type="Particles2D" parent="."]
 modulate = Color( 1, 1, 1.5, 1 )
-position = Vector2( 133.888, -101.822 )
+position = Vector2( 149.689, -150.473 )
 scale = Vector2( 1.5, 1.5 )
 explosiveness = 1.0
 process_material = SubResource( 38 )
