@@ -6,6 +6,9 @@ export var fire_speed = 4
 export var fireDelay = 0.2
 export var canFire = true
 export var speed = 100
+export var autoStart = false
+export var presetEnemy = 0
+
 var bullet
 var bullets
 var time_elapsed = 0
@@ -36,16 +39,16 @@ var enemy_config = {
 		"name": "spaceship",
 		"bullet_type": "normal",
 		"canRotate": false,
-		"smart": true,
+		"smart": false,
 		"canShoot": true,
-		"speed": 175,
+		"speed": 75,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2.4,
 		"fireDelayMax": 2.5,
 		"bullet_speed": 300,
-		"health": 50,
-		"chaseX": true,
-		"chaseY": true
+		"health": 20,
+		"chaseX": false,
+		"chaseY": false
 	},
 	2: {
 		"key": 2,
@@ -54,7 +57,7 @@ var enemy_config = {
 		"canRotate": false,
 		"smart": false,
 		"canShoot": false,
-		"speed": 100,
+		"speed": 75,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2,
 		"fireDelayMax": 3,
@@ -67,7 +70,7 @@ var enemy_config = {
 		"key": 3,
 		"name": "asteroid",
 		"bullet_type": "normal",
-		"canRotate": false,
+		"canRotate": true,
 		"smart": false,
 		"canShoot": false,
 		"speed": 50,
@@ -83,7 +86,7 @@ var enemy_config = {
 		"key": 4,
 		"name": "asteroid",
 		"bullet_type": "normal",
-		"canRotate": false,
+		"canRotate": true,
 		"smart": false,
 		"canShoot": false,
 		"speed": 70,
@@ -102,7 +105,7 @@ var enemy_config = {
 		"canRotate": false,
 		"smart": false,
 		"canShoot": false,
-		"speed": 250,
+		"speed": 30,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 0.1,
 		"fireDelayMax": 3,
@@ -118,7 +121,7 @@ var enemy_config = {
 		"canRotate": false,
 		"smart": false,
 		"canShoot": true,
-		"speed": 150,
+		"speed": 40,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2,
 		"fireDelayMax": 2,
@@ -132,16 +135,16 @@ var enemy_config = {
 		"name": "big_plane",
 		"bullet_type": "sided",
 		"canRotate": true,
-		"smart": false,
+		"smart": true,
 		"canShoot": true,
-		"speed": 200,
+		"speed": 30,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2.5,
 		"fireDelayMax": 2.7,
 		"bullet_speed": 250,
 		"health": 80,
-		"chaseX": false,
-		"chaseY": false
+		"chaseX": true,
+		"chaseY": true
 	},
 	8: {
 		"key": 8,
@@ -162,16 +165,16 @@ var enemy_config = {
 	9: {
 		"key": 9,
 		"name": "big_ufo",
-		"bullet_type": "sided",
+		"bullet_type": "spiral",
 		"canRotate": false,
 		"smart": true,
 		"canShoot": true,
-		"speed": 5,
-		"chaseDelay": 2.0,
+		"speed": 0,
+		"chaseDelay": 0.26,
 		"fireDelayMin": 2,
 		"fireDelayMax": 2,
-		"bullet_speed": 250,
-		"health": 250,
+		"bullet_speed": 300,
+		"health": 300,
 		"chaseX": true,
 		"chaseY": false
 	},
@@ -182,7 +185,7 @@ var enemy_config = {
 		"canRotate": false,
 		"smart": true,
 		"canShoot": true,
-		"speed": 5,
+		"speed": 15,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2,
 		"fireDelayMax": 2,
@@ -241,7 +244,9 @@ func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	tween = get_node("Tween")
-
+	
+	if autoStart:
+		generate_enemy(999)
 	# randomly change alien color
 	# if key == 2:
 	#	modulate = alien_colors[randi() % alien_colors.size()]
@@ -250,7 +255,10 @@ func _ready():
 func generate_enemy(max_enemies = enemy_config.size()):
 	is_active = true
 	current_wave = max_enemies
-	enemy_selected_config = enemy_config[ randi() % max_enemies + 1]
+	if autoStart:
+		enemy_selected_config = enemy_config[presetEnemy]
+	else:
+		enemy_selected_config = enemy_config[ randi() % max_enemies + 1]
 	fireDelay = rand_range(enemy_selected_config["fireDelayMin"],enemy_selected_config["fireDelayMax"])
 
 	speed = enemy_selected_config["speed"]
@@ -262,26 +270,30 @@ func generate_enemy(max_enemies = enemy_config.size()):
 	key = enemy_selected_config["key"]
 	canRotate = enemy_selected_config["canRotate"]
 	bullet_type = enemy_selected_config["bullet_type"]
+
+	print("k" + str(key))
+	print("h" + str(health))
 	
 	play(str(key))
 	bullets = []
-	
-	if key == 3 or key == 4:
-		$Tween.interpolate_property(self, "rotation", 0, 7200, 15,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
-		$Tween.start()
+
+	#if key == 3 or key == 4:
+	#	$Tween.interpolate_property(self, "rotation", 0, 7200, 15,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
+	#	$Tween.start()
 	pass
 
 func move_to(_pos):
 	var canChase = (chaseX == true or chaseY == true) && current_wave > 3
-
+	
 	if last_chased < rand_range(0.25,enemy_selected_config["chaseDelay"]):
 		return
 	else:
 		last_chased = 0
 	if chaseY:
-		_pos.y = position.y
+		_pos.y = global_position.y
+	
 	if canChase:
-		tween.interpolate_property(self, "position", position, _pos, 3,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		tween.interpolate_property(self, "global_position", global_position, _pos, 3,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		tween.start()
 	pass
 
@@ -294,7 +306,8 @@ func hit(full = false):
 	tween.start()
 	
 	health = health - 10
-
+	print("h") 
+	print(health)
 	if full:
 		health = -1000
 
@@ -378,14 +391,14 @@ func create_bullet(direction):
 	if enemy_selected_config == null:
 		return
 
-	bullet_clone.position = Vector2(self.position.x, self.position.y)
+	bullet_clone.position = global_position
 	bullet_clone.name = "enemy_bullet"
 	
 	if key > 3:
 		bullet_clone.set_bullet_texture("res://Images/Enemy_Level_02_Bullets.png")
 	else:
 		bullet_clone.set_bullet_texture("res://Images/Enemy_Level_01_Bullets.png")
-		
+
 	get_parent().get_parent().add_child(bullet_clone)
 	bullet_clone.fire(direction, enemy_selected_config["bullet_speed"])
 	pass
@@ -396,6 +409,9 @@ func fire():
 
 func on_enemy_invisible():
 	queue_free()
+	#print($"..".name)
+	$"..".checkWave()
+	pass
 
 func _on_explosion_animation_finished():
 	queue_free()
@@ -404,6 +420,6 @@ func _on_explosion_animation_finished():
 func on_chase_compelete(_object, _key):
 	if _key == ":modulate":
 		self.modulate = Color.white
-	if canFire && _key == ":position" && canShoot:
+	if canFire && _key == ":position" && canShoot && (chaseX || chaseY):
 		fire()
 	pass

@@ -3,7 +3,8 @@ extends Node
 var selected_plane = 1
 var over = false
 var score = 0
-var current_wave = 0
+var current_wave = 1
+var isDroneInventory = false
 var save_file_path = "user://score.save"
 
 var screen_width = 0

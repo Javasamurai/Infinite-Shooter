@@ -12,6 +12,7 @@ var powerup_spawn_delay = 5
 var isPowerSpawned = false
 var canSpawn = true
 
+var wave_clone
 var wave_cooldown = 3
 var spawnDelay = 1.5
 var last_spawned_time
@@ -27,7 +28,7 @@ var timer
 var coin_wave_node
 var score_path = "user://score.txt"
 
-var current_wave = 1
+var current_wave = 0
 var powerup_enengy
 var powerup_timer
 var time_passed_since_powerup = 0
@@ -43,12 +44,12 @@ export(NodePath) var announcement_panel_path
 export(NodePath) var heart_container_path
 
 # warning-ignore:unused_signal
-signal hit
+#signal hit
 
 var coin_range = range(2000, 30000, 2000)
 var coin_wave_clone = null
-var crazy_path
-var circular_path
+#var crazy_path
+#var circular_path
 var wave_range = range(4, 3000, 5)
 
 var waves = {
@@ -111,6 +112,142 @@ var enemies_waves = {
 	}
 }
 
+
+var waveSystem = [
+	"wave_1",
+	"wave_2",
+	"wave_3",
+	"wave_4",
+	"wave_5",
+	"wave_6",
+	"wave_7",
+	"wave_2",
+	"wave_2",
+	"wave_2",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_6",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_3",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1",
+	"wave_1"
+]
+
 func _ready():
 	global = get_node("/root/Globals")
 	#global.saved_data["coins"] = 0
@@ -130,8 +267,8 @@ func _ready():
 	last_spawned_time = 0
 	enemy = preload("res://Nodes/Enemy.tscn")
 	player = $Player
-	crazy_path = preload("res://Nodes/spiral_path.tscn")
-	circular_path = preload("res://Nodes/circular_path.tscn")
+	#crazy_path = preload("res://Nodes/spiral_path.tscn")
+	#circular_path = preload("res://Nodes/circular_path.tscn")
 	coin_wave_node = preload("res://Nodes/coin_wave_linear.tscn")
 
 	powerup_node = preload("res://Nodes/powerup.tscn")
@@ -143,11 +280,40 @@ func _ready():
 	$Player.connect("right", self, "right")
 
 	powerup_container = $powerup_container
+	global.current_wave = 0
+	nextWave()
+	pass
+	#announce_something("In a galaxy far far away. There was a gladiator.", 5)
+func nextWave():
+	yield(get_tree().create_timer(3.0), "timeout")
+	
+	if $"../game_over".visible:
+		return
+	
+	current_wave = current_wave + 1
 	announcement_lbl = get_node(announcement_lbl_path)
 	announcement_panel = get_node(announcement_panel_path)
-	announce_something("WAVE " + str(current_wave))
 	
-	#announce_something("In a galaxy far far away. There was a gladiator.", 5)
+	print("w" + str(current_wave))
+	var wave1 = load("res://Nodes/" + str(waveSystem[current_wave - 1]) + ".tscn")
+	
+	if wave_clone != null:
+		$".".remove_child(wave_clone)
+		wave_clone.queue_free()
+	wave_clone = wave1.instance()
+	wave_clone.connect("nextWave", self, "nextWave")
+	wave_clone.position = Vector2( -screenBounds.x / 2, -screenBounds.y)
+	
+	$".".add_child(wave_clone)
+	
+	for i in range(wave_clone.get_child_count()):
+		wave_clone.get_child(i).connect("enemy_hit", self, "enemy_hit")
+	
+	if wave_clone.get_child_count() == 1:
+		announce_something("BOSS FIGHT")
+	else:
+		announce_something("WAVE " + str(current_wave))
+pass
 
 func left():
 	#$anim.play("left_camera_lerp")
@@ -162,9 +328,12 @@ func right():
 	pass
 
 func game_over():
+	global.saved_data["score"] = score
+	global.current_wave = current_wave
+	
 	$"../game_over".visible = true
+	$"../game_over".playing = true
 	#global.over = true
-	global.score = score
 	
 	pass
 
@@ -179,20 +348,20 @@ func _process(delta):
 	last_spawned_time+= delta
 
 	#if time_elapsed > 2:
-	for i in range($enemy_container.get_child_count()):
-		var enemy = $enemy_container.get_child(i)
+	if wave_clone != null:
+		for i in range(wave_clone.get_child_count()):
+			var enemy = wave_clone.get_child(i)
+			if enemy is AnimatedSprite:
+				enemy.move_to($Player.global_position)
 
-		#if enemy.smart:
-		enemy.move_to($Player.position)
-
-	if last_spawned_time > rand_range(1, spawnDelay):
-		last_spawned_time = 0
+	#if last_spawned_time > rand_range(1, spawnDelay):
+	#	last_spawned_time = 0
 		#canSpawn = true
-
-		if !wave_range.has(current_wave):
-			spawnEnemiesWAVE1()
-		else:
-			crazy_wave()
+		
+		#if !wave_range.has(current_wave):
+		#	spawnEnemiesWAVE1()
+		#else:
+		#	crazy_wave()
 
 # Wave generation logic
 
@@ -226,10 +395,11 @@ func _input(event):
 	pass
 
 func check_wave():
+	return
 	var score_range = waves[current_wave]
 	#if score > current_wave * 100:
 	if score > score_range:
-		current_wave = current_wave + 1
+		#current_wave = current_wave + 1
 		announce_something("WAVE " + str(current_wave))
 		
 		canSpawn = false
@@ -277,15 +447,14 @@ func enemy_hit(which_one):
 		score += 200
 	else:
 		score += 100
-	
-	#print("Shakeee")
-	$ScreenShake.shake(0.75, 500, 5)
+	$ScreenShake.shake(0.75, 250, 2)
 	get_node(score_label).text = "Score:" + str(score) 
-	check_wave()
+
+	wave_clone.checkWave()
 
 func on_player_hit():
 	get_node(health_label).set_text(str($Player.health))
-	$ScreenShake.shake(0.75, 1000, 5)
+	$ScreenShake.shake(0.75, 300, 2)
 	if $Player.health >=0:
 		health_progress.value = $Player.health
 		#health_container.get_child(int($Player.health / 20)).hide()
@@ -373,14 +542,15 @@ func getRandomEnemy():
 	return random_enemy
 
 func crazy_wave():
-	if $"crazy_enemies_path".get_child_count() <= max_enemies && canSpawn:
-		var crazy_enemy =  circular_path.instance()
-		crazy_enemy.position = Vector2(0, - 405/ 2)
-		crazy_enemy.find_node("Enemy").connect("enemy_hit", self, "enemy_hit")
-		$"crazy_enemies_path".add_child(crazy_enemy)
+	return
+	#if $"crazy_enemies_path".get_child_count() <= max_enemies && canSpawn:
+	#	var crazy_enemy =  circular_path.instance()
+	#	crazy_enemy.position = Vector2(0, - 405/ 2)
+	#	crazy_enemy.find_node("Enemy").connect("enemy_hit", self, "enemy_hit")
+	#	$"crazy_enemies_path".add_child(crazy_enemy)
 	pass
 
-func _on_Tween_tween_all_completed():
+func _on_Tween_tween_all_completed(name):
 	announcement_panel.visible = false
 	pass
 
@@ -404,7 +574,7 @@ func load_score():
 		print("does not Exists")
 		return 0
 	f.open(global.save_file_path, File.READ)
-	print(f.get_as_text())
+	#print(f.get_as_text())
 	var curr_data = parse_json(f.get_as_text())
 	if curr_data != null:
 		curr_score = curr_data["score"]
@@ -413,12 +583,14 @@ func load_score():
 	pass
 
 func save_score():
+
+	global.saved_data["score"] = score
+	global.current_wave = current_wave
+
 	var curr_score = load_score()
 	var f = File.new()
 	f.open(global.save_file_path, File.WRITE)
 	
-	global.saved_data["score"] = score
-	global.current_wave = current_wave
 
 	if score > curr_score:
 		f.store_string(to_json(global.saved_data))
@@ -428,6 +600,5 @@ func save_score():
 	pass
 
 func _on_wave_timer_timeout():
-	#print("Timeout")
 	canSpawn = true
 	pass

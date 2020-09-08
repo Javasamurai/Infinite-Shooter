@@ -10,7 +10,7 @@ var curvy_bullet
 var isSheilded = false
 
 var time_elapsed = 0
-var health = 100
+var health = 300
 var window_size = {
 	"x": 0,
 	"y": 0
@@ -284,7 +284,7 @@ func _on_Accelerate(_viewport, event, shape_idx):
 	pass
 
 func healthpotion():
-	health = 100
+	health = 300
 	pass
 
 func minify():

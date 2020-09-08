@@ -84,7 +84,8 @@ func game_over():
 	$game_over/AnimatedSprite.play()
 	pass
 	
-func toInventory():
+func toInventory(drone = false):
+	global.isDroneInventory = drone
 	get_tree().change_scene("res://Nodes/Inventory.tscn")
 	pass
 

@@ -37,19 +37,24 @@ animations = [ {
 "name": "coins",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ) ],
+"frames": [ ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
 "loop": true,
-"name": "sonic_boom",
+"name": "coins_create",
 "speed": 15.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ), ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "missile",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 21 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 25 ) ],
 "loop": true,
 "name": "minify",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
+"frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ) ],
 "loop": true,
-"name": "coins_create",
+"name": "sonic boom",
 "speed": 15.0
 }, {
 "frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
@@ -57,20 +62,15 @@ animations = [ {
 "name": "shield",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 22 ), ExtResource( 24 ), ExtResource( 23 ) ],
-"loop": true,
-"name": "machine_gun",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 2 ), ExtResource( 1 ), ExtResource( 8 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "missile",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "potion",
 "speed": 15.0
+}, {
+"frames": [ ExtResource( 22 ), ExtResource( 24 ), ExtResource( 23 ) ],
+"loop": true,
+"name": "Machine gun",
+"speed": 10.0
 } ]
 
 [sub_resource type="CanvasItemMaterial" id=2]
@@ -87,14 +87,16 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 1.74671, 1.80791 )
+extents = Vector2( 1.33788, 1.38691 )
 
 [node name="powerup" type="Node2D"]
 
 [node name="powerup_animated" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 1 )
 frames = SubResource( 1 )
-animation = "missile"
+animation = "Machine gun"
+frame = 1
+playing = true
 script = ExtResource( 3 )
 
 [node name="coins" type="Particles2D" parent="powerup_animated"]
@@ -106,8 +108,8 @@ process_material = SubResource( 3 )
 texture = ExtResource( 15 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="powerup_animated"]
-position = Vector2( -0.112154, 0.237602 )
-scale = Vector2( 1.67639, 1.77002 )
+position = Vector2( 0.824287, 0.284425 )
+scale = Vector2( 1.26436, 1.37203 )
 
 [node name="powerup_area" type="Area2D" parent="powerup_animated"]
 scale = Vector2( 10, 10 )

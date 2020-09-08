@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Drone_B_level_01.png-43f0cdb97d70157494800b020ff3c92e.stex"
+path="res://.import/Drone_A_level_02_b.png-d97faf49ab78eb3e726a11157b5ca8df.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/Drone/Drone_B/Level_01/Drone_B_level_01.png"
-dest_files=[ "res://.import/Drone_B_level_01.png-43f0cdb97d70157494800b020ff3c92e.stex" ]
+source_file="res://Images/Drone/Drone_A_level_02_b.png"
+dest_files=[ "res://.import/Drone_A_level_02_b.png-d97faf49ab78eb3e726a11157b5ca8df.stex" ]
 
 [params]
 

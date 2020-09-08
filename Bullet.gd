@@ -51,7 +51,7 @@ func _process(delta):
 		elif DIRECTION == "RIGHT":
 			self.position = Vector2(self.position.x + (fire_speed * delta), self.position.y)
 		elif DIRECTION == "TOP_LEFT":
-			self.position = Vector2(self.position.x - (fire_speed * delta), self.position.y + (fire_speed * delta))
+			self.position = Vector2(self.position.x - (fire_speed * delta), self.position.y - (fire_speed * delta))
 		elif DIRECTION == "TOP_RIGHT":
 			self.position = Vector2(self.position.x + (fire_speed * delta), self.position.y - (fire_speed * delta))
 		elif DIRECTION == "BOTT_LEFT":
@@ -73,7 +73,7 @@ func fire(_direction, _fire_speed):
 func _on_bullet_hit(body):
 	if body == $bullet_body:
 		return
-	var node_name = self.name
+	var _node_name = self.name
 	var area_name = body.name
 		
 	var isPlayer_bullet = self.name.find("player_bullet") != -1

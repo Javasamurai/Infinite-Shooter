@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/dialogue.gd" type="Script" id=2]
@@ -21,7 +21,6 @@
 [ext_resource path="res://Images/UI/Health_03.png" type="Texture" id=21]
 [ext_resource path="res://Images/UI/Empty_Health.png" type="Texture" id=22]
 [ext_resource path="res://Images/UI/Full_Health.png" type="Texture" id=23]
-[ext_resource path="res://Nodes/circular_path.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Nodes/crt.tscn" type="PackedScene" id=26]
 
 [sub_resource type="Environment" id=1]
@@ -309,13 +308,6 @@ stream = ExtResource( 16 )
 
 [node name="Tween" type="Tween" parent="Camera2D"]
 
-[node name="path" parent="Camera2D" instance=ExtResource( 24 )]
-visible = false
-position = Vector2( -3, -176 )
-
-[node name="Enemy" parent="Camera2D/path/path1" index="0"]
-frame = 1
-
 [node name="crazy_enemies_path" type="Node2D" parent="Camera2D"]
 
 [node name="wave_timer" type="Timer" parent="Camera2D"]
@@ -513,15 +505,14 @@ __meta__ = {
 }
 
 [node name="center_container" type="MarginContainer" parent="Control"]
-modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -140.0
-margin_top = -0.5
+margin_top = 332.0
 margin_right = 135.0
-margin_bottom = 23.5
+margin_bottom = 356.5
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -578,6 +569,7 @@ centered = true
 
 [node name="AnimatedSprite" parent="game_over" index="1"]
 position = Vector2( 23, 0 )
+playing = false
 centered = true
 
 [node name="retry_btn" parent="game_over" index="2"]
@@ -602,7 +594,5 @@ texture_pressed = ExtResource( 8 )
 [connection signal="pressed" from="game_over/home_btn" to="game_over" method="_on_home_btn_pressed"]
 
 [editable path="Camera2D/ParallaxBackground"]
-
-[editable path="Camera2D/path"]
 
 [editable path="game_over"]
