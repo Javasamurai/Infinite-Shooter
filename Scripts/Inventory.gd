@@ -6,8 +6,7 @@ var plane_clone
 
 var plane_node
 var global
-
-
+var currentNodeInside
 
 func _ready():
 	global = get_node("/root/Globals")
@@ -41,13 +40,11 @@ func toMainMenu():
 
 func onPlaneEntered(area):
 	$plane_info.text = area.get_node("..").name
-	$Tween.interpolate_property(area.get_node(".."), "rect_scale", Vector2.ONE, Vector2(1.25,1.25), 0.1, Tween.EASE_IN_OUT)
-	$Tween.start()
-	Input.vibrate_handheld(50)
+	currentNodeInside = area.get_node("..")
+	currentNodeInside.selected = true
 	$buy_button/price.text = area.get_node("..").name.right(area.get_node("..").name.length() - 1) + "000"
 	pass
 
 func onPlaneExited(area):
-	$Tween.interpolate_property(area.get_node(".."), "rect_scale", rect_scale, Vector2.ONE, 0.1, Tween.EASE_IN_OUT)
-	$Tween.start()
+	currentNodeInside.selected = false
 	pass

@@ -35,6 +35,7 @@ var time_passed_since_powerup = 0
 var health_progress
 var global
 var max_enemies_spawn = 1
+var fps_lbl
 
 export(NodePath) var health_label
 export(NodePath) var score_label
@@ -42,6 +43,7 @@ export(NodePath) var health_progress_path
 export(NodePath) var announcement_lbl_path
 export(NodePath) var announcement_panel_path
 export(NodePath) var heart_container_path
+export(NodePath) var fps_lbl_path
 
 # warning-ignore:unused_signal
 #signal hit
@@ -252,6 +254,7 @@ func _ready():
 	global = get_node("/root/Globals")
 	#global.saved_data["coins"] = 0
 	load_score()
+	fps_lbl = get_node(fps_lbl_path)
 	tween = get_node("Tween")
 	timer = get_node("powerup_timer")
 	powerup_enengy = get_node("../Control/PowerupEnergy")
@@ -294,7 +297,6 @@ func nextWave():
 	announcement_lbl = get_node(announcement_lbl_path)
 	announcement_panel = get_node(announcement_panel_path)
 	
-	print("w" + str(current_wave))
 	var wave1 = load("res://Nodes/" + str(waveSystem[current_wave - 1]) + ".tscn")
 	
 	if wave_clone != null:
@@ -351,9 +353,10 @@ func _process(delta):
 	if wave_clone != null:
 		for i in range(wave_clone.get_child_count()):
 			var enemy = wave_clone.get_child(i)
-			if enemy is AnimatedSprite:
-				enemy.move_to($Player.global_position)
+			#if enemy is AnimatedSprite:
+			#	enemy.move_to($Player.global_position)
 
+	fps_lbl.text = str(Engine.get_frames_per_second())
 	#if last_spawned_time > rand_range(1, spawnDelay):
 	#	last_spawned_time = 0
 		#canSpawn = true
@@ -456,7 +459,7 @@ func on_player_hit():
 	get_node(health_label).set_text(str($Player.health))
 	$ScreenShake.shake(0.75, 300, 2)
 	if $Player.health >=0:
-		health_progress.value = $Player.health
+		health_progress.value = int(float($Player.health / 300.0) * 100)
 		#health_container.get_child(int($Player.health / 20)).hide()
 	pass
 	
@@ -465,6 +468,7 @@ func spawnPowerup():
 	powerup_clone = powerup_node.instance()
 	var powerup_animated = powerup_clone.get_node("powerup_animated")
 	powerup_animated.connect("powerup_cleared", self, "powerup_cleared")
+	
 	var collision_area = powerup_clone.find_node("powerup_area")
 	collision_area.connect("area_entered", self ,"_on_powerup_got")
 	powerup_clone.position = Vector2(rand_range(-screenBounds.x / 2, screenBounds.x / 2), -(screenBounds.y / 2))
@@ -574,7 +578,7 @@ func load_score():
 		print("does not Exists")
 		return 0
 	f.open(global.save_file_path, File.READ)
-	#print(f.get_as_text())
+
 	var curr_data = parse_json(f.get_as_text())
 	if curr_data != null:
 		curr_score = curr_data["score"]

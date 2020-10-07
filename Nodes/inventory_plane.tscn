@@ -1,19 +1,24 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Images/Drone/Drone_level_02.png" type="Texture" id=1]
+[ext_resource path="res://Images/New-Planes/Type_A_Level_01_Plane/Level_01_Plane.png" type="Texture" id=1]
+[ext_resource path="res://Nodes/inventory_plane.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
 
 [node name="plane2" type="TextureRect"]
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-margin_left = -54.5
-margin_top = -57.0
-margin_right = 30.5
-margin_bottom = 53.0
+anchor_bottom = 0.5
+margin_left = -121.5
+margin_top = -202.5
+margin_right = -72.5
+margin_bottom = -156.5
+rect_pivot_offset = Vector2( 24.5, 25.5 )
 texture = ExtResource( 1 )
 stretch_mode = 5
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

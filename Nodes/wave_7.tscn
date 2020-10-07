@@ -10,41 +10,41 @@ script = ExtResource( 2 )
 [node name="Enemy15" parent="." instance=ExtResource( 1 )]
 position = Vector2( 223, 344 )
 animation = "5"
-frame = 1
+frame = 0
 autoStart = true
 presetEnemy = 5
 
 [node name="Enemy16" parent="." instance=ExtResource( 1 )]
 position = Vector2( 88, 179 )
 animation = "7"
-frame = 1
+frame = 0
 autoStart = true
 presetEnemy = 7
 
 [node name="Enemy25" parent="." instance=ExtResource( 1 )]
 position = Vector2( 224, 41 )
 animation = "5"
-frame = 1
+frame = 0
 autoStart = true
 presetEnemy = 5
 
 [node name="Enemy27" parent="." instance=ExtResource( 1 )]
 position = Vector2( 42, 342 )
 animation = "5"
-frame = 1
+frame = 0
 autoStart = true
 presetEnemy = 5
 
 [node name="Enemy28" parent="." instance=ExtResource( 1 )]
 position = Vector2( 28, 39 )
 animation = "5"
-frame = 1
+frame = 0
 autoStart = true
 presetEnemy = 5
 
 [node name="Enemy26" parent="." instance=ExtResource( 1 )]
 position = Vector2( 168, 179 )
 animation = "7"
-frame = 1
+frame = 0
 autoStart = true
 presetEnemy = 7

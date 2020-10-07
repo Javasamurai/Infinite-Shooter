@@ -50,10 +50,12 @@ func _ready():
 	drone_object = preload("res://Nodes/drone.tscn")
 	$Player_bg.play(str(global.selected_plane))
 	tween = get_node("Tween")
-	$drone1.positioning = "left"
-	$drone2.positioning = "right"
-	tween.interpolate_property(self, "position", Vector2(0,250),Vector2(0, 150),1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
-	tween.start()
+	#$drone_left.positioning = "left"
+	$drone_right.positioning = "right"
+	
+	if get_tree().get_current_scene().get_name() != "MainMenu":
+		tween.interpolate_property(self, "position", Vector2(0,250),Vector2(0, 150),1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+		tween.start()
 
 	canFire = false
 	is_sonic_boom = false
@@ -295,6 +297,7 @@ func minify():
 
 func clear_powerup():
 	time_elapsed = 0
+	$shield.visible = false
 	tween.interpolate_property(self, "scale", get_scale(),Vector2.ONE,0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
 	isSheilded = false
@@ -324,8 +327,9 @@ func powerup(which_one):
 		sheild()
 
 func sheild():
+	$shield.visible = true
 	isSheilded = true
-	modulate = Color(1,1,1, 0.25)
+	#modulate = Color(1,1,1, 0.25)
 	pass
 
 func hit_complete(_object, _path):
@@ -348,6 +352,17 @@ func _on_muzzle_timer_timeout():
 
 
 func _on_player_area_area_entered(area):
+	var _node_name = self.name
+	var area_name = area.get_node("..").name
+	var isPlayer_bullet = area_name.find("player_bullet") != -1
+	var isEnemy_bullet = area_name.find("enemy_bullet") != -1
+	var hitPlayer_body = (_node_name.find("Player") != -1)
+	var hitEnemy_body = (_node_name.find("Enemy") != -1)
+	
+	if isEnemy_bullet && hitPlayer_body:
+		hit()
+		area.get_node("../").queue_free()
+
 	if area.name == "enemy_area":
 		hit()
 	pass

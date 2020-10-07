@@ -1,6 +1,6 @@
 extends ParallaxLayer
 
-export var speed = 300
+export var speed = 400
 var time_spent = 0
 var init_speed = 300
 func _ready():
@@ -16,6 +16,5 @@ func _process(delta):
 	pass
 
 func _on_HSlider_value_changed(value):
-	print(speed)
 	speed = init_speed * (value / 100)
 	pass

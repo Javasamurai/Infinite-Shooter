@@ -10,22 +10,26 @@ var	bullet
 var left = true
 
 export var positioning = "left"
+var time = 1
+var scale_up = false
+var offset_x = 35
+var what_tween = Tween.TRANS_LINEAR
 
 func _ready():
+	print(positioning)
 	if positioning == "left":
-		$Tween.interpolate_method(self, "set_position", self.position, Vector2(position.x - 5, position.y), 1, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
+		$AnimationPlayer.play("scale_up")
+		$Tween.interpolate_method(self, "set_position", self.position, Vector2(position.x + offset_x, position.y), time, what_tween, what_tween)
 	else:
-		$Tween.interpolate_method(self, "set_position", self.position, Vector2(position.x + 5, position.y), 1, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
+		$AnimationPlayer.play("scale_down")
+		$Tween.interpolate_method(self, "set_position", self.position, Vector2(position.x - offset_x, position.y), time, what_tween, what_tween)
 		left = true
-
-
+	$AnimationPlayer.play()
 	$Tween.start()
 
 	bullet = preload("res://Nodes/Bullet.tscn")
 	$Area2D.connect("area_entered", self, "drone_hit")
 	set_physics_process(true)
-
-	
 	pass
 
 func activate(_target):
@@ -37,6 +41,9 @@ func activate(_target):
 func _physics_process(delta):
 	if is_instance_valid(target) && activated:
 		chaseTarget(delta)
+	#if position == positioning && positioning == "left":
+	#	scale = Vector2(0.5, 0.5)
+		
 
 func chaseTarget(delta):
 	return
@@ -69,11 +76,12 @@ func fire():
 	var bullet_clone = bullet.instance()
 
 	#bullet_clone.position = Vector2(get_node("..").position.x, get_node("..").position.y)
-	bullet_clone.position = self.global_position
+	bullet_clone.position = Vector2(self.global_position.x + 4, self.global_position.y)
 	bullet_clone.fire("UP", 500)
 	bullet_clone.name = "player_bullet_drone"
 	get_node("../..").add_child(bullet_clone)
 	pass
+
 #func explosion_done():
 #	if !exploded:
 #		explode()
@@ -85,17 +93,17 @@ func fire():
 func _on_drone_animation_finished():
 	if positioning == "left":
 		if left:
-			$Tween.interpolate_method(self, "set_position", position, Vector2(position.x + 5, position.y), 1, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
+			$Tween.interpolate_method(self, "set_position", position, Vector2(position.x - offset_x, position.y), time, what_tween, what_tween)
 			left = false
 		else:
-			$Tween.interpolate_method(self, "set_position", position, Vector2(position.x - 5, position.y), 1, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
+			$Tween.interpolate_method(self, "set_position", position, Vector2(position.x + offset_x, position.y), time, what_tween, what_tween)
 			left = true
 	else:
 		if left:
-			$Tween.interpolate_method(self, "set_position", position, Vector2(position.x - 5, position.y), 1, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
+			$Tween.interpolate_method(self, "set_position", position, Vector2(position.x + offset_x, position.y), time, what_tween, what_tween)
 			left = false
 		else:
-			$Tween.interpolate_method(self, "set_position", position, Vector2(position.x + 5, position.y), 1, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
+			$Tween.interpolate_method(self, "set_position", position, Vector2(position.x - offset_x, position.y), time, what_tween, what_tween)
 			left = true
 
 	#else:

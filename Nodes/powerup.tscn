@@ -42,6 +42,11 @@ animations = [ {
 "name": "coins_create",
 "speed": 15.0
 }, {
+"frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
+"loop": true,
+"name": "shield",
+"speed": 15.0
+}, {
 "frames": [ ExtResource( 2 ), ExtResource( 1 ), ExtResource( 8 ), ExtResource( 9 ) ],
 "loop": true,
 "name": "missile",
@@ -55,11 +60,6 @@ animations = [ {
 "frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ) ],
 "loop": true,
 "name": "sonic boom",
-"speed": 15.0
-}, {
-"frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
-"loop": true,
-"name": "shield",
 "speed": 15.0
 }, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ) ],

@@ -109,7 +109,7 @@ var enemy_config = {
 		"chaseDelay": 2.0,
 		"fireDelayMin": 0.1,
 		"fireDelayMax": 3,
-		"bullet_speed": 300,
+		"bullet_speed": 150,
 		"health": 50,
 		"chaseX": false,
 		"chaseY": false
@@ -125,7 +125,7 @@ var enemy_config = {
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2,
 		"fireDelayMax": 2,
-		"bullet_speed": 300,
+		"bullet_speed": 200,
 		"health": 80,
 		"chaseX": true,
 		"chaseY": false
@@ -271,9 +271,6 @@ func generate_enemy(max_enemies = enemy_config.size()):
 	canRotate = enemy_selected_config["canRotate"]
 	bullet_type = enemy_selected_config["bullet_type"]
 
-	print("k" + str(key))
-	print("h" + str(health))
-	
 	play(str(key))
 	bullets = []
 
@@ -302,12 +299,12 @@ func hit(full = false):
 	tween.interpolate_property(self, "position", position, Vector2(position.x, position.y - 6), 0.1,Tween.TRANS_BOUNCE, Tween.EASE_IN_OUT)
 	$AnimationPlayer.play("hit")
 	#tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 1.5,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	
 	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 200, 1.25,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 	
 	health = health - 10
-	print("h") 
-	print(health)
+
 	if full:
 		health = -1000
 
@@ -385,6 +382,9 @@ func fire_spiral():
 	create_bullet("BOTT_RIGHT")
 	pass
 
+func fire_random():
+	create_bullet("RANDOM")
+
 func create_bullet(direction):
 	var bullet_clone = bullet.instance()
 
@@ -395,9 +395,9 @@ func create_bullet(direction):
 	bullet_clone.name = "enemy_bullet"
 	
 	if key > 3:
-		bullet_clone.set_bullet_texture("res://Images/Enemy_Level_02_Bullets.png")
+		bullet_clone.set_bullet_texture("res://Images/Enemy_Bullet_01.png")
 	else:
-		bullet_clone.set_bullet_texture("res://Images/Enemy_Level_01_Bullets.png")
+		bullet_clone.set_bullet_texture("res://Images/Enemy_Bullet_01.png")
 
 	get_parent().get_parent().add_child(bullet_clone)
 	bullet_clone.fire(direction, enemy_selected_config["bullet_speed"])
@@ -409,7 +409,6 @@ func fire():
 
 func on_enemy_invisible():
 	queue_free()
-	#print($"..".name)
 	$"..".checkWave()
 	pass
 
@@ -422,4 +421,20 @@ func on_chase_compelete(_object, _key):
 		self.modulate = Color.white
 	if canFire && _key == ":position" && canShoot && (chaseX || chaseY):
 		fire()
+	pass
+
+
+func _on_enemy_area_area_entered(area):
+	var _node_name = self.name
+	var area_name = area.get_node("..").name
+
+	var isPlayer_bullet = area_name.find("player_bullet") != -1
+	var isEnemy_bullet = area_name.find("enemy_bullet") != -1
+	var hitPlayer_body = (_node_name.find("player_area") != -1)
+	var hitEnemy_body = (_node_name.find("Enemy") != -1)
+	print(area_name)
+	if isPlayer_bullet && hitEnemy_body:
+		hit()
+		if area_name.find("laser") == -1:
+			area.get_node("../").queue_free()
 	pass

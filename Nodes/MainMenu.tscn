@@ -1,4 +1,4 @@
-[gd_scene load_steps=119 format=2]
+[gd_scene load_steps=121 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
 [ext_resource path="res://Images/UI_Planes/UI_Level_1_Plane.png" type="Texture" id=2]
@@ -42,7 +42,7 @@
 [ext_resource path="res://Images/Meteor_02.png" type="Texture" id=40]
 [ext_resource path="res://Images/Meteor_01.png" type="Texture" id=41]
 [ext_resource path="res://Nodes/ParallaxBackground.tscn" type="PackedScene" id=42]
-[ext_resource path="res://SFX/maximum_overdrive.wav" type="AudioStream" id=43]
+[ext_resource path="res://SFX/don-pachi-bgm.wav" type="AudioStream" id=43]
 [ext_resource path="res://Plane_Flame.tscn" type="PackedScene" id=44]
 [ext_resource path="res://Images/UI/Inventory_ON.png" type="Texture" id=45]
 [ext_resource path="res://Images/UI/Earth.png" type="Texture" id=46]
@@ -95,6 +95,7 @@
 [ext_resource path="res://Images/UI/Drone_Button_ON.png" type="Texture" id=93]
 [ext_resource path="res://Images/UI/Sound_Selected.png" type="Texture" id=94]
 [ext_resource path="res://Images/UI/Sound_OFF_01.png" type="Texture" id=95]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=96]
 
 [sub_resource type="Animation" id=1]
 resource_name = "cloud_movement"
@@ -363,7 +364,10 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0.494118 ), Color( 0, 0, 0, 1 ) ]
 }
 
-[node name="Control" type="Control"]
+[sub_resource type="DynamicFont" id=24]
+font_data = ExtResource( 25 )
+
+[node name="MainMenu" type="Control"]
 modulate = Color( 1, 1, 1, 0.905882 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -371,7 +375,7 @@ script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-earth = NodePath("MarginContainer2/rotating_earth2")
+earth = NodePath("../MainMenu/MarginContainer2/rotating_earth2")
 
 [node name="AudioManager" type="Node" parent="."]
 
@@ -433,6 +437,13 @@ __meta__ = {
 
 [node name="ParallaxBackground" parent="MarginContainer4" instance=ExtResource( 42 )]
 
+[node name="ParallaxLayer2" parent="MarginContainer4/ParallaxBackground" index="0"]
+speed = 700
+
+[node name="NightSky" parent="MarginContainer4/ParallaxBackground" index="1"]
+visible = false
+speed = 500
+
 [node name="bg" type="Sprite" parent="MarginContainer4"]
 visible = false
 position = Vector2( -97.5428, -366.215 )
@@ -459,6 +470,7 @@ centered = false
 visible = false
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -512,11 +524,10 @@ centered = false
 [node name="MarginContainer3" type="MarginContainer" parent="."]
 anchor_right = 1.0
 margin_left = 10.0
-margin_top = 8.0
+margin_top = 384.0
 margin_right = -11.0
-margin_bottom = 20.0
+margin_bottom = 396.0
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -557,27 +568,25 @@ __meta__ = {
 }
 
 [node name="MarginContainer6" type="MarginContainer" parent="."]
-anchor_left = 0.527
-anchor_right = 0.527
-margin_left = -128.061
-margin_top = 43.0
-margin_right = 114.939
-margin_bottom = 75.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="title_bg" type="AnimatedSprite" parent="MarginContainer6"]
-position = Vector2( 121.5, 98 )
+position = Vector2( 31, 0 )
+scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 11 )
-frame = 34
+frame = 19
 playing = true
+centered = false
 
 [node name="title" type="Label" parent="MarginContainer6"]
 visible = false
-margin_top = 2.0
+margin_top = 188.0
 margin_right = 243.0
-margin_bottom = 30.0
+margin_bottom = 216.0
 custom_fonts/font = SubResource( 12 )
 custom_colors/font_color = Color( 0.831373, 0.682353, 0.168627, 1 )
 text = "Galaxy Gladiator"
@@ -589,9 +598,9 @@ __meta__ = {
 
 [node name="title2" type="Label" parent="MarginContainer6"]
 visible = false
-margin_top = 2.0
+margin_top = 188.0
 margin_right = 243.0
-margin_bottom = 30.0
+margin_bottom = 216.0
 custom_fonts/font = SubResource( 12 )
 custom_colors/font_color = Color( 0.815686, 0.682353, 0.176471, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
@@ -605,6 +614,7 @@ __meta__ = {
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -635,6 +645,7 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Purchase"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+visible = false
 margin_right = 257.0
 margin_bottom = 405.0
 custom_constants/separation = -50
@@ -825,35 +836,48 @@ __meta__ = {
 }
 
 [node name="Container" type="MarginContainer" parent="."]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -48.0
-margin_top = -44.0
-margin_right = -17.0
-margin_bottom = -10.0
+margin_left = 11.0
+margin_top = 10.0
+margin_right = 242.0
+margin_bottom = 44.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="hamburger" type="TextureButton" parent="Container"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Container"]
+margin_right = 244.0
+margin_bottom = 34.0
+size_flags_horizontal = 4
+custom_constants/separation = 190
+
+[node name="inventory" type="TextureButton" parent="Container/HBoxContainer"]
 margin_right = 31.0
+margin_bottom = 34.0
+texture_normal = ExtResource( 34 )
+texture_pressed = ExtResource( 45 )
+texture_hover = ExtResource( 45 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hamburger" type="TextureButton" parent="Container/HBoxContainer"]
+margin_left = 221.0
+margin_right = 244.0
 margin_bottom = 34.0
 texture_normal = ExtResource( 52 )
 texture_pressed = ExtResource( 92 )
 
-[node name="Control" type="VBoxContainer" parent="Container/hamburger"]
+[node name="Control" type="VBoxContainer" parent="Container/HBoxContainer/hamburger"]
 visible = false
 margin_left = -5.0
-margin_top = -155.0
+margin_top = 32.0
 margin_right = 26.0
-margin_bottom = -7.0
+margin_bottom = 180.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="info_btn" type="TextureButton" parent="Container/hamburger/Control"]
+[node name="info_btn" type="TextureButton" parent="Container/HBoxContainer/hamburger/Control"]
 margin_right = 31.0
 margin_bottom = 34.0
 texture_normal = ExtResource( 8 )
@@ -863,7 +887,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="credit" type="TextureButton" parent="Container/hamburger/Control"]
+[node name="credit" type="TextureButton" parent="Container/HBoxContainer/hamburger/Control"]
 margin_top = 38.0
 margin_right = 31.0
 margin_bottom = 72.0
@@ -874,18 +898,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="inventory" type="TextureButton" parent="Container/hamburger/Control"]
-margin_top = 76.0
-margin_right = 31.0
-margin_bottom = 110.0
-texture_normal = ExtResource( 34 )
-texture_pressed = ExtResource( 45 )
-texture_hover = ExtResource( 45 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="music_btn" type="TextureButton" parent="Container/hamburger/Control"]
+[node name="music_btn" type="TextureButton" parent="Container/HBoxContainer/hamburger/Control"]
 margin_top = 114.0
 margin_right = 31.0
 margin_bottom = 148.0
@@ -895,7 +908,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="animation_player" type="AnimationPlayer" parent="Container/hamburger"]
+[node name="animation_player" type="AnimationPlayer" parent="Container/HBoxContainer/hamburger"]
 anims/slide_down = SubResource( 20 )
 
 [node name="bottom_container" type="MarginContainer" parent="."]
@@ -912,6 +925,7 @@ __meta__ = {
 }
 
 [node name="play_btn" type="TextureButton" parent="bottom_container"]
+visible = false
 margin_right = 48.0
 margin_bottom = 52.0
 texture_normal = ExtResource( 51 )
@@ -954,15 +968,35 @@ margin_bottom = 34.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI/VBoxContainer"]
 margin_right = 243.0
+margin_bottom = 23.0
 alignment = 1
 
 [node name="play" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
 visible = false
-margin_left = 106.0
-margin_right = 137.0
+margin_left = 52.0
+margin_right = 83.0
 margin_bottom = 34.0
 texture_normal = ExtResource( 23 )
 texture_pressed = ExtResource( 24 )
+
+[node name="play_label" type="Button" parent="GUI/VBoxContainer/HBoxContainer"]
+margin_left = 69.0
+margin_right = 173.0
+margin_bottom = 23.0
+focus_mode = 0
+custom_fonts/font = SubResource( 24 )
+action_mode = 0
+enabled_focus_mode = 0
+keep_pressed_outside = true
+text = "TAP TO PLAY"
+flat = true
+
+[node name="Player" parent="GUI/VBoxContainer/HBoxContainer" instance=ExtResource( 96 )]
+position = Vector2( 128.904, -65.745 )
+z_index = 999
+
+[node name="Player_bg" parent="GUI/VBoxContainer/HBoxContainer/Player" index="1"]
+animation = "3"
 
 [node name="Particles2D" parent="." instance=ExtResource( 33 )]
 visible = false
@@ -1012,14 +1046,15 @@ __meta__ = {
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VerticalContainer/inventory_button" to="." method="toInventory"]
 [connection signal="button_up" from="MarginContainer5/HBoxContainer/music_btn_2" to="." method="_on_music_button_up"]
 [connection signal="button_up" from="MarginContainer5/HBoxContainer/credits" to="." method="_on_credits_button_up"]
-[connection signal="pressed" from="Container/hamburger" to="." method="_on_hamburger_pressed"]
-[connection signal="button_up" from="Container/hamburger/Control/info_btn" to="." method="_on_enemies_button_up"]
-[connection signal="button_up" from="Container/hamburger/Control/credit" to="." method="_on_credits_button_up"]
-[connection signal="pressed" from="Container/hamburger/Control/inventory" to="." method="toInventory"]
-[connection signal="pressed" from="Container/hamburger/Control/music_btn" to="." method="_on_music_button_up"]
+[connection signal="pressed" from="Container/HBoxContainer/inventory" to="." method="toInventory"]
+[connection signal="pressed" from="Container/HBoxContainer/hamburger" to="." method="_on_hamburger_pressed"]
+[connection signal="button_up" from="Container/HBoxContainer/hamburger/Control/info_btn" to="." method="_on_enemies_button_up"]
+[connection signal="button_up" from="Container/HBoxContainer/hamburger/Control/credit" to="." method="_on_credits_button_up"]
+[connection signal="pressed" from="Container/HBoxContainer/hamburger/Control/music_btn" to="." method="_on_music_button_up"]
 [connection signal="pressed" from="bottom_container/play_btn" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="GUI/VBoxContainer/HBoxContainer/play" method="switch_scene"]
+[connection signal="button_down" from="GUI/VBoxContainer/HBoxContainer/play_label" to="." method="switch_scene"]
 [connection signal="timeout" from="Timer" to="." method="game_over"]
 [connection signal="animation_finished" from="game_over/AnimatedSprite" to="." method="game_over_animation_finished"]
 [connection signal="button_up" from="game_over/retry_btn" to="." method="switch_scene"]
@@ -1028,5 +1063,7 @@ __meta__ = {
 [connection signal="button_up" from="TextureButton/credits2" to="." method="_on_credits_button_up"]
 
 [editable path="MarginContainer4/ParallaxBackground"]
+
+[editable path="GUI/VBoxContainer/HBoxContainer/Player"]
 
 [editable path="game_over"]

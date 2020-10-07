@@ -258,9 +258,9 @@ func _on_music_button_up(_toogle = true):
 	off = current_data["music"]
 	
 	if off:
-		get_node("/root/Control/AudioManager/bgm").stop()
+		get_node("/root/MainMenu/AudioManager/bgm").stop()
 	else:
-		get_node("/root/Control/AudioManager/bgm").play()
+		get_node("/root/MainMenu/AudioManager/bgm").play()
 	
 	file.close()
 	
@@ -292,9 +292,10 @@ func _on_anim_animation_finished(anim_name):
 
 
 func _on_hamburger_pressed():
+	print("Pressed")
 	hamburger_visible = !hamburger_visible
 	
-	$Container/hamburger/Control.visible = hamburger_visible
+	$Container/HBoxContainer/hamburger/Control.visible = hamburger_visible
 	#if !hamburger_visible:
 	#	$Container/hamburger/animation_player.play_backwards("slide_down")
 	#else:
