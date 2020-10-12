@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/don-pachi-bgm.wav-efcf05f8afd980785e99ae841ce0d0ae.sample"
+
+[deps]
+
+source_file="res://SFX/don-pachi-bgm.wav"
+dest_files=[ "res://.import/don-pachi-bgm.wav-efcf05f8afd980785e99ae841ce0d0ae.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

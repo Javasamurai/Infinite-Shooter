@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Nodes/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Nodes/Wave.gd" type="Script" id=2]
+[ext_resource path="res://Nodes/EnemyVisibilyNotifier.tscn" type="PackedScene" id=3]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 0, -320 )
+script = ExtResource( 2 )
+
+[node name="Enemy15" parent="." instance=ExtResource( 1 )]
+position = Vector2( 152, 133 )
+animation = "1"
+autoStart = true
+
+[node name="Enemy16" parent="." instance=ExtResource( 1 )]
+position = Vector2( 88, 133 )
+animation = "1"
+autoStart = true
+
+[node name="Enemy17" parent="." instance=ExtResource( 1 )]
+position = Vector2( 30.5, 233 )
+animation = "1"
+autoStart = true
+
+[node name="Enemy18" parent="." instance=ExtResource( 1 )]
+position = Vector2( 30.5, 233 )
+animation = "1"
+autoStart = true
+
+[node name="Enemy19" parent="." instance=ExtResource( 1 )]
+position = Vector2( 62, 233 )
+animation = "1"
+autoStart = true
+
+[node name="Enemy21" parent="." instance=ExtResource( 1 )]
+position = Vector2( 224, 233 )
+animation = "1"
+autoStart = true
+
+[node name="Enemy25" parent="." instance=ExtResource( 1 )]
+position = Vector2( 120, 41 )
+animation = "1"
+autoStart = true
+
+[node name="Enemy26" parent="." instance=ExtResource( 1 )]
+position = Vector2( 120, 133 )
+animation = "1"
+autoStart = true
+
+[node name="Enemy27" parent="." instance=ExtResource( 1 )]
+position = Vector2( 189, 278.5 )
+animation = "1"
+autoStart = true
+
+[node name="Enemy22" parent="." instance=ExtResource( 1 )]
+position = Vector2( 190, 233 )
+animation = "1"
+autoStart = true
+
+[node name="Enemy24" parent="." instance=ExtResource( 1 )]
+position = Vector2( 92, 278.5 )
+animation = "1"
+autoStart = true
+
+[node name="VisibilityNotifier2D" parent="." instance=ExtResource( 3 )]

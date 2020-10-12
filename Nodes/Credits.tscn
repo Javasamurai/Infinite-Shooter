@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://Nodes/ParallaxBackground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Images/credits/artist.png" type="Texture" id=3]
+[ext_resource path="res://Images/Inventory/Store_Back_Button__on.png" type="Texture" id=4]
+[ext_resource path="res://Images/Inventory/Store_Back_Button__off.png" type="Texture" id=5]
+[ext_resource path="res://Nodes/Credits.gd" type="Script" id=6]
+[ext_resource path="res://Images/credits/artist.jpg" type="Texture" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 1 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 24.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="back_btn" type="TextureButton" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+
+[node name="title" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -49.0
+margin_top = -14.0
+margin_right = 49.0
+margin_bottom = 17.0
+custom_fonts/font = SubResource( 1 )
+text = "Credits"
+
+[node name="ParallaxBackground" parent="." instance=ExtResource( 2 )]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_top = 39.0
+margin_right = 125.0
+margin_bottom = 79.0
+custom_constants/separation = 50
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="dev" type="Label" parent="HBoxContainer"]
+margin_top = 11.0
+margin_right = 72.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 2 )
+text = "Developer"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer/dev"]
+margin_top = 24.0
+margin_right = 225.0
+margin_bottom = 249.0
+rect_scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="artist" type="Label" parent="HBoxContainer"]
+margin_left = 122.0
+margin_top = 11.0
+margin_right = 165.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 2 )
+text = "Artist"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/artist"]
+margin_top = 24.0
+margin_right = 225.0
+margin_bottom = 246.0
+rect_scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="back_btn" to="." method="_on_back_btn_pressed"]

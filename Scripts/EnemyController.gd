@@ -6,6 +6,9 @@ export var fire_speed = 4
 export var fireDelay = 0.2
 export var canFire = true
 export var speed = 100
+export var autoStart = false
+export var presetEnemy = 0
+
 var bullet
 var bullets
 var time_elapsed = 0
@@ -28,6 +31,7 @@ var current_wave = 1
 #var selected_color
 var is_active = false
 signal enemy_hit(which_one)
+var coin_node
 
 var enemy_config = {
 	1: {
@@ -35,16 +39,16 @@ var enemy_config = {
 		"name": "spaceship",
 		"bullet_type": "normal",
 		"canRotate": false,
-		"smart": true,
+		"smart": false,
 		"canShoot": true,
-		"speed": 175,
+		"speed": 75,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2.4,
 		"fireDelayMax": 2.5,
 		"bullet_speed": 300,
-		"health": 50,
-		"chaseX": true,
-		"chaseY": true
+		"health": 20,
+		"chaseX": false,
+		"chaseY": false
 	},
 	2: {
 		"key": 2,
@@ -53,7 +57,7 @@ var enemy_config = {
 		"canRotate": false,
 		"smart": false,
 		"canShoot": false,
-		"speed": 100,
+		"speed": 75,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2,
 		"fireDelayMax": 3,
@@ -66,7 +70,7 @@ var enemy_config = {
 		"key": 3,
 		"name": "asteroid",
 		"bullet_type": "normal",
-		"canRotate": false,
+		"canRotate": true,
 		"smart": false,
 		"canShoot": false,
 		"speed": 50,
@@ -82,7 +86,7 @@ var enemy_config = {
 		"key": 4,
 		"name": "asteroid",
 		"bullet_type": "normal",
-		"canRotate": false,
+		"canRotate": true,
 		"smart": false,
 		"canShoot": false,
 		"speed": 70,
@@ -101,11 +105,11 @@ var enemy_config = {
 		"canRotate": false,
 		"smart": false,
 		"canShoot": false,
-		"speed": 250,
+		"speed": 30,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 0.1,
 		"fireDelayMax": 3,
-		"bullet_speed": 300,
+		"bullet_speed": 150,
 		"health": 50,
 		"chaseX": false,
 		"chaseY": false
@@ -117,11 +121,11 @@ var enemy_config = {
 		"canRotate": false,
 		"smart": false,
 		"canShoot": true,
-		"speed": 150,
+		"speed": 40,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2,
 		"fireDelayMax": 2,
-		"bullet_speed": 300,
+		"bullet_speed": 200,
 		"health": 80,
 		"chaseX": true,
 		"chaseY": false
@@ -131,16 +135,16 @@ var enemy_config = {
 		"name": "big_plane",
 		"bullet_type": "sided",
 		"canRotate": true,
-		"smart": false,
+		"smart": true,
 		"canShoot": true,
-		"speed": 200,
+		"speed": 30,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2.5,
 		"fireDelayMax": 2.7,
 		"bullet_speed": 250,
 		"health": 80,
-		"chaseX": false,
-		"chaseY": false
+		"chaseX": true,
+		"chaseY": true
 	},
 	8: {
 		"key": 8,
@@ -161,6 +165,38 @@ var enemy_config = {
 	9: {
 		"key": 9,
 		"name": "big_ufo",
+		"bullet_type": "spiral",
+		"canRotate": false,
+		"smart": true,
+		"canShoot": true,
+		"speed": 0,
+		"chaseDelay": 0.26,
+		"fireDelayMin": 2,
+		"fireDelayMax": 2,
+		"bullet_speed": 300,
+		"health": 300,
+		"chaseX": true,
+		"chaseY": false
+	},
+	10: {
+		"key": 10,
+		"name": "new_enemy_1",
+		"bullet_type": "sided",
+		"canRotate": false,
+		"smart": true,
+		"canShoot": true,
+		"speed": 15,
+		"chaseDelay": 2.0,
+		"fireDelayMin": 2,
+		"fireDelayMax": 2,
+		"bullet_speed": 250,
+		"health": 250,
+		"chaseX": true,
+		"chaseY": false
+	},
+	11: {
+		"key": 11,
+		"name": "new_enemy_2",
 		"bullet_type": "sided",
 		"canRotate": false,
 		"smart": true,
@@ -170,8 +206,24 @@ var enemy_config = {
 		"fireDelayMin": 2,
 		"fireDelayMax": 2,
 		"bullet_speed": 250,
-		"health": 250,
-		"chaseX": true,
+		"health": 500,
+		"chaseX": false,
+		"chaseY": false
+	},
+	12: {
+		"key": 12,
+		"name": "new_enemy_3",
+		"bullet_type": "sided",
+		"canRotate": false,
+		"smart": true,
+		"canShoot": true,
+		"speed": 5,
+		"chaseDelay": 2.0,
+		"fireDelayMin": 2,
+		"fireDelayMax": 2,
+		"bullet_speed": 250,
+		"health": 750,
+		"chaseX": false,
 		"chaseY": false
 	}
 }
@@ -185,12 +237,16 @@ func _ready():
 	set_process_input(true)
 	global = get_node("/root/Globals")
 	bullet = preload("res://Nodes/Bullet.tscn")
+	coin_node = preload("res://coin.tscn")
 	path_node = find_node("path")
+
 	score_lbl = $score
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	tween = get_node("Tween")
-
+	
+	if autoStart:
+		generate_enemy(999)
 	# randomly change alien color
 	# if key == 2:
 	#	modulate = alien_colors[randi() % alien_colors.size()]
@@ -199,7 +255,10 @@ func _ready():
 func generate_enemy(max_enemies = enemy_config.size()):
 	is_active = true
 	current_wave = max_enemies
-	enemy_selected_config = enemy_config[ randi() % max_enemies + 1]
+	if autoStart:
+		enemy_selected_config = enemy_config[presetEnemy]
+	else:
+		enemy_selected_config = enemy_config[ randi() % max_enemies + 1]
 	fireDelay = rand_range(enemy_selected_config["fireDelayMin"],enemy_selected_config["fireDelayMax"])
 
 	speed = enemy_selected_config["speed"]
@@ -211,37 +270,44 @@ func generate_enemy(max_enemies = enemy_config.size()):
 	key = enemy_selected_config["key"]
 	canRotate = enemy_selected_config["canRotate"]
 	bullet_type = enemy_selected_config["bullet_type"]
-	
+
 	play(str(key))
 	bullets = []
-	
-	if key == 3 or key == 4:
-		$Tween.interpolate_property(self, "rotation", 0, 7200, 15,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
-		$Tween.start()
+
+	#if key == 3 or key == 4:
+	#	$Tween.interpolate_property(self, "rotation", 0, 7200, 15,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
+	#	$Tween.start()
 	pass
 
 func move_to(_pos):
 	var canChase = (chaseX == true or chaseY == true) && current_wave > 3
-
+	
 	if last_chased < rand_range(0.25,enemy_selected_config["chaseDelay"]):
 		return
 	else:
 		last_chased = 0
 	if chaseY:
-		_pos.y = position.y
+		_pos.y = global_position.y
+	
 	if canChase:
-		tween.interpolate_property(self, "position", position, _pos, 3,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		tween.interpolate_property(self, "global_position", global_position, _pos, 3,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		tween.start()
 	pass
 
-func hit():
+func hit(full = false):
 	tween.interpolate_property(self, "modulate", Color.white, Color(0,0,0,0.5), 0.25,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
 	tween.interpolate_property(self, "position", position, Vector2(position.x, position.y - 6), 0.1,Tween.TRANS_BOUNCE, Tween.EASE_IN_OUT)
 	$AnimationPlayer.play("hit")
 	#tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 1.5,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	
 	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 200, 1.25,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
+	
 	health = health - 10
+
+	if full:
+		health = -1000
+
 	if health <= 0 && !dead:
 		dead = true
 		if global.saved_data["music"]:
@@ -252,6 +318,7 @@ func hit():
 			$hit_sfx.play()
 
 	if key == 1 or key == 2:
+		$Timer.wait_time = 0.15
 		$Timer.start()
 		play("hit_"+ str(key))
 	pass
@@ -265,6 +332,13 @@ func die():
 	score_lbl.visible = true
 	$explosion.visible = true
 	$explosion_particle.visible = true
+	$death_timer.start()
+	
+	var coin_clone = coin_node.instance()
+	coin_clone.position = self.global_position
+	coin_clone.move = true
+	
+	get_node("../..").add_child(coin_clone)
 	if global.saved_data["music"]:
 		$explosion.play("explosion")
 
@@ -295,6 +369,7 @@ func fire_side():
 	create_bullet("RIGHT")
 	create_bullet("DOWN")
 	pass
+
 func fire_spiral():
 	create_bullet("LEFT")
 	create_bullet("UP")
@@ -307,15 +382,23 @@ func fire_spiral():
 	create_bullet("BOTT_RIGHT")
 	pass
 
+func fire_random():
+	create_bullet("RANDOM")
+
 func create_bullet(direction):
 	var bullet_clone = bullet.instance()
 
 	if enemy_selected_config == null:
 		return
 
-	bullet_clone.position = Vector2(self.position.x, self.position.y)
+	bullet_clone.position = global_position
 	bullet_clone.name = "enemy_bullet"
-	bullet_clone.set_bullet_texture("res://Images/Enemy_Level_02_Bullets.png")
+	
+	if key > 3:
+		bullet_clone.set_bullet_texture("res://Images/Enemy_Bullet_01.png")
+	else:
+		bullet_clone.set_bullet_texture("res://Images/Enemy_Bullet_01.png")
+
 	get_parent().get_parent().add_child(bullet_clone)
 	bullet_clone.fire(direction, enemy_selected_config["bullet_speed"])
 	pass
@@ -326,14 +409,32 @@ func fire():
 
 func on_enemy_invisible():
 	queue_free()
+	$"..".checkWave()
+	pass
 
 func _on_explosion_animation_finished():
 	queue_free()
 	pass
 
-func on_chase_compelete(object, key):
-	if key == ":modulate":
+func on_chase_compelete(_object, _key):
+	if _key == ":modulate":
 		self.modulate = Color.white
-	if canFire && key == ":position" && canShoot:
+	if canFire && _key == ":position" && canShoot && (chaseX || chaseY):
 		fire()
+	pass
+
+
+func _on_enemy_area_area_entered(area):
+	var _node_name = self.name
+	var area_name = area.get_node("..").name
+
+	var isPlayer_bullet = area_name.find("player_bullet") != -1
+	var isEnemy_bullet = area_name.find("enemy_bullet") != -1
+	var hitPlayer_body = (_node_name.find("player_area") != -1)
+	var hitEnemy_body = (_node_name.find("Enemy") != -1)
+	print(area_name)
+	if isPlayer_bullet && hitEnemy_body:
+		hit()
+		if area_name.find("laser") == -1:
+			area.get_node("../").queue_free()
 	pass

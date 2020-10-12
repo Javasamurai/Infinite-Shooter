@@ -5,13 +5,13 @@ signal powerup_cleared
 var time_elapsed
 var speed = 120
 onready var powerup_names = {
-	1: "Minify",
+	1: "minify",
 	2: "sonic boom",
 	3: "potion",
 	4: "shield",
-	5: "Coins",
-	6: "coins crate",
-	7: "Machine gun"
+	5: "coins",
+	6: "Machine gun",
+	7: "missile"
 }
 
 var powerup = null
@@ -35,7 +35,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 	pass
 
-func _on_VisibilityNotifier2D_viewport_exited(viewport):
+func _on_VisibilityNotifier2D_viewport_exited(_viewport):
 	#emit_signal("powerup_cleared")
 	queue_free()
 	pass

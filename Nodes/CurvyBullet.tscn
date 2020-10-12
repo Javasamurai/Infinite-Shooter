@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/CurvyBullet.gd" type="Script" id=2]
+[ext_resource path="res://Nodes/Bullet.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 2.05272, 0.388407, -5.75747, 9.8995, 5.75747, -9.8995, 28.553, -42.3013, 1.57104, 19.534, -1.57104, -19.534, 54.4233, -91.8938, 3.7346, 7.02269, -3.7346, -7.02269, 26.7324, -147.514, 4.76391, 3.72326, -4.76391, -3.72326, 0.330734, -188.549 )
+}
+
+[node name="Path2DRight" type="Path2D"]
+position = Vector2( -0.105924, 0 )
+rotation = -0.0014188
+scale = Vector2( 1.32027, 1 )
+curve = SubResource( 1 )
+script = ExtResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2( 2.05272, 0.388407 )
+rotation = -1.0076
+
+[node name="player_bullet" parent="PathFollow2D" instance=ExtResource( 3 )]
+modulate = Color( 0.819608, 0.380392, 0.647059, 1 )
+rotation = 1.01185

@@ -1,10 +1,14 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=34 format=2]
 
+[ext_resource path="res://Images/UI/Triangle_Bullet_02.png" type="Texture" id=1]
+[ext_resource path="res://Images/UI/Triangle_Bullet_01.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Powerup.gd" type="Script" id=3]
 [ext_resource path="res://Images/UI/Heart_02.png" type="Texture" id=4]
 [ext_resource path="res://Images/UI/Heart_01.png" type="Texture" id=5]
 [ext_resource path="res://Images/UI/Heart_04.png" type="Texture" id=6]
 [ext_resource path="res://Images/UI/Heart_03.png" type="Texture" id=7]
+[ext_resource path="res://Images/UI/Triangle_Bullet_03.png" type="Texture" id=8]
+[ext_resource path="res://Images/UI/Triangle_Bullet_04.png" type="Texture" id=9]
 [ext_resource path="res://Images/UI/Machine_Gun_01.png" type="Texture" id=10]
 [ext_resource path="res://Images/UI/Machine_Gun_02.png" type="Texture" id=11]
 [ext_resource path="res://Images/UI/Machine_Gun_04.png" type="Texture" id=12]
@@ -28,14 +32,14 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ) ],
+"frames": [ ExtResource( 14 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
 "loop": true,
-"name": "sonic_boom",
+"name": "coins",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 21 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 25 ) ],
+"frames": [ ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
 "loop": true,
-"name": "minify",
+"name": "coins_create",
 "speed": 15.0
 }, {
 "frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
@@ -43,25 +47,30 @@ animations = [ {
 "name": "shield",
 "speed": 15.0
 }, {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ), ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "missile",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 21 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 25 ) ],
+"loop": true,
+"name": "minify",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "sonic boom",
+"speed": 15.0
+}, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "potion",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 14 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
-"loop": true,
-"name": "coins_create",
-"speed": 15.0
-}, {
 "frames": [ ExtResource( 22 ), ExtResource( 24 ), ExtResource( 23 ) ],
 "loop": true,
-"name": "machine_gun",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 14 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ) ],
-"loop": true,
-"name": "coins",
-"speed": 15.0
+"name": "Machine gun",
+"speed": 10.0
 } ]
 
 [sub_resource type="CanvasItemMaterial" id=2]
@@ -78,14 +87,16 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 1.74671, 1.80791 )
+extents = Vector2( 1.33788, 1.38691 )
 
 [node name="powerup" type="Node2D"]
 
 [node name="powerup_animated" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 1 )
 frames = SubResource( 1 )
-animation = "machine_gun"
+animation = "Machine gun"
+frame = 1
+playing = true
 script = ExtResource( 3 )
 
 [node name="coins" type="Particles2D" parent="powerup_animated"]
@@ -97,8 +108,8 @@ process_material = SubResource( 3 )
 texture = ExtResource( 15 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="powerup_animated"]
-position = Vector2( -0.112154, 0.237602 )
-scale = Vector2( 1.67639, 1.77002 )
+position = Vector2( 0.824287, 0.284425 )
+scale = Vector2( 1.26436, 1.37203 )
 
 [node name="powerup_area" type="Area2D" parent="powerup_animated"]
 scale = Vector2( 10, 10 )

@@ -22,6 +22,7 @@ var music_btn
 var score_lbl
 var music = false
 var coins_lbl
+var hamburger_visible = false
 
 export(NodePath) var earth
 
@@ -47,51 +48,73 @@ func _ready():
 	initial_plane_pos = plane_node.get_position_in_parent()
 	fill_values()
 	$anim.play("cloud_movement")
-	$anim.play("fade")
+	#$anim.play("fade")
 
 	var rot_tween = earth_node.get_node("Tween")
 	rot_tween.interpolate_property(earth_node, "rotation_degrees", 0, 36000, 1500,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	rot_tween.start()
-
+	
 	if global.selected_plane == 1:
 		left_arrow.modulate = Color(0,0.0, 0.75)
+		left_arrow.disabled = true
 	if global.selected_plane == 3:
 		right_arrow.modulate = Color.white
 
-	if global.over:
-		if !music:
-			get_node("/root/Control/AudioManager/death").play()
-		global.over = false
-		$game_over.visible=true
-		
-		$Timer.start(3)
+	#if global.over:
+	#	if !music:
+	#		get_node("/root/Control/AudioManager/death").play()
+	#	global.over = false
+	#	$game_over.visible=true
+	#
+	#	$Timer.start(3)
+	
 	pass
+
+func _input(event):
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_LEFT:
+			_on_left_arrow_pressed()
+		elif event.pressed and event.scancode == KEY_RIGHT:
+			_on_right_arrow_pressed()
+		elif event.pressed and event.scancode == KEY_P:
+			switch_scene()
+
 
 func game_over():
 	$game_over/AnimatedSprite.play()
+	pass
+	
+func toInventory(drone = false):
+	global.isDroneInventory = drone
+	get_tree().change_scene("res://Nodes/Inventory.tscn")
 	pass
 
 func _process(delta):
 	time_spent+= delta
 	if global.selected_plane == 3:
-		#print(time_spent)
 		if time_spent > 1.25 and flames_lvl_3_left.visible == false:
 			flames_lvl_3_left.visible = true
 			flames_lvl_3_right.visible = true
-			plane_node.set_texture(load("res://Images/level_" + str(global.selected_plane) + "_05.png"))
+			plane_node.set_texture(load("res://Images/UI_Planes/UI_Level_" + str(global.selected_plane) + "_Plane_05.png"))
 
 func _on_arrow_pressed(_direction):
 	if !music:
 		button_click.play()
+	
 	if _direction == direction.LEFT:
 		right_arrow.modulate = Color.white
+		right_arrow.disabled = false
+		
 		if global.selected_plane > 1:
 			left_arrow.modulate = Color.white
 			global.selected_plane = global.selected_plane - 1
+		else:
+			left_arrow.disabled = true
 
 	if _direction == direction.RIGHT:
 		left_arrow.modulate = Color.white
-		if global.selected_plane < 3:
+		left_arrow.disabled = false
+		if global.selected_plane < 8:
 			right_arrow.disabled = false
 			right_arrow.modulate = Color.white
 			global.selected_plane = global.selected_plane + 1
@@ -103,31 +126,29 @@ func _on_arrow_pressed(_direction):
 
 	if global.selected_plane == 1:
 		left_arrow.modulate = Color(0,0.0, 0.75)
-
-	if global.selected_plane == 3:
+		left_arrow.disabled = true
+	if global.selected_plane == 8:
 		right_arrow.modulate = Color(0,0.0, 0.75)
-		time_spent = 0
-		var texture = {
-			1: load("res://Images/level_" + str(global.selected_plane) + "_01.png"),
-			2: load("res://Images/level_" + str(global.selected_plane) + "_02.png"),
-			3: load("res://Images/level_" + str(global.selected_plane) + "_03.png"),
-			4: load("res://Images/level_" + str(global.selected_plane) + "_04.png"),
-			5: load("res://Images/level_" + str(global.selected_plane) + "_05.png")
-		}
-		flames_lvl_3_left.visible = false
-		flames_lvl_3_right.visible = false
+		right_arrow.disabled = true
 
+		
+	if global.selected_plane == 3:
+		time_spent = 0
+		
+		var texture = {}
 		var anim_tex = AnimatedTexture.new()
 		anim_tex.set_frames(4)
 		anim_tex.set_fps(3)
-		anim_tex.set_frame_texture(0, texture[1])
-		anim_tex.set_frame_texture(1, texture[2])
-		anim_tex.set_frame_texture(2, texture[3])
-		anim_tex.set_frame_texture(3, texture[4])
-		anim_tex.set_frame_texture(4, texture[5])
+
+		for i in range(6):
+			texture[i+1] = load("res://Images/UI_Planes/UI_Level_" + str(global.selected_plane) + "_Plane_0" + str(i + 1) + ".png")
+			anim_tex.set_frame_texture(i, texture[i+1])
 		plane_node.set_texture(anim_tex)
+
+		flames_lvl_3_left.visible = false
+		flames_lvl_3_right.visible = false
 	else:
-		tex = load("res://Images/UI_Level_" + str(global.selected_plane) + "_Plane.png")
+		tex = load("res://Images/UI_Planes/UI_Level_" + str(global.selected_plane) + "_Plane.png")
 		plane_node.set_texture(tex)
 		flames_lvl_3_left.visible = false
 		flames_lvl_3_right.visible = false
@@ -152,19 +173,17 @@ func switching_finished(_object, _key):
 	pass
 
 func _on_right_arrow_pressed():
-	$anim.play("right")
+	if !right_arrow.disabled:
+		$anim.play("right")
 	#_on_arrow_pressed(direction.RIGHT)
 	#switch_plane(false)
 
 func _on_left_arrow_pressed():
-	$anim.play("left")
+
+	if !left_arrow.disabled:
+		$anim.play("left")
 	#_on_arrow_pressed(direction.LEFT)
 	#switch_plane(true)
-	pass
-
-func game_over_animation_finished():
-	if $game_over/AnimatedSprite.name != "last":
-		$game_over/AnimatedSprite.play("last")
 	pass
 
 
@@ -186,11 +205,13 @@ func fill_values():
 
 	music = false
 	
+	if current_data == null:
+		return
 	music = current_data["music"]
 	global.saved_data["music"] = music
 	
 	if music:
-		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF.png"))
+		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF_01.png"))
 	else:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_ON.png"))
 
@@ -202,6 +223,10 @@ func fill_values():
 	pass
 
 func _on_credits_button_up():
+	get_tree().change_scene("res://Nodes/Credits.tscn")
+	pass
+
+func _on_enemies_button_up():
 	get_tree().change_scene("res://Nodes/Info.tscn")
 	pass
 
@@ -233,16 +258,14 @@ func _on_music_button_up(_toogle = true):
 	off = current_data["music"]
 	
 	if off:
-		get_node("/root/Control/AudioManager/bgm").stop()
+		get_node("/root/MainMenu/AudioManager/bgm").stop()
 	else:
-		get_node("/root/Control/AudioManager/bgm").play()
-
-
+		get_node("/root/MainMenu/AudioManager/bgm").play()
 	
 	file.close()
 	
 	if !off:
-		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF.png"))
+		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF_01.png"))
 		music = false
 	else:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_ON.png"))
@@ -259,9 +282,23 @@ func spawnMeteor():
 	pass
 
 func _on_anim_animation_finished(anim_name):
+	$anim.play("cloud_movement")
 	$anim.play("fade")
 	if (anim_name == "left"):
 		_on_arrow_pressed(direction.LEFT)
 	elif (anim_name == "right"):
 		_on_arrow_pressed(direction.RIGHT)
+	pass
+
+
+func _on_hamburger_pressed():
+	print("Pressed")
+	hamburger_visible = !hamburger_visible
+	
+	$Container/HBoxContainer/hamburger/Control.visible = hamburger_visible
+	#if !hamburger_visible:
+	#	$Container/hamburger/animation_player.play_backwards("slide_down")
+	#else:
+	#	$Container/hamburger/animation_player.play("slide_down")
+	#$Container/hamburger/Control.visible = hamburger_visible
 	pass
