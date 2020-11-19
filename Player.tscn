@@ -29,7 +29,6 @@
 [ext_resource path="res://Images/New-Planes/Type_A_Level_02_Plane/Level_02_Plane_Muzzle.png" type="Texture" id=27]
 [ext_resource path="res://Images/New-Planes/Type_A_Level_01_Plane/Level_01_Plane_Muzzle.png" type="Texture" id=28]
 [ext_resource path="res://SFX/Laser_Shoot7.wav" type="AudioStream" id=29]
-[ext_resource path="res://SFX/bgm.wav" type="AudioStream" id=30]
 [ext_resource path="res://Images/New-Planes/Type_D_Planes/Level_3/Idle/01_Base.png" type="Texture" id=31]
 [ext_resource path="res://Images/UI_Planes/UI_Level_6_Plane.png" type="Texture" id=32]
 [ext_resource path="res://Images/New-Planes/Type_B_Planes/Level_02.png" type="Texture" id=33]
@@ -41,6 +40,7 @@
 [ext_resource path="res://Images/New-Planes/Type_D_Planes/Level_3/Green_Muzzle/Green_Muzzle_01.png" type="Texture" id=39]
 [ext_resource path="res://Sheild_01.tscn" type="PackedScene" id=40]
 [ext_resource path="res://Images/Enemy_Bullet_01.png" type="Texture" id=41]
+[ext_resource path="res://Images/radial-shadow.png" type="Texture" id=42]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 9
@@ -70,9 +70,14 @@ animations = [ {
 "name": "4",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 10 ) ],
+"frames": [ ExtResource( 33 ) ],
 "loop": true,
-"name": "1",
+"name": "5",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 20 ) ],
+"loop": true,
+"name": "2",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 31 ) ],
@@ -80,14 +85,9 @@ animations = [ {
 "name": "8",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 31 ) ],
+"frames": [ ExtResource( 10 ) ],
 "loop": true,
-"name": "7",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 33 ) ],
-"loop": true,
-"name": "5",
+"name": "1",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 23 ) ],
@@ -100,24 +100,9 @@ animations = [ {
 "name": "6",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 20 ) ],
+"frames": [ ExtResource( 31 ) ],
 "loop": true,
-"name": "2",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 26 ) ],
-"loop": true,
-"name": "3_muzzle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 38 ) ],
-"loop": true,
-"name": "7_muzzle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 36 ) ],
-"loop": true,
-"name": "6_muzzle",
+"name": "7",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 28 ) ],
@@ -125,9 +110,9 @@ animations = [ {
 "name": "1_muzzle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 34 ) ],
+"frames": [ ExtResource( 36 ) ],
 "loop": true,
-"name": "4_muzzle",
+"name": "6_muzzle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 35 ) ],
@@ -135,14 +120,29 @@ animations = [ {
 "name": "5_muzzle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 27 ) ],
+"frames": [ ExtResource( 34 ) ],
 "loop": true,
-"name": "2_muzzle",
+"name": "4_muzzle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 39 ) ],
 "loop": true,
 "name": "8_muzzle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 38 ) ],
+"loop": true,
+"name": "7_muzzle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 27 ) ],
+"loop": true,
+"name": "2_muzzle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 26 ) ],
+"loop": true,
+"name": "3_muzzle",
 "speed": 5.0
 } ]
 
@@ -213,6 +213,12 @@ playing = true
 
 [node name="muzzle_timer" type="Timer" parent="Player_bg"]
 wait_time = 0.1
+
+[node name="Light2D" type="Light2D" parent="Player_bg"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 42 )
+mode = 2
+shadow_enabled = true
 
 [node name="explosion" type="Sprite" parent="."]
 visible = false
@@ -327,12 +333,6 @@ rotation = 1.61945
 position = Vector2( 0, 3.25465 )
 shape = SubResource( 10 )
 
-[node name="bgm" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 30 )
-
-[node name="shot" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 29 )
-
 [node name="shield" parent="." instance=ExtResource( 40 )]
 visible = false
 position = Vector2( 0, 1.45517 )
@@ -348,6 +348,9 @@ texture = ExtResource( 41 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_bullet_laser/player_bullet_laser"]
 position = Vector2( -0.0233024, 0.724271 )
 shape = SubResource( 11 )
+
+[node name="shot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 29 )
 [connection signal="frame_changed" from="powerup_1" to="." method="_on_powerup_frame_changed"]
 [connection signal="timeout" from="Player_bg/muzzle_timer" to="." method="_on_muzzle_timer_timeout"]
 [connection signal="area_entered" from="player_area" to="." method="_on_player_area_area_entered"]

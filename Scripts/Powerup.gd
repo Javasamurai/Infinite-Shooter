@@ -12,6 +12,7 @@ onready var powerup_names = {
 	5: "coins",
 	6: "Machine gun",
 	7: "missile"
+	#8: "laser"
 }
 
 var powerup = null

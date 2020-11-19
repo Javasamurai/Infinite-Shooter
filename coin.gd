@@ -23,8 +23,9 @@ func on_got_coin(area):
 			$audio.play()
 			global.saved_data["coins"] = global.saved_data["coins"] + 1
 			connect("got_coin", get_node("../"), "got_coin")
+			queue_free()
 	pass
 
 func _on_audio_finished():
-	queue_free()
+	# queue_free()
 	pass

@@ -44,34 +44,9 @@ animations = [ {
 "name": "4",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 14 ), ExtResource( 15 ) ],
-"loop": true,
-"name": "5",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 32 ) ],
-"loop": true,
-"name": "10",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 33 ) ],
 "loop": true,
 "name": "11",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
-"loop": true,
-"name": "9",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 20 ), ExtResource( 21 ) ],
-"loop": true,
-"name": "8",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 35 ) ],
-"loop": true,
-"name": "hit_10+",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 5 ) ],
@@ -84,10 +59,35 @@ animations = [ {
 "name": "hit_3",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 17 ), ExtResource( 16 ) ],
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
-"name": "6",
-"speed": 30.0
+"name": "100",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "2",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "3",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 32 ) ],
+"loop": true,
+"name": "10",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
+"loop": true,
+"name": "9",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 35 ) ],
+"loop": true,
+"name": "hit_10+",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 23 ) ],
 "loop": true,
@@ -99,30 +99,30 @@ animations = [ {
 "name": "7",
 "speed": 30.0
 }, {
-"frames": [ ExtResource( 12 ) ],
+"frames": [ ExtResource( 17 ), ExtResource( 16 ) ],
 "loop": true,
-"name": "3",
-"speed": 15.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "2",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 22 ) ],
-"loop": true,
-"name": "hit_1",
-"speed": 5.0
+"name": "6",
+"speed": 30.0
 }, {
 "frames": [ ExtResource( 34 ) ],
 "loop": true,
 "name": "12",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"frames": [ ExtResource( 14 ), ExtResource( 15 ) ],
 "loop": true,
-"name": "100",
-"speed": 10.0
+"name": "5",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 22 ) ],
+"loop": true,
+"name": "hit_1",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 20 ), ExtResource( 21 ) ],
+"loop": true,
+"name": "8",
+"speed": 30.0
 } ]
 
 [sub_resource type="DynamicFontData" id=2]
@@ -188,11 +188,11 @@ extents = Vector2( 13.4424, 17.7929 )
 position = Vector2( 125, 0 )
 frames = SubResource( 1 )
 animation = "9"
-frame = 3
+frame = 2
 playing = true
 script = ExtResource( 2 )
 movementSpeed = 10
-bulletSpeed = 150
+bulletSpeed = 50
 
 [node name="score" type="Label" parent="."]
 visible = false
@@ -232,7 +232,7 @@ wait_time = 0.25
 autostart = true
 
 [node name="cooldown_timer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 3.0
 autostart = true
 
 [node name="death_sfx" type="AudioStreamPlayer2D" parent="."]
@@ -259,6 +259,7 @@ __meta__ = {
 }
 
 [node name="Bullet" parent="." instance=ExtResource( 36 )]
+visible = false
 position = Vector2( -2.47785, -25.1151 )
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="on_enemy_invisible"]
 [connection signal="tween_completed" from="Tween" to="." method="on_chase_compelete"]

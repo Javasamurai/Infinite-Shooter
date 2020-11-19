@@ -9,7 +9,6 @@ _data = {
 }
 
 [node name="path" type="Path2D"]
-position = Vector2( -88, -280 )
 curve = SubResource( 1 )
 
 [node name="path1" type="PathFollow2D" parent="."]

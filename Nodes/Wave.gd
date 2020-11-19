@@ -1,6 +1,5 @@
 extends Node2D
 
-
 signal nextWave
 
 func checkWave():
@@ -8,7 +7,7 @@ func checkWave():
 		WaveDone()
 	pass
 
-func WaveDone():
+func WaveDone(var args=null):
 	emit_signal("nextWave")
 	queue_free()
 	pass

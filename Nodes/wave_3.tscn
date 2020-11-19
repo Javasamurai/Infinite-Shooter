@@ -149,3 +149,4 @@ autoStart = true
 presetEnemy = 4
 
 [node name="VisibilityNotifier2D" parent="." instance=ExtResource( 3 )]
+position = Vector2( 122, 0 )
