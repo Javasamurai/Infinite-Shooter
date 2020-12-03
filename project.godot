@@ -60,6 +60,7 @@ config/icon="res://Images/Players/Level_03_1.png"
 [autoload]
 
 Globals="*res://Scripts/Globals.gd"
+EventBus="*res://Scripts/EventBus.gd"
 
 [display]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Nodes/crt.tscn" type="PackedScene" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=22]
 [ext_resource path="res://SFX/bgm.wav" type="AudioStream" id=23]
 [ext_resource path="res://SFX/sfx_damage_hit9.wav" type="AudioStream" id=24]
+[ext_resource path="res://SFX/General Sounds/Coins/sfx_coin_single5.wav" type="AudioStream" id=25]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -207,6 +208,9 @@ stream = ExtResource( 23 )
 
 [node name="hit" type="AudioStreamPlayer" parent="Camera2D/AudioManager"]
 stream = ExtResource( 24 )
+
+[node name="coin" type="AudioStreamPlayer" parent="Camera2D/AudioManager"]
+stream = ExtResource( 25 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Camera2D"]
 environment = SubResource( 1 )

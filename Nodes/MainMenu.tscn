@@ -433,8 +433,10 @@ __meta__ = {
 speed = 700
 
 [node name="NightSky" parent="MarginContainer4/ParallaxBackground" index="1"]
-visible = false
 speed = 500
+
+[node name="Particles2D" parent="MarginContainer4/ParallaxBackground/NightSky" index="0"]
+visible = false
 
 [node name="meteor_1" type="Sprite" parent="MarginContainer4"]
 position = Vector2( 59, 920 )
@@ -566,7 +568,7 @@ __meta__ = {
 position = Vector2( 31, 0 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 11 )
-frame = 35
+frame = 18
 playing = true
 centered = false
 
@@ -834,15 +836,17 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Container"]
-margin_left = 19.0
-margin_right = 203.0
+margin_left = -3.0
+margin_right = 226.0
 margin_bottom = 34.0
 size_flags_horizontal = 4
-custom_constants/separation = 130
+custom_constants/separation = 175
 
 [node name="inventory" type="TextureButton" parent="Container/HBoxContainer"]
 margin_right = 31.0
 margin_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 0
 texture_normal = ExtResource( 34 )
 texture_pressed = ExtResource( 45 )
 texture_hover = ExtResource( 45 )
@@ -851,9 +855,11 @@ __meta__ = {
 }
 
 [node name="hamburger" type="TextureButton" parent="Container/HBoxContainer"]
-margin_left = 161.0
-margin_right = 184.0
+margin_left = 206.0
+margin_right = 229.0
 margin_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 0
 texture_normal = ExtResource( 52 )
 texture_pressed = ExtResource( 92 )
 texture_hover = ExtResource( 92 )
@@ -1046,8 +1052,8 @@ __meta__ = {
 [connection signal="button_up" from="Container/HBoxContainer/hamburger/Control/credit" to="." method="_on_credits_button_up"]
 [connection signal="pressed" from="Container/HBoxContainer/hamburger/Control/music_btn" to="." method="_on_music_button_up"]
 [connection signal="pressed" from="bottom_container/play_btn" to="." method="switch_scene"]
-[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="GUI/VBoxContainer/HBoxContainer/play" method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
+[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="GUI/VBoxContainer/HBoxContainer/play" method="switch_scene"]
 [connection signal="button_down" from="GUI/VBoxContainer/HBoxContainer/play_label" to="." method="switch_scene"]
 [connection signal="timeout" from="Timer" to="." method="game_over"]
 [connection signal="animation_finished" from="game_over/AnimatedSprite" to="." method="game_over_animation_finished"]

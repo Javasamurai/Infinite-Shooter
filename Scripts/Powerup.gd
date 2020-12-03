@@ -18,11 +18,12 @@ onready var powerup_names = {
 var powerup = null
 func _ready():
 	randomize()
-	powerup = powerup_names[1]
+	powerup = powerup_names[4]
 	set_process(true)
 	time_elapsed = 0
 	var random_int = randi()
-	powerup = powerup_names[random_int % powerup_names.size() + 1]
+	
+	#powerup = powerup_names[random_int % powerup_names.size() + 1]
 	play(powerup)
 	pass
 

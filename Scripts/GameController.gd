@@ -46,7 +46,7 @@ export(NodePath) var heart_container_path
 export(NodePath) var fps_lbl_path
 
 # warning-ignore:unused_signal
-#signal hit
+signal got_coin
 
 var coin_range = range(2000, 30000, 2000)
 var coin_wave_clone = null
@@ -287,12 +287,17 @@ func _ready():
 	$Player.connect("player_die", self, "save_score")
 	$Player.connect("left", self, "left")
 	$Player.connect("right", self, "right")
-
+	EventBus.connect("got_coin", self, "playCoinSound")
 	powerup_container = $powerup_container
 	global.current_wave = 0
 	nextWave()
 	pass
 	#announce_something("In a galaxy far far away. There was a gladiator.", 5)
+
+func playCoinSound():
+	$AudioManager/coin.play()
+	pass
+
 func nextWave():
 	yield(get_tree().create_timer(1.0), "timeout")
 	

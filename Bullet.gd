@@ -126,9 +126,6 @@ func _on_bullet_hit(body):
 		queue_free()
 	pass
 
-func _on_music_finished():
-	#queue_free()
-	pass
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()

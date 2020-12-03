@@ -14,7 +14,6 @@ func _ready():
 
 func _input(event):
 	if event is InputEventScreenDrag:
-	
 		if plane_parent.rect_position.x < left_limit && plane_parent.rect_position.x > -right_limit:
 			plane_parent.rect_position.x = plane_parent.rect_position.x + event.relative.x 
 		elif plane_parent.rect_position.x >= left_limit &&  event.relative.x < 0:
