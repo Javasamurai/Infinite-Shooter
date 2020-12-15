@@ -27,6 +27,7 @@ func _ready():
 			plane_clone = plane_node.instance()
 			plane_clone.rect_position = Vector2.ZERO
 			plane_clone.name = "Plane " + str(i + 1)
+			plane_clone.index = i
 			plane_clone.texture = load("res://Images/Drone/Drone_level_0" + str(i + 1) + ".png")
 		
 			$Control.add_child(plane_clone)
@@ -39,12 +40,19 @@ func toMainMenu():
 	pass
 
 func onPlaneEntered(area):
-	$plane_info.text = area.get_node("..").name
-	currentNodeInside = area.get_node("..")
+	var plane = area.get_node("..")
+	$plane_info.text = plane.name
+	currentNodeInside = plane
 	currentNodeInside.selected = true
 	$buy_button/price.text = area.get_node("..").name.right(area.get_node("..").name.length() - 1) + "000"
 	pass
 
 func onPlaneExited(area):
 	currentNodeInside.selected = false
+	pass
+
+
+func _on_buy_button_button_up():
+	global.selected_plane = currentNodeInside.get_index()
+	print("purchased:" + str(global.selected_plane))
 	pass

@@ -155,7 +155,7 @@ func _on_arrow_pressed(_direction):
 	pass
 
 func switch_scene():
-	get_tree().change_scene("res://Nodes/Root.tscn")
+	get_tree().change_scene("res://Nodes/GamePlay.tscn")
 	pass
 
 func switch_plane(left):
@@ -245,8 +245,9 @@ func _on_music_button_up(_toogle = true):
 	var off = false
 	var current_data = null
 	var toggle = _toogle
+
 	file.open(global.save_file_path, File.READ_WRITE)
-	
+
 	current_data = parse_json(file.get_as_text())
 	if current_data == null:
 		return
@@ -255,16 +256,19 @@ func _on_music_button_up(_toogle = true):
 		current_data["music"] = !current_data["music"]
 		global.saved_data["music"] = current_data["music"]
 		file.store_string(to_json(current_data))
-	off = current_data["music"]
+	off = !current_data["music"]
+
+	print("Music toggle" + str(off))
+	print(toggle)
 	
 	if off:
-		get_node("/root/MainMenu/AudioManager/bgm").stop()
+		$AudioManager/bgm.stop()
 	else:
-		get_node("/root/MainMenu/AudioManager/bgm").play()
+		$AudioManager/bgm.play()
 	
 	file.close()
 	
-	if !off:
+	if off:
 		music_btn.set_normal_texture(load("res://Images/UI/Sound_OFF_01.png"))
 		music = false
 	else:
@@ -272,11 +276,9 @@ func _on_music_button_up(_toogle = true):
 		music = true
 	pass
 
-
 func hide_game_over():
 	find_node("game_over").visible = false
 	pass
-	
 	
 func spawnMeteor():
 	pass

@@ -8,6 +8,7 @@ var target = null
 #var tween
 var	bullet
 var left = true
+var isMainMenu = false
 
 export var positioning = "left"
 var time = 1
@@ -16,7 +17,7 @@ var offset_x = 35
 var what_tween = Tween.TRANS_LINEAR
 
 func _ready():
-	print(positioning)
+	isMainMenu = get_tree().get_current_scene().get_name() == "MainMenu"
 	if positioning == "left":
 		$AnimationPlayer.play("scale_up")
 		$Tween.interpolate_method(self, "set_position", self.position, Vector2(position.x + offset_x, position.y), time, what_tween, what_tween)
@@ -72,9 +73,13 @@ func explode():
 	$Timer.start()
 	pass
 
-func fire():
-	var bullet_clone = bullet.instance()
 
+func fire():
+	if isMainMenu:
+		return
+	
+	var bullet_clone = bullet.instance()
+	get_tree().get_current_scene().get_name() != "MainMenu"
 	#bullet_clone.position = Vector2(get_node("..").position.x, get_node("..").position.y)
 	bullet_clone.position = Vector2(self.global_position.x + 4, self.global_position.y)
 	bullet_clone.fire("UP", 500)
@@ -90,7 +95,7 @@ func fire():
 #	pass
 
 
-func _on_drone_animation_finished():
+func _on_drone_animation_finished(d, s):
 	if positioning == "left":
 		if left:
 			$Tween.interpolate_method(self, "set_position", position, Vector2(position.x - offset_x, position.y), time, what_tween, what_tween)

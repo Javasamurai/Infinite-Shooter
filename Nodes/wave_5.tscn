@@ -28,13 +28,13 @@ presetEnemy = 10
 [node name="Enemy25" parent="." instance=ExtResource( 1 )]
 position = Vector2( 224, 41 )
 animation = "1"
-frame = 0
+frame = 1
 autoStart = true
 
 [node name="Enemy27" parent="." instance=ExtResource( 1 )]
 position = Vector2( 32, 41 )
 animation = "1"
-frame = 1
+frame = 2
 autoStart = true
 
 [node name="Enemy26" parent="." instance=ExtResource( 1 )]

@@ -43,14 +43,19 @@ animations = [ {
 "name": "4",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 12 ) ],
+"frames": [ ExtResource( 20 ), ExtResource( 21 ) ],
 "loop": true,
-"name": "3",
-"speed": 15.0
+"name": "8",
+"speed": 30.0
 }, {
-"frames": [ ExtResource( 32 ) ],
+"frames": [ ExtResource( 35 ) ],
 "loop": true,
-"name": "10",
+"name": "hit_10+",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
+"loop": true,
+"name": "9",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 33 ) ],
@@ -58,59 +63,9 @@ animations = [ {
 "name": "11",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 20 ), ExtResource( 21 ) ],
-"loop": true,
-"name": "8",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
-"loop": true,
-"name": "9",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 35 ) ],
-"loop": true,
-"name": "hit_10+",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "1",
-"speed": 10.0
-}, {
-"frames": [  ],
-"loop": true,
-"name": "hit_3",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 14 ), ExtResource( 15 ) ],
 "loop": true,
 "name": "5",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 34 ) ],
-"loop": true,
-"name": "12",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 23 ) ],
-"loop": true,
-"name": "hit_2",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "100",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 18 ), ExtResource( 19 ) ],
-"loop": true,
-"name": "7",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 17 ), ExtResource( 16 ) ],
-"loop": true,
-"name": "6",
 "speed": 30.0
 }, {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
@@ -118,14 +73,59 @@ animations = [ {
 "name": "2",
 "speed": 10.0
 }, {
+"frames": [ ExtResource( 23 ) ],
+"loop": true,
+"name": "hit_2",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "hit_3",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "100",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "1",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "6",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "3",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 18 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "7",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 32 ) ],
+"loop": true,
+"name": "10",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 22 ) ],
 "loop": true,
 "name": "hit_1",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 34 ) ],
+"loop": true,
+"name": "12",
+"speed": 5.0
 } ]
 
 [sub_resource type="DynamicFontData" id=2]
-font_path = "res://fonts/joystix monospace.ttf"
+font_path = "res://fonts/Mister Pixel Regular.otf"
 
 [sub_resource type="DynamicFont" id=3]
 size = 8
@@ -186,17 +186,16 @@ extents = Vector2( 13.4424, 17.7929 )
 [node name="Enemy" type="AnimatedSprite"]
 frames = SubResource( 1 )
 animation = "9"
-frame = 1
 playing = true
 script = ExtResource( 2 )
 presetEnemy = 1
 
 [node name="score" type="Label" parent="."]
 visible = false
-margin_left = -1.03905
-margin_top = -15.7853
-margin_right = 38.961
-margin_bottom = -1.78533
+margin_left = 1.57107
+margin_top = -19.1154
+margin_right = 41.5711
+margin_bottom = -5.11539
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "100"
@@ -249,8 +248,9 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_body"]
 shape = SubResource( 8 )
 [connection signal="area_entered" from="enemy_area" to="." method="_on_enemy_area_area_entered"]
-[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="on_enemy_invisible"]
 [connection signal="tween_completed" from="Tween" to="." method="on_chase_compelete"]
 [connection signal="animation_finished" from="explosion" to="." method="_on_explosion_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="reset_anim"]
 [connection signal="timeout" from="death_timer" to="." method="on_enemy_invisible"]
+
+[editable path="enemy_area"]

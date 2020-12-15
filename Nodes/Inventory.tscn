@@ -34,7 +34,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 39, 40 )
+extents = Vector2( 39, 32 )
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -62,9 +62,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -135.5
-margin_top = -232.0
+margin_top = -231.5
 margin_right = 135.5
-margin_bottom = 232.0
+margin_bottom = 286.5
 texture = ExtResource( 2 )
 expand = true
 __meta__ = {
@@ -155,7 +155,7 @@ margin_left = -0.5
 margin_top = -54.0
 margin_right = 0.5
 margin_bottom = -54.0
-custom_constants/separation = 20
+custom_constants/separation = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -212,7 +212,7 @@ playing = true
 [node name="ParallaxBackground" parent="." instance=ExtResource( 8 )]
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2( 129, 216 )
+position = Vector2( 129, 207 )
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -221,5 +221,6 @@ __meta__ = {
 "_edit_lock_": true
 }
 [connection signal="pressed" from="back_btn" to="." method="toMainMenu"]
+[connection signal="button_up" from="buy_button" to="." method="_on_buy_button_button_up"]
 [connection signal="area_entered" from="Area2D" to="." method="onPlaneEntered"]
 [connection signal="area_exited" from="Area2D" to="." method="onPlaneExited"]

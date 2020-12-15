@@ -9,22 +9,17 @@ var is_firing = false
 var fire_speed = 0
 enum type {
 	NORMAL,
-	MISSILE
+	MISSILE,
+	FIREBALL,
+	RADIAL,
+	RANDOM
 }
 var radius = 0
 var global
 var tween
 var already_hit = false
-var current_type
-var a = 0
 
-var angles = {
-	"LEFT": [180],
-	"UP": [90],
-	"RIGHT": [0],
-	"DOWN": [360],
-	"TOP_RIGHT": [1, 45]
-}
+var a = 0
 
 func _ready():
 	set_physics_process(true)
@@ -131,9 +126,6 @@ func _on_bullet_hit(body):
 		queue_free()
 	pass
 
-func _on_music_finished():
-	#queue_free()
-	pass
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()

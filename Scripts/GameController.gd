@@ -46,7 +46,7 @@ export(NodePath) var heart_container_path
 export(NodePath) var fps_lbl_path
 
 # warning-ignore:unused_signal
-#signal hit
+signal got_coin
 
 var coin_range = range(2000, 30000, 2000)
 var coin_wave_clone = null
@@ -253,6 +253,12 @@ var waveSystem = [
 func _ready():
 	global = get_node("/root/Globals")
 	#global.saved_data["coins"] = 0
+	
+	print(global.saved_data["music"])
+	
+	if global.saved_data["music"]:
+		$AudioManager/BGM.play()
+
 	load_score()
 	fps_lbl = get_node(fps_lbl_path)
 	tween = get_node("Tween")
@@ -281,14 +287,19 @@ func _ready():
 	$Player.connect("player_die", self, "save_score")
 	$Player.connect("left", self, "left")
 	$Player.connect("right", self, "right")
-
+	EventBus.connect("got_coin", self, "playCoinSound")
 	powerup_container = $powerup_container
 	global.current_wave = 0
 	nextWave()
 	pass
 	#announce_something("In a galaxy far far away. There was a gladiator.", 5)
+
+func playCoinSound():
+	$AudioManager/coin.play()
+	pass
+
 func nextWave():
-	yield(get_tree().create_timer(3.0), "timeout")
+	yield(get_tree().create_timer(1.0), "timeout")
 	
 	if $"../game_over".visible:
 		return
@@ -353,8 +364,8 @@ func _process(delta):
 	if wave_clone != null:
 		for i in range(wave_clone.get_child_count()):
 			var enemy = wave_clone.get_child(i)
-			#if enemy is AnimatedSprite:
-			#	enemy.move_to($Player.global_position)
+			if enemy is AnimatedSprite:
+				enemy.move_to($Player.global_position)
 
 	fps_lbl.text = str(Engine.get_frames_per_second())
 	#if last_spawned_time > rand_range(1, spawnDelay):
@@ -451,8 +462,7 @@ func enemy_hit(which_one):
 	else:
 		score += 100
 	$ScreenShake.shake(0.75, 250, 2)
-	get_node(score_label).text = "Score:" + str(score) 
-
+	get_node(score_label).text = "Score:" + str(score)
 	wave_clone.checkWave()
 
 func on_player_hit():
@@ -461,6 +471,7 @@ func on_player_hit():
 	if $Player.health >=0:
 		health_progress.value = int(float($Player.health / 300.0) * 100)
 		#health_container.get_child(int($Player.health / 20)).hide()
+		$AudioManager/hit.play()
 	pass
 	
 func spawnPowerup():
@@ -494,11 +505,10 @@ func _on_powerup_got(areas):
 	if areas.name == "bullet_area" && powerup_clone != null:
 		#var which_one = "sonic_boom" if rng.randf_range(0, 1) < 0.5 else "minify"
 		var which_one = powerup_clone.get_node("powerup_animated").powerup
-		announce_something(which_one)
 		
 		time_passed_since_powerup = 0
 		isPowerSpawned = false
-		if which_one == "coins crate":
+		if which_one == "coins":
 			powerup_clone.find_node("coins").visible = true
 			coin_wave()
 		elif which_one == "potion":
@@ -506,6 +516,7 @@ func _on_powerup_got(areas):
 				health_progress.value = $Player.health
 				$health.play()
 		else:
+			announce_something(which_one)
 			powerup_enengy.visible = true
 			powerup_enengy.value = 100
 			powerup_clone.queue_free()

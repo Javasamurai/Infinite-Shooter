@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Images/Shield/Layer 101.png" type="Texture" id=1]
+[ext_resource path="res://Sheild.gd" type="Script" id=2]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 0.981832 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.990923 ), 0.0, 0.0, 0, 0 ]
@@ -19,6 +20,9 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale_curve = SubResource( 2 )
 
+[sub_resource type="CircleShape2D" id=4]
+radius = 28.2257
+
 [node name="Particles2D2" type="Particles2D"]
 modulate = Color( 1, 1, 1.5, 1 )
 position = Vector2( 149.689, -150.473 )
@@ -26,3 +30,10 @@ scale = Vector2( 1.5, 1.5 )
 explosiveness = 1.0
 process_material = SubResource( 3 )
 texture = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 4 )
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

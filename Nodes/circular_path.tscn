@@ -9,7 +9,6 @@ _data = {
 }
 
 [node name="path" type="Path2D"]
-position = Vector2( -88, -280 )
 curve = SubResource( 1 )
 
 [node name="path1" type="PathFollow2D" parent="."]
@@ -22,5 +21,4 @@ position = Vector2( -8.43963, -7.53476 )
 rotation = -0.197395
 animation = "100"
 frame = 1
-playing = true
 script = ExtResource( 2 )

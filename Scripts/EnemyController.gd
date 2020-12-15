@@ -244,7 +244,12 @@ func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	tween = get_node("Tween")
+	var rect_shape = RectangleShape2D.new()
+	var _size = frames.get_frame(str(presetEnemy), 0).get_size()
 	
+	rect_shape.extents = Vector2(_size.x, _size.y)
+	$enemy_area/CollisionShape2D.shape = rect_shape
+
 	if autoStart:
 		generate_enemy(999)
 	# randomly change alien color
@@ -273,10 +278,6 @@ func generate_enemy(max_enemies = enemy_config.size()):
 
 	play(str(key))
 	bullets = []
-
-	#if key == 3 or key == 4:
-	#	$Tween.interpolate_property(self, "rotation", 0, 7200, 15,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
-	#	$Tween.start()
 	pass
 
 func move_to(_pos):
@@ -298,12 +299,13 @@ func hit(full = false):
 	tween.interpolate_property(self, "modulate", Color.white, Color(0,0,0,0.5), 0.25,Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
 	tween.interpolate_property(self, "position", position, Vector2(position.x, position.y - 6), 0.1,Tween.TRANS_BOUNCE, Tween.EASE_IN_OUT)
 	$AnimationPlayer.play("hit")
-	#tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 1.5,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	
-	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 200, 1.25,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.start()
+	score_lbl.visible = true
 	
 	health = health - 10
+
+	tween.interpolate_property(score_lbl, "modulate", Color.white, Color.transparent, 0.5,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.interpolate_property(score_lbl, "margin_top", score_lbl.margin_top, score_lbl.margin_top, score_lbl.margin_top + 200, 0.75,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
 
 	if full:
 		health = -1000
@@ -361,6 +363,9 @@ func _process(delta):
 		else:
 			fire()
 		time_elapsed = 0
+
+	if position.y > 1500:
+		on_enemy_invisible()
 	pass
 	
 func fire_side():
@@ -409,7 +414,7 @@ func fire():
 
 func on_enemy_invisible():
 	queue_free()
-	$"..".checkWave()
+	#$"..".checkWave()
 	pass
 
 func _on_explosion_animation_finished():
@@ -432,7 +437,7 @@ func _on_enemy_area_area_entered(area):
 	var isEnemy_bullet = area_name.find("enemy_bullet") != -1
 	var hitPlayer_body = (_node_name.find("player_area") != -1)
 	var hitEnemy_body = (_node_name.find("Enemy") != -1)
-	print(area_name)
+	
 	if isPlayer_bullet && hitEnemy_body:
 		hit()
 		if area_name.find("laser") == -1:

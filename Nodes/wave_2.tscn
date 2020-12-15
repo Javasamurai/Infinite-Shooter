@@ -11,32 +11,32 @@ script = ExtResource( 2 )
 [node name="Enemy" parent="." instance=ExtResource( 1 )]
 position = Vector2( 24, 40 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="Enemy9" parent="." instance=ExtResource( 1 )]
 visible = false
 position = Vector2( 24, 40 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="Enemy11" parent="." instance=ExtResource( 1 )]
 position = Vector2( 112, 41 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="Enemy3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 184, 40 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="Enemy7" parent="." instance=ExtResource( 1 )]
 position = Vector2( 63, 40 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="Enemy6" parent="." instance=ExtResource( 1 )]
@@ -49,43 +49,43 @@ presetEnemy = 2
 [node name="Enemy17" parent="." instance=ExtResource( 1 )]
 position = Vector2( 28.5, 322.5 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="Enemy18" parent="." instance=ExtResource( 1 )]
 position = Vector2( 28.5, 322.5 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="Enemy19" parent="." instance=ExtResource( 1 )]
 position = Vector2( 28.5, 322.5 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="Enemy20" parent="." instance=ExtResource( 1 )]
 position = Vector2( 28.5, 322.5 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="Enemy25" parent="." instance=ExtResource( 1 )]
 position = Vector2( 222.5, 40.5 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="Enemy26" parent="." instance=ExtResource( 1 )]
 position = Vector2( 223, 210.5 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="Enemy24" parent="." instance=ExtResource( 1 )]
 position = Vector2( 67.5, 322.5 )
 animation = "1"
-frame = 0
+frame = 2
 autoStart = true
 
 [node name="VisibilityNotifier2D" parent="." instance=ExtResource( 3 )]

@@ -20,11 +20,9 @@ func on_got_coin(area):
 	if area.name == "bullet_area":
 		if !got_coin:
 			got_coin = true
-			$audio.play()
 			global.saved_data["coins"] = global.saved_data["coins"] + 1
+			
+			EventBus.emit_signal("got_coin")
 			connect("got_coin", get_node("../"), "got_coin")
-	pass
-
-func _on_audio_finished():
-	queue_free()
+			queue_free()
 	pass

@@ -17,7 +17,7 @@ var size
 
 func _ready():
 	set_process(true)
-	bullet = preload("res://Nodes/Bullet.tscn")
+	bullet = preload("res://Nodes/BulletLight.tscn")
 	firstTexture = frames.get_frame("1", 1)
 	size = firstTexture.get_size()
 	
@@ -34,17 +34,17 @@ func _process(delta):
 func testBullet():
 	if !canShoot:
 		return
-	#createBullet("UP")
-	#createBullet("DOWN")
-	#createBullet("RIGHT")
-	#createBullet("LEFT")
+	createBullet("UP")
+	createBullet("DOWN")
+	createBullet("RIGHT")
+	createBullet("LEFT")
 
-	#createBullet("TOP_RIGHT")
-	#createBullet("TOP_LEFT")
-	#createBullet("BOTT_RIGHT")
-	#createBullet("BOTT_LEFT")
-	#for i in range(1, 360, 15):
-	#	createBullet("RIGHT", i)
+	createBullet("TOP_RIGHT")
+	createBullet("TOP_LEFT")
+	createBullet("BOTT_RIGHT")
+	createBullet("BOTT_LEFT")
+	for i in range(1, 360, 15):
+		createBullet("RIGHT", i)
 pass
 
 func createBullet(dir, angle = 0):
@@ -52,13 +52,11 @@ func createBullet(dir, angle = 0):
 	#var _dir = directions[randi() % 4]
 
 	bullet_clone.rotation = angle
-	
-
 
 	bullet_clone.global_position = Vector2(global_position.x, global_position.y)
 	bullet_clone.name = "enemy_bullet"
 	get_parent().add_child(bullet_clone)
-	bullet_clone.fireAngle(angle, bulletSpeed)
+	bullet_clone.fire(angle, bulletSpeed, angle)
 	pass
 
 func toggleShoot():

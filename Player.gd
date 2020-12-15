@@ -69,13 +69,14 @@ func _ready():
 	window_size = get_viewport_rect().size / 2
 	$Timer.connect("timeout", self, "clear_powerup")
 	
-	if global.saved_data["music"]:
-		$bgm.play()
 	if global.selected_plane == 3:
 		$side_flame.visible = true
 	else:
 		$side_flame.visible = false
 	pass
+
+func canFire():
+	return canFire && get_tree().get_current_scene().get_name() != "MainMenu"
 
 func _process(delta):
 	time_elapsed+=delta
@@ -132,8 +133,7 @@ func movement(_direction = null, _acc = null):
 		get_tree().change_scene("./MainMenu.tscn")
 	if Input.is_key_pressed(KEY_SPACE):
 		is_pressed = true
-	#if Input.is_key_pressed(KEY_0):
-	#	drone()
+
 	if Input.is_key_pressed(KEY_LEFT) || _direction == DIRECTION.LEFT:
 		if self.position.x > -window_size.x:
 			emit_signal("left")
@@ -167,9 +167,7 @@ func spawnDrone():
 	drone1.position = Vector2.ZERO
 	drone2.position = Vector2.ZERO
 	$drone1_parent.add_child(drone1)
-	$drone2_parent.add_child(drone2)
-	
-	print($drone1_parent.get_child(0))
+	$drone2_parent.add_child(drone2)	
 	pass
 
 func drone(target1, target2):
@@ -186,7 +184,7 @@ func drone(target1, target2):
 		drone2.activate(target2)
 	pass
 
-func create_bullet(pos, rotate = false, missile = false):
+func create_bullet(pos, rotate = false, missile = false, laser = false):
 	var bullet_clone_1
 	var bullet_clone_2
 	
@@ -200,6 +198,9 @@ func create_bullet(pos, rotate = false, missile = false):
 	else:
 		bullet_clone_1 = bullet.instance()
 		bullet_clone_2 = bullet.instance()
+
+	if laser:
+		$player_bullet_laser.visible = true
 
 	bullet_clone_1.name = "player_bullet_1"
 	bullet_clone_2.name = "player_bullet_2"
@@ -223,10 +224,12 @@ func create_bullet(pos, rotate = false, missile = false):
 	pass
 
 func fire():
-	if canFire and health > 0:
+	if canFire() and health > 0:
 		canFire = false
 		if current_powerup == "missile":
 			create_bullet(1, false, true)
+		elif current_powerup == "laser":
+			create_bullet(1, false, false, true)
 		create_bullet(1)
 		if global.selected_plane >= 2:
 			create_bullet(2, true)
@@ -242,6 +245,7 @@ func fire():
 		# Firreeee!!!!
 		if global.saved_data["music"]:
 			$shot.play()
+
 		$Player_bg.play(str(global.selected_plane) + "_muzzle")
 		$Player_bg/muzzle_timer.start()
 		#$muzzles.visible = true
@@ -298,6 +302,8 @@ func minify():
 func clear_powerup():
 	time_elapsed = 0
 	$shield.visible = false
+	$player_bullet_laser.visible = false
+
 	tween.interpolate_property(self, "scale", get_scale(),Vector2.ONE,0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
 	isSheilded = false
@@ -308,6 +314,7 @@ func clear_powerup():
 	is_sonic_boom = false
 	is_pressed = false
 	canFire = false
+
 
 func powerup(which_one):
 	$powerup.visible = true
