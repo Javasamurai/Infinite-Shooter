@@ -86,6 +86,7 @@ func game_over():
 	
 func toInventory(drone = false):
 	global.isDroneInventory = drone
+	$AudioManager/ButtonClick.play()
 	get_tree().change_scene("res://Nodes/Inventory.tscn")
 	pass
 
@@ -294,9 +295,9 @@ func _on_anim_animation_finished(anim_name):
 
 
 func _on_hamburger_pressed():
-	print("Pressed")
 	hamburger_visible = !hamburger_visible
-	
+	button_click.play()
+
 	$Container/HBoxContainer/hamburger/Control.visible = hamburger_visible
 	#if !hamburger_visible:
 	#	$Container/hamburger/animation_player.play_backwards("slide_down")

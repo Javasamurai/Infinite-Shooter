@@ -10,14 +10,14 @@
 [ext_resource path="res://Images/UI/About_OFF.png" type="Texture" id=8]
 [ext_resource path="res://Images/right_arrow.png" type="Texture" id=9]
 [ext_resource path="res://Images/UI/Coin_01_1.png" type="Texture" id=10]
-[ext_resource path="res://SFX/General Sounds/Buttons/sfx_sounds_button3.wav" type="AudioStream" id=11]
+[ext_resource path="res://SFX/click3.wav" type="AudioStream" id=11]
 [ext_resource path="res://Images/Flame_02.png" type="Texture" id=12]
 [ext_resource path="res://Images/Flame_01.png" type="Texture" id=13]
 [ext_resource path="res://Images/Earth/Earth_01.png" type="Texture" id=14]
 [ext_resource path="res://Images/Earth/Earth_02.png" type="Texture" id=15]
 [ext_resource path="res://Images/Earth/Earth_03.png" type="Texture" id=16]
 [ext_resource path="res://Images/Earth/Earth_04.png" type="Texture" id=17]
-[ext_resource path="res://SFX/bgm.wav" type="AudioStream" id=18]
+[ext_resource path="res://Music/New Hope.ogg" type="AudioStream" id=18]
 [ext_resource path="res://Images/Side_Flame_02.png" type="Texture" id=19]
 [ext_resource path="res://Images/Blue_overlay.png" type="Texture" id=20]
 [ext_resource path="res://Nodes/crt.tscn" type="PackedScene" id=21]
@@ -568,7 +568,6 @@ __meta__ = {
 position = Vector2( 31, 0 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 11 )
-frame = 18
 playing = true
 centered = false
 
@@ -1052,8 +1051,8 @@ __meta__ = {
 [connection signal="button_up" from="Container/HBoxContainer/hamburger/Control/credit" to="." method="_on_credits_button_up"]
 [connection signal="pressed" from="Container/HBoxContainer/hamburger/Control/music_btn" to="." method="_on_music_button_up"]
 [connection signal="pressed" from="bottom_container/play_btn" to="." method="switch_scene"]
-[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="GUI/VBoxContainer/HBoxContainer/play" method="switch_scene"]
+[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
 [connection signal="button_down" from="GUI/VBoxContainer/HBoxContainer/play_label" to="." method="switch_scene"]
 [connection signal="timeout" from="Timer" to="." method="game_over"]
 [connection signal="animation_finished" from="game_over/AnimatedSprite" to="." method="game_over_animation_finished"]

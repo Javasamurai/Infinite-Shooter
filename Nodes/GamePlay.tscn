@@ -22,7 +22,7 @@
 [ext_resource path="res://Images/UI/Full_Health.png" type="Texture" id=20]
 [ext_resource path="res://Images/UI/Health_04.png" type="Texture" id=21]
 [ext_resource path="res://fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=22]
-[ext_resource path="res://SFX/bgm.wav" type="AudioStream" id=23]
+[ext_resource path="res://Music/Interstellar Odyssey.ogg" type="AudioStream" id=23]
 [ext_resource path="res://SFX/sfx_damage_hit9.wav" type="AudioStream" id=24]
 [ext_resource path="res://SFX/General Sounds/Coins/sfx_coin_single5.wav" type="AudioStream" id=25]
 
@@ -203,14 +203,15 @@ fps_lbl_path = NodePath("../Control/MarginContainer/header/fps")
 
 [node name="AudioManager" type="Node" parent="Camera2D"]
 
-[node name="BGM" type="AudioStreamPlayer" parent="Camera2D/AudioManager"]
-stream = ExtResource( 23 )
-
 [node name="hit" type="AudioStreamPlayer" parent="Camera2D/AudioManager"]
 stream = ExtResource( 24 )
 
 [node name="coin" type="AudioStreamPlayer" parent="Camera2D/AudioManager"]
 stream = ExtResource( 25 )
+
+[node name="BGM" type="AudioStreamPlayer" parent="Camera2D/AudioManager"]
+stream = ExtResource( 23 )
+volume_db = -6.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Camera2D"]
 environment = SubResource( 1 )

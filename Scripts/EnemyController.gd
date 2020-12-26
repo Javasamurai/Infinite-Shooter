@@ -438,7 +438,7 @@ func _on_enemy_area_area_entered(area):
 	var hitPlayer_body = (_node_name.find("player_area") != -1)
 	var hitEnemy_body = (_node_name.find("Enemy") != -1)
 	
-	if isPlayer_bullet && hitEnemy_body:
+	if isPlayer_bullet && area.get_node("..").visible && hitEnemy_body:
 		hit()
 		if area_name.find("laser") == -1:
 			area.get_node("../").queue_free()
