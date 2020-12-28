@@ -86,7 +86,7 @@ func game_over():
 	
 func toInventory(drone = false):
 	global.isDroneInventory = drone
-	$AudioManager/ButtonClick.play()
+	playButtonAudio()
 	get_tree().change_scene("res://Nodes/Inventory.tscn")
 	pass
 
@@ -304,4 +304,9 @@ func _on_hamburger_pressed():
 	#else:
 	#	$Container/hamburger/animation_player.play("slide_down")
 	#$Container/hamburger/Control.visible = hamburger_visible
+	pass
+
+
+func playButtonAudio():
+	$AudioManager/ButtonClick.play()
 	pass

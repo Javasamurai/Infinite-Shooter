@@ -1,4 +1,4 @@
-[gd_scene load_steps=120 format=2]
+[gd_scene load_steps=123 format=2]
 
 [ext_resource path="res://Images/empty_sky.png" type="Texture" id=1]
 [ext_resource path="res://Images/UI_Planes/UI_Level_1_Plane.png" type="Texture" id=2]
@@ -42,6 +42,7 @@
 [ext_resource path="res://Images/Meteor_02.png" type="Texture" id=40]
 [ext_resource path="res://Images/Meteor_01.png" type="Texture" id=41]
 [ext_resource path="res://Nodes/ParallaxBackground.tscn" type="PackedScene" id=42]
+[ext_resource path="res://Images/UI/whiteButtonUnselected.png" type="Texture" id=43]
 [ext_resource path="res://Plane_Flame.tscn" type="PackedScene" id=44]
 [ext_resource path="res://Images/UI/Inventory_ON.png" type="Texture" id=45]
 [ext_resource path="res://Images/UI/Earth.png" type="Texture" id=46]
@@ -95,6 +96,7 @@
 [ext_resource path="res://Images/UI/Sound_Selected.png" type="Texture" id=94]
 [ext_resource path="res://Images/UI/Sound_OFF_01.png" type="Texture" id=95]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=96]
+[ext_resource path="res://Images/UI/whiteButtonselected.png" type="Texture" id=97]
 
 [sub_resource type="Animation" id=1]
 resource_name = "cloud_movement"
@@ -366,6 +368,11 @@ tracks/0/keys = {
 [sub_resource type="DynamicFont" id=24]
 font_data = ExtResource( 25 )
 
+[sub_resource type="DynamicFont" id=25]
+size = 10
+use_mipmaps = true
+font_data = ExtResource( 25 )
+
 [node name="MainMenu" type="Control"]
 modulate = Color( 1, 1, 1, 0.905882 )
 anchor_right = 1.0
@@ -398,6 +405,7 @@ __meta__ = {
 
 [node name="bgm" type="AudioStreamPlayer2D" parent="AudioManager"]
 stream = ExtResource( 18 )
+pitch_scale = 2.0
 
 [node name="anim" type="AnimationPlayer" parent="."]
 autoplay = "cloud_movement"
@@ -568,6 +576,7 @@ __meta__ = {
 position = Vector2( 31, 0 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 11 )
+frame = 21
 playing = true
 centered = false
 
@@ -964,7 +973,7 @@ margin_bottom = 34.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI/VBoxContainer"]
 margin_right = 243.0
-margin_bottom = 23.0
+margin_bottom = 25.0
 alignment = 1
 
 [node name="play" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
@@ -976,6 +985,7 @@ texture_normal = ExtResource( 23 )
 texture_pressed = ExtResource( 24 )
 
 [node name="play_label" type="Button" parent="GUI/VBoxContainer/HBoxContainer"]
+visible = false
 margin_left = 69.0
 margin_right = 173.0
 margin_bottom = 23.0
@@ -986,6 +996,29 @@ enabled_focus_mode = 0
 keep_pressed_outside = true
 text = "TAP TO PLAY"
 flat = true
+
+[node name="PlayButton" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
+margin_left = 91.0
+margin_right = 151.0
+margin_bottom = 25.0
+texture_normal = ExtResource( 43 )
+texture_pressed = ExtResource( 97 )
+texture_hover = ExtResource( 97 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/VBoxContainer/HBoxContainer/PlayButton"]
+margin_right = 60.0
+margin_bottom = 25.0
+custom_fonts/font = SubResource( 25 )
+custom_colors/font_color = Color( 0.717647, 0.678431, 0.678431, 1 )
+text = "PLAY"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Player" parent="GUI/VBoxContainer/HBoxContainer" instance=ExtResource( 96 )]
 position = Vector2( 128.904, -65.745 )
@@ -1052,8 +1085,9 @@ __meta__ = {
 [connection signal="pressed" from="Container/HBoxContainer/hamburger/Control/music_btn" to="." method="_on_music_button_up"]
 [connection signal="pressed" from="bottom_container/play_btn" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="GUI/VBoxContainer/HBoxContainer/play" method="switch_scene"]
-[connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="." method="switch_scene"]
 [connection signal="button_down" from="GUI/VBoxContainer/HBoxContainer/play_label" to="." method="switch_scene"]
+[connection signal="button_down" from="GUI/VBoxContainer/HBoxContainer/PlayButton" to="." method="playButtonAudio"]
+[connection signal="button_up" from="GUI/VBoxContainer/HBoxContainer/PlayButton" to="." method="switch_scene"]
 [connection signal="timeout" from="Timer" to="." method="game_over"]
 [connection signal="animation_finished" from="game_over/AnimatedSprite" to="." method="game_over_animation_finished"]
 [connection signal="button_up" from="game_over/retry_btn" to="." method="switch_scene"]
