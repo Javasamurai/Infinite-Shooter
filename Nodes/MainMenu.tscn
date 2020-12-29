@@ -369,7 +369,6 @@ tracks/0/keys = {
 font_data = ExtResource( 25 )
 
 [sub_resource type="DynamicFont" id=25]
-size = 10
 use_mipmaps = true
 font_data = ExtResource( 25 )
 
@@ -576,7 +575,7 @@ __meta__ = {
 position = Vector2( 31, 0 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 11 )
-frame = 21
+frame = 7
 playing = true
 centered = false
 
@@ -978,17 +977,17 @@ alignment = 1
 
 [node name="play" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
 visible = false
-margin_left = 52.0
-margin_right = 83.0
+margin_left = 64.0
+margin_right = 95.0
 margin_bottom = 34.0
 texture_normal = ExtResource( 23 )
 texture_pressed = ExtResource( 24 )
 
 [node name="play_label" type="Button" parent="GUI/VBoxContainer/HBoxContainer"]
 visible = false
-margin_left = 69.0
-margin_right = 173.0
-margin_bottom = 23.0
+margin_left = 27.0
+margin_right = 131.0
+margin_bottom = 25.0
 focus_mode = 0
 custom_fonts/font = SubResource( 24 )
 action_mode = 0
@@ -996,29 +995,6 @@ enabled_focus_mode = 0
 keep_pressed_outside = true
 text = "TAP TO PLAY"
 flat = true
-
-[node name="PlayButton" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
-margin_left = 91.0
-margin_right = 151.0
-margin_bottom = 25.0
-texture_normal = ExtResource( 43 )
-texture_pressed = ExtResource( 97 )
-texture_hover = ExtResource( 97 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="GUI/VBoxContainer/HBoxContainer/PlayButton"]
-margin_right = 60.0
-margin_bottom = 25.0
-custom_fonts/font = SubResource( 25 )
-custom_colors/font_color = Color( 0.717647, 0.678431, 0.678431, 1 )
-text = "PLAY"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Player" parent="GUI/VBoxContainer/HBoxContainer" instance=ExtResource( 96 )]
 position = Vector2( 128.904, -65.745 )
@@ -1028,7 +1004,32 @@ z_index = 999
 animation = "5"
 
 [node name="Light2D" parent="GUI/VBoxContainer/HBoxContainer/Player/Player_bg" index="1"]
+visible = false
 position = Vector2( 0, -0.5 )
+
+[node name="PlayButton" type="TextureButton" parent="GUI/VBoxContainer/HBoxContainer"]
+margin_left = 81.0
+margin_right = 161.0
+margin_bottom = 25.0
+keep_pressed_outside = true
+texture_normal = ExtResource( 43 )
+texture_pressed = ExtResource( 97 )
+texture_hover = ExtResource( 97 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/VBoxContainer/HBoxContainer/PlayButton"]
+margin_right = 80.0
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 25 )
+custom_colors/font_color = Color( 0.537255, 0.537255, 0.537255, 1 )
+text = "Play"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Particles2D" parent="." instance=ExtResource( 33 )]
 visible = false
@@ -1082,7 +1083,7 @@ __meta__ = {
 [connection signal="pressed" from="Container/HBoxContainer/hamburger" to="." method="_on_hamburger_pressed"]
 [connection signal="button_up" from="Container/HBoxContainer/hamburger/Control/info_btn" to="." method="_on_enemies_button_up"]
 [connection signal="button_up" from="Container/HBoxContainer/hamburger/Control/credit" to="." method="_on_credits_button_up"]
-[connection signal="pressed" from="Container/HBoxContainer/hamburger/Control/music_btn" to="." method="_on_music_button_up"]
+[connection signal="pressed" from="Container/HBoxContainer/hamburger/Control/music_btn" to="." method="_on_music_button_up" binds= [ true ]]
 [connection signal="pressed" from="bottom_container/play_btn" to="." method="switch_scene"]
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/play" to="GUI/VBoxContainer/HBoxContainer/play" method="switch_scene"]
 [connection signal="button_down" from="GUI/VBoxContainer/HBoxContainer/play_label" to="." method="switch_scene"]

@@ -193,12 +193,11 @@ func fill_values():
 	var current_data = global.saved_data
 
 	if !file.file_exists(global.save_file_path):
-		file.open(global.save_file_path, File.READ_WRITE)
-
-		file.store_string(to_json(global.saved_data))
+		file.open(global.save_file_path, File.WRITE_READ)
+		file.store_string(to_json(current_data))
 		current_data = parse_json(file.get_as_text())
 	else:
-		file.open(global.save_file_path, File.READ_WRITE)
+		file.open(global.save_file_path, File.WRITE_READ)
 		current_data = parse_json(file.get_as_text())
 		if current_data == null:
 			file.store_string(to_json(global.saved_data))
@@ -247,21 +246,20 @@ func _on_music_button_up(_toogle = true):
 	var current_data = null
 	var toggle = _toogle
 
-	file.open(global.save_file_path, File.READ_WRITE)
+	file.open(global.save_file_path, File.READ)
 
 	current_data = parse_json(file.get_as_text())
 	if current_data == null:
 		return
 
-	if toggle == true:
+	if toggle:
 		current_data["music"] = !current_data["music"]
 		global.saved_data["music"] = current_data["music"]
+		file = File.new()
+		file.open(global.save_file_path, File.WRITE)
 		file.store_string(to_json(current_data))
 	off = !current_data["music"]
 
-	print("Music toggle" + str(off))
-	print(toggle)
-	
 	if off:
 		$AudioManager/bgm.stop()
 	else:
