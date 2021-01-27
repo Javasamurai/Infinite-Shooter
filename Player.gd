@@ -98,8 +98,8 @@ func _process(delta):
 	movement()
 
 func _input(event):
-	var extra_speed
-	var move_to = Vector2.ONE
+	#var extra_speed
+	#var move_to = Vector2.ONE
 	if event is InputEventScreenDrag:
 		is_pressed = true
 

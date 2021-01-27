@@ -52,7 +52,6 @@ func createBullet(dir, angle = 0):
 	#var _dir = directions[randi() % 4]
 
 	bullet_clone.rotation = angle
-
 	bullet_clone.global_position = Vector2(global_position.x, global_position.y)
 	bullet_clone.name = "enemy_bullet"
 	get_parent().add_child(bullet_clone)

@@ -17,12 +17,12 @@ func fire(_direction, _fire_speed, _angle):
 	angle = _angle
 	DIRECTION = _direction
 
-	var t = Timer.new()
-	t.set_one_shot(true)
-	t.set_wait_time(5)
-	t.start()
-	t.connect("timeout", self, "selfDestruct")
-
+	#var t = Timer.new()
+	#t.set_one_shot(true)
+	#t.set_wait_time(5)
+	#t.autostart(true)
+	#t.start(true)
+	#t.connect("timeout", self, "selfDestruct")
 	pass
 
 func _process(delta):

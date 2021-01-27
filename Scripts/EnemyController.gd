@@ -41,7 +41,7 @@ var enemy_config = {
 		"canRotate": false,
 		"smart": false,
 		"canShoot": true,
-		"speed": 75,
+		"speed": 40,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2.4,
 		"fireDelayMax": 2.5,
@@ -201,7 +201,7 @@ var enemy_config = {
 		"canRotate": false,
 		"smart": true,
 		"canShoot": true,
-		"speed": 5,
+		"speed": 10,
 		"chaseDelay": 2.0,
 		"fireDelayMin": 2,
 		"fireDelayMax": 2,
@@ -252,6 +252,8 @@ func _ready():
 
 	if autoStart:
 		generate_enemy(999)
+	
+	
 	# randomly change alien color
 	# if key == 2:
 	#	modulate = alien_colors[randi() % alien_colors.size()]
@@ -345,10 +347,17 @@ func die():
 		$explosion.play("explosion")
 
 func _process(delta):
+
 	if !is_active:
 		return
 	time_elapsed+=delta
 	last_chased+=delta
+	_keep_moving(delta)
+	if position.y > 1500:
+		on_enemy_invisible()
+	pass
+	
+func _keep_moving(delta):
 	position.y = (position.y) + (speed * delta)
 	if path_node != null:
 		path_node.off
@@ -363,9 +372,7 @@ func _process(delta):
 		else:
 			fire()
 		time_elapsed = 0
-
-	if position.y > 1500:
-		on_enemy_invisible()
+	
 	pass
 	
 func fire_side():

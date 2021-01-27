@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Images/UI_Planes/UI_Level_3_Plane_01.png" type="Texture" id=1]
+[ext_resource path="res://Images/Players/New Enemies/New_Enemy_01.png" type="Texture" id=2]
+[ext_resource path="res://BotTest.gd" type="Script" id=3]
+[ext_resource path="res://SteeringPlayer.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 14.25, 19 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 11.782, 10 )
+
+[node name="Base" type="Node"]
+
+[node name="Player" type="Sprite" parent="." groups=[
+"Player",
+]]
+position = Vector2( 128, 352 )
+texture = ExtResource( 1 )
+script = ExtResource( 4 )
+
+[node name="KinematicBody2D2" type="KinematicBody2D" parent="Player"]
+position = Vector2( 2, -180 )
+scale = Vector2( 1.68421, 1.68421 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/KinematicBody2D2"]
+position = Vector2( -1.1875, 106.875 )
+shape = SubResource( 1 )
+
+[node name="Bot" type="Sprite" parent="."]
+position = Vector2( 130, 120 )
+scale = Vector2( 1.68421, 1.68421 )
+texture = ExtResource( 2 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="Bot"]
+script = ExtResource( 3 )
+speed_max = 100
+acc_max = 20
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bot/KinematicBody2D"]
+shape = SubResource( 2 )

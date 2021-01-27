@@ -11,56 +11,78 @@ script = ExtResource( 2 )
 [node name="Enemy15" parent="." instance=ExtResource( 1 )]
 position = Vector2( 152, 133 )
 animation = "1"
+frame = 1
+speed = 10
 autoStart = true
 
 [node name="Enemy16" parent="." instance=ExtResource( 1 )]
 position = Vector2( 88, 133 )
 animation = "1"
+frame = 1
+speed = 30
 autoStart = true
 
 [node name="Enemy17" parent="." instance=ExtResource( 1 )]
 position = Vector2( 30.5, 233 )
 animation = "1"
+frame = 1
+speed = 30
 autoStart = true
 
 [node name="Enemy18" parent="." instance=ExtResource( 1 )]
 position = Vector2( 30.5, 233 )
 animation = "1"
+frame = 1
+speed = 30
 autoStart = true
 
 [node name="Enemy19" parent="." instance=ExtResource( 1 )]
 position = Vector2( 62, 233 )
 animation = "1"
+frame = 1
+speed = 30
 autoStart = true
 
 [node name="Enemy21" parent="." instance=ExtResource( 1 )]
 position = Vector2( 224, 233 )
 animation = "1"
+frame = 1
+speed = 30
 autoStart = true
 
 [node name="Enemy25" parent="." instance=ExtResource( 1 )]
 position = Vector2( 120, 41 )
 animation = "1"
+frame = 1
+speed = 30
 autoStart = true
 
 [node name="Enemy26" parent="." instance=ExtResource( 1 )]
 position = Vector2( 120, 133 )
 animation = "1"
+frame = 1
+speed = 30
 autoStart = true
 
 [node name="Enemy27" parent="." instance=ExtResource( 1 )]
 position = Vector2( 189, 278.5 )
 animation = "1"
+frame = 1
+speed = 30
 autoStart = true
 
 [node name="Enemy22" parent="." instance=ExtResource( 1 )]
 position = Vector2( 190, 233 )
 animation = "1"
+frame = 1
+speed = 30
 autoStart = true
 
 [node name="Enemy24" parent="." instance=ExtResource( 1 )]
 position = Vector2( 92, 278.5 )
 animation = "1"
+frame = 1
+speed = 30
 autoStart = true
 
 [node name="VisibilityNotifier2D" parent="." instance=ExtResource( 3 )]

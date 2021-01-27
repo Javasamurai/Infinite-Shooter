@@ -4,21 +4,24 @@
 [ext_resource path="res://Nodes/Pathed_Enemies.gd" type="Script" id=2]
 
 [sub_resource type="Curve2D" id=1]
+bake_interval = 104.5
 _data = {
-"points": PoolVector2Array( -7.23529, -5.23953, 7.23529, 5.23953, 280, 288, -27.6598, 13.8987, 27.6598, -13.8987, -88, 32, 0, 0, 0, 0, 304, 56, 0, 0, 0, 0, -88, 288, 0, 0, 0, 0, 280, 288 )
+"points": PoolVector2Array( -7.23529, -5.23953, 7.23529, 5.23953, 404, 278, -15.7677, -1.56099, 15.7677, 1.56099, -28, 14, 0, 0, 0, 0, 404, 14, 0, 0, 0, 0, -28, 278, 0, 0, 0, 0, 408, 280 )
 }
 
 [node name="path" type="Path2D"]
+position = Vector2( -40, 32 )
 curve = SubResource( 1 )
 
 [node name="path1" type="PathFollow2D" parent="."]
-position = Vector2( 280, 288 )
-loop = false
+position = Vector2( 407.998, 280 )
+offset = 1550.39
 
 [node name="Enemy" parent="path1" instance=ExtResource( 1 )]
-position = Vector2( -8.43963, -7.53476 )
+position = Vector2( -4.00323, -6.9263 )
 animation = "11"
 script = ExtResource( 2 )
+speed = 300
 autoStart = true
 presetEnemy = 11
 
@@ -26,7 +29,7 @@ presetEnemy = 11
 position = Vector2( 42.6381, -6.1637 )
 animation = "11"
 script = ExtResource( 2 )
-speed = 40
+speed = 300
 autoStart = true
 presetEnemy = 11
 
@@ -34,6 +37,14 @@ presetEnemy = 11
 position = Vector2( 114.062, -10.4845 )
 animation = "11"
 script = ExtResource( 2 )
-speed = 40
+speed = 300
+autoStart = true
+presetEnemy = 11
+
+[node name="Enemy4" parent="path1" instance=ExtResource( 1 )]
+position = Vector2( 171.633, -6.79884 )
+animation = "11"
+script = ExtResource( 2 )
+speed = 300
 autoStart = true
 presetEnemy = 11

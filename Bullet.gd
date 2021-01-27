@@ -1,7 +1,6 @@
 extends Sprite
 
 var area_2d
-var time_elapsed = 0
 #var Bullets
 var DIRECTION = "DOWN"
 var angle = 0
@@ -25,14 +24,14 @@ func _ready():
 	set_physics_process(true)
 	global = get_node("/root/Globals")
 	area_2d = $bullet_area
-	area_2d.connect("area_entered",self,"_on_bullet_hit")
+	#area_2d.connect("area_entered",self,"_on_bullet_hit")
 	#Bullets = get_parent().get("Bullets")
 	tween = get_node("Tween")
 	fade_again()
 	pass
 
 func fade_again():
-	tween.interpolate_property($".", "modulate", Color.white,Color(1,1,1,0.75),0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+	tween.interpolate_property(self, "modulate", Color.white,Color(1,1,1,0.75),0.25,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
 	tween.start()
 	
 func set_bullet_texture(path):
@@ -41,7 +40,6 @@ func set_bullet_texture(path):
 
 func _process(delta):
 	if is_firing:
-		
 		#Vector2(self.position.x - (fire_speed * delta), self.position.y - (fire_speed * delta))
 		#offset = Vector2(offset.x + (fire_speed * delta), offset.y  + (fire_speed * delta))
 		#a += 25 * delta
@@ -85,12 +83,6 @@ func _process(delta):
 		elif DIRECTION == "BOTT_RIGHT":
 			self.position = Vector2(self.position.x + (fire_speed * delta), self.position.y + (fire_speed * delta))
 
-	time_elapsed+= delta
-	# remove after 10 seconds
-	#if time_elapsed > 10:
-	#	self.queue_free()
-
-
 func fire(_direction, _fire_speed):
 	is_firing = true
 	DIRECTION = _direction
@@ -125,7 +117,6 @@ func _on_bullet_hit(body):
 		$bullet_area.disconnect("area_entered",self, "_on_bullet_hit")
 		queue_free()
 	pass
-
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()

@@ -25,21 +25,28 @@ func _ready():
 	#}
 	#fireDelay =  presetEnemy
 	#fireDelay = enemy_selected_config["fireDelayMax"]
-#	set_process(true)
+	set_process(true)
 	pass
 	
 func _process(delta):
+	_keep_moving(delta)
+	pass
+	
+func _keep_moving(delta):
 	#time_elapsed+=delta
 	#if time_elapsed > fireDelay && canShoot:
 	#	time_elapsed = 0
 	#	fire()
-	._process(delta)
-	if reverse:
-		path_controller.offset = (path_controller.offset - speed * delta)
-	else:
-		path_controller.offset = (path_controller.offset + speed * delta)
+	
+	#._process(delta)
+	#if reverse:
+	path_controller.offset = (path_controller.offset + speed * delta)
+	#else:
+	#	path_controller.offset = (path_controller.offset + speed * delta)
 	if path_controller.unit_offset >= 1 || path_controller.unit_offset <= 0:
 		reverse = !reverse
+	pass
+
 	pass
 
 func _on_explosion_animation_finished():

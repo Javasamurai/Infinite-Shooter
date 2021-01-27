@@ -463,7 +463,7 @@ func enemy_hit(which_one):
 		score += 100
 	$ScreenShake.shake(0.75, 250, 2)
 	get_node(score_label).text = "Score:" + str(score)
-	wave_clone.checkWave()
+	#wave_clone.checkWave()
 
 func on_player_hit():
 	get_node(health_label).set_text(str($Player.health))

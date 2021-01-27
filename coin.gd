@@ -5,6 +5,7 @@ signal got_coin
 var global
 var move = false
 var got_coin = false
+onready var EventBus = get_node("/root/EventBus")
 
 func _ready():
 	global = get_node("/root/Globals")

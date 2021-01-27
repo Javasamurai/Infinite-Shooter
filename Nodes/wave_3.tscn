@@ -11,140 +11,120 @@ script = ExtResource( 2 )
 [node name="Enemy" parent="." instance=ExtResource( 1 )]
 position = Vector2( 24, 40 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 3
 
 [node name="Enemy9" parent="." instance=ExtResource( 1 )]
 position = Vector2( 24, 40 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 3
 
 [node name="Enemy10" parent="." instance=ExtResource( 1 )]
 position = Vector2( 24, 40 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 3
 
 [node name="Enemy11" parent="." instance=ExtResource( 1 )]
 position = Vector2( 24, 40 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 3
 
 [node name="Enemy3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 184, 40 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 3
 
 [node name="Enemy4" parent="." instance=ExtResource( 1 )]
 position = Vector2( 144, 40 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 3
 
 [node name="Enemy5" parent="." instance=ExtResource( 1 )]
 position = Vector2( 102, 40 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 3
 
 [node name="Enemy7" parent="." instance=ExtResource( 1 )]
 position = Vector2( 63, 40 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 3
 
 [node name="Enemy6" parent="." instance=ExtResource( 1 )]
 position = Vector2( 184.5, 130.5 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 3
 
 [node name="Enemy17" parent="." instance=ExtResource( 1 )]
 position = Vector2( 24.5, 202.5 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 4
 
 [node name="Enemy18" parent="." instance=ExtResource( 1 )]
 position = Vector2( 24.5, 202.5 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 4
 
 [node name="Enemy19" parent="." instance=ExtResource( 1 )]
 position = Vector2( 24, 104 )
 animation = "4"
-frame = 0
 autoStart = true
 presetEnemy = 4
 
 [node name="Enemy20" parent="." instance=ExtResource( 1 )]
 position = Vector2( 145, 128 )
 animation = "4"
-frame = 0
 autoStart = true
 presetEnemy = 4
 
 [node name="Enemy21" parent="." instance=ExtResource( 1 )]
 position = Vector2( 184.5, 202.5 )
 animation = "4"
-frame = 0
 autoStart = true
 presetEnemy = 4
 
 [node name="Enemy25" parent="." instance=ExtResource( 1 )]
 position = Vector2( 232, 131 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 3
 
 [node name="Enemy26" parent="." instance=ExtResource( 1 )]
 position = Vector2( 232, 182 )
 animation = "3"
-frame = 0
 autoStart = true
 presetEnemy = 3
 
 [node name="Enemy27" parent="." instance=ExtResource( 1 )]
 position = Vector2( 183, 256 )
 animation = "4"
-frame = 0
 autoStart = true
 presetEnemy = 4
 
 [node name="Enemy22" parent="." instance=ExtResource( 1 )]
 position = Vector2( 144.5, 202.5 )
 animation = "4"
-frame = 0
 autoStart = true
 presetEnemy = 4
 
 [node name="Enemy23" parent="." instance=ExtResource( 1 )]
 position = Vector2( 102.5, 202.5 )
 animation = "4"
-frame = 0
 autoStart = true
 presetEnemy = 4
 
 [node name="Enemy24" parent="." instance=ExtResource( 1 )]
 position = Vector2( 63.5, 202.5 )
 animation = "4"
-frame = 0
 autoStart = true
 presetEnemy = 4
 
