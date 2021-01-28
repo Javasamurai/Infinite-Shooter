@@ -50,6 +50,12 @@ func _input(event):
 	if event is InputEventScreenDrag:
 		holding_touch = true
 		if event.relative.x != 0:
+			if event.relative.x < 0:
+				$Tween.interpolate_property(get_node("."), "rotation_degrees", 0,-2,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+				$Tween.start()
+			else:
+				$Tween.interpolate_property(get_node("."), "rotation_degrees", 0,2,0.1,Tween.TRANS_LINEAR,Tween.TRANS_LINEAR)
+				$Tween.start()
 			translate(event.relative)
 	if event is InputEventScreenTouch:
 		holding_touch = event.is_pressed()
@@ -74,8 +80,12 @@ func update_agent() -> void:
 
 func _on_BulletServer_collision_detected(bullet, colliders):
 	var bullet_type = bullet.get_type()
-		
-	if ( (bullet_type.custom_data["enemy"] && !colliders[0].enemy) || (!bullet_type.custom_data["enemy"] && colliders[0].enemy)):
+	var collided_body = colliders[0]
+	
+	if !collided_body.active:
+		return
+
+	if ( (bullet_type.custom_data["enemy"] && !collided_body.enemy) || (!bullet_type.custom_data["enemy"] && collided_body.enemy)):
 		colliders[0].hit(bullet_type.damage)
 		if (!colliders[0].enemy):
 			emit_signal("hit", colliders[0].health)

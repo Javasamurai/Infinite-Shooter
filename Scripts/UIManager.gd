@@ -156,7 +156,7 @@ func _on_arrow_pressed(_direction):
 	pass
 
 func switch_scene():
-	get_tree().change_scene("res://Nodes/GamePlay.tscn")
+	get_tree().change_scene("res://GamePlayTest.tscn")
 	pass
 
 func switch_plane(left):

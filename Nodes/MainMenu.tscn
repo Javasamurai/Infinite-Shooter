@@ -575,7 +575,7 @@ __meta__ = {
 position = Vector2( 31, 0 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 11 )
-frame = 5
+frame = 16
 playing = true
 centered = false
 
@@ -1021,10 +1021,10 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="GUI/VBoxContainer/HBoxContainer/PlayButton"]
 margin_right = 80.0
-margin_bottom = 23.0
+margin_bottom = 25.0
 custom_fonts/font = SubResource( 25 )
 custom_colors/font_color = Color( 0.537255, 0.537255, 0.537255, 1 )
-text = "Play"
+text = "PLAY"
 align = 1
 valign = 1
 __meta__ = {
