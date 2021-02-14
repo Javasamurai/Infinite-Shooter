@@ -26,7 +26,6 @@ func _ready():
 	$BulletSpawner.autofire = active
 	enemy = true
 	set_physics_process(true)
-
 	if active:
 		setup()
 	else:
@@ -40,8 +39,9 @@ func setup():
 	agent.angular_acceleration_max = deg2rad(angular_acc_max)
 	agent.linear_speed_max = speed_max
 	agent.linear_acceleration_max = acc_max
-	var shape = $CollisionShape2D.shape as RectangleShape2D
+	#var shape = $CollisionShape2D.shape as RectangleShape2D
 	#agent.bounding_radius = shape.extents.x
+	
 	agent.bounding_radius = 10
 	var persue := GSAIPursue.new(agent, player_agent)
 	persue.predict_time_max = 0.5
@@ -66,7 +66,7 @@ func update_agent():
 func _physics_process(delta):
 	if !active:
 		return
-	
+
 	if !$BulletSpawner.autofire:
 		setup()
 		$BulletSpawner.autofire = true

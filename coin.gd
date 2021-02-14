@@ -3,7 +3,7 @@ extends Node2D
 signal got_coin
 
 var global
-var move = false
+var active = false
 var got_coin = false
 onready var EventBus = get_node("/root/EventBus")
 
@@ -13,7 +13,7 @@ func _ready():
 	pass
 	
 func _process(delta):
-	if move:
+	if active:
 		position.y = ( position.y + (100 *  delta) )
 	pass
 

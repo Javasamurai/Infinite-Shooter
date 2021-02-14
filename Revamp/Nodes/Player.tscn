@@ -1,23 +1,38 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Revamp/Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Images/player_bullet.png" type="Texture" id=2]
-[ext_resource path="res://Images/New-Planes/Type_A_Level_03_Plane/01.png" type="Texture" id=3]
+[ext_resource path="res://Images/New-Planes/Type_A_Level_01_Plane/Level_01_Plane.png" type="Texture" id=3]
+[ext_resource path="res://Images/New-Planes/Type_A_Level_01_Plane/Level_01_Plane_Muzzle.png" type="Texture" id=4]
+[ext_resource path="res://Plane_Flame.tscn" type="PackedScene" id=5]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "1",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "1_muzzle",
+"speed": 5.0
+} ]
 
-[sub_resource type="BulletType" id=2]
+[sub_resource type="RectangleShape2D" id=2]
+
+[sub_resource type="BulletType" id=3]
 speed = 400.0
 damage = 20.0
 texture = ExtResource( 2 )
-collision_shape = SubResource( 1 )
+collision_shape = SubResource( 2 )
 linear_acceleration = 100.0
 custom_data = {
 "enemy": false
 }
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 5.037, 16.881 )
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 5.037, 8.88101 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "Player",
@@ -31,15 +46,24 @@ fire_delay = 0.075
 hitAudioPath = NodePath("../AudioManager/hit")
 explodeAudioPath = NodePath("../AudioManager/blast")
 
-[node name="bg" type="Sprite" parent="."]
-texture = ExtResource( 3 )
+[node name="bg" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "1_muzzle"
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="BulletSpawner" type="BulletSpawner" parent="."]
-position = Vector2( -10, 0 )
-bullet_type = SubResource( 2 )
+position = Vector2( -15, -11 )
+bullet_type = SubResource( 3 )
+aim_mode = 1
+aim_angle = -1.5708
+scatter_mode = 1
+preview_visible_in_game = true
+
+[node name="BulletSpawner2" type="BulletSpawner" parent="."]
+position = Vector2( -3, -11 )
+bullet_type = SubResource( 3 )
 aim_mode = 1
 aim_angle = -1.5708
 scatter_mode = 1
@@ -47,8 +71,11 @@ preview_visible_in_game = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 4.213 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 one_way_collision_margin = 53.2
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Plane_Flame" parent="." instance=ExtResource( 5 )]
+position = Vector2( 1, 21 )

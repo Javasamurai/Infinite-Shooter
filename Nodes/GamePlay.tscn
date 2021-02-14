@@ -10,7 +10,7 @@
 [ext_resource path="res://SFX/Powerup.wav" type="AudioStream" id=8]
 [ext_resource path="res://Nodes/dialogue.gd" type="Script" id=9]
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=10]
-[ext_resource path="res://Scripts/ScreenShake.gd" type="Script" id=11]
+[ext_resource path="res://Nodes/ScreenShake.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Images/arrow.png" type="Texture" id=12]
 [ext_resource path="res://Images/UI/Next_Wave.png" type="Texture" id=13]
 [ext_resource path="res://Images/UI/Home_OFF.png" type="Texture" id=14]
@@ -220,9 +220,7 @@ environment = SubResource( 1 )
 anims/left_camera_lerp = SubResource( 2 )
 anims/right_camera_lerp = SubResource( 3 )
 
-[node name="ScreenShake" type="Node2D" parent="Camera2D"]
-script = ExtResource( 11 )
-cam = NodePath("..")
+[node name="ScreenShake" parent="Camera2D" instance=ExtResource( 11 )]
 
 [node name="left" type="Button" parent="Camera2D"]
 visible = false

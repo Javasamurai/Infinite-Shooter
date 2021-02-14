@@ -1,8 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Nodes/coin_wave.gd" type="Script" id=1]
-[ext_resource path="res://coin.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Revamp/Nodes/coin.tscn" type="PackedScene" id=2]
 [ext_resource path="res://SFX/General Sounds/Coins/sfx_coin_single5.wav" type="AudioStream" id=3]
+
+
 
 [node name="coin_wave" type="Node2D"]
 script = ExtResource( 1 )

@@ -207,6 +207,7 @@ __meta__ = {
 [node name="coins" type="AnimatedSprite" parent="buy_button/price"]
 position = Vector2( 41, 8 )
 frames = SubResource( 3 )
+frame = 3
 playing = true
 
 [node name="ParallaxBackground" parent="." instance=ExtResource( 8 )]

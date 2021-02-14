@@ -16,7 +16,7 @@ var server
 var fireAudio
 var explodeAudio
 var holding_touch = false
-
+onready var selected_plane = str(Globals.selected_plane) 
 signal hit(health)
 
 func _ready():
@@ -27,7 +27,7 @@ func _ready():
 	fireAudio = get_node(firePath)
 	hitAudio = get_node(hitAudioPath)
 	explodeAudio = get_node(explodeAudioPath)
-
+	$bg.animation = selected_plane
 	canFire = true
 	pass
 
@@ -59,18 +59,24 @@ func _input(event):
 			translate(event.relative)
 	if event is InputEventScreenTouch:
 		holding_touch = event.is_pressed()
+
 func fire():
 	if !canFire:
 		return
 	#var clonedBullet = bulletInstance.instance()
 	#get_parent().add_child(clonedBullet)
-	
+	move_and_slide(Vector2(0, 10))
 	#clonedBullet.global_position = global_position
 	#clonedBullet.fire(Vector2(0, -1), 500)
 	time_elapsed = 0
 	#server.spawn_bullet(spawner.bullet_type, global_position,  Vector2(0, -1))
-	spawner.fire()
+	$BulletSpawner.fire()
+	$BulletSpawner2.fire()
 	fireAudio.play()
+	$bg.animation = selected_plane + "_muzzle"
+	yield(get_tree().create_timer(0.1),"timeout")
+	$bg.animation = selected_plane
+	move_and_slide(Vector2(0, -10))
 	pass
 
 func update_agent() -> void:
@@ -84,12 +90,9 @@ func _on_BulletServer_collision_detected(bullet, colliders):
 	
 	if !collided_body.active:
 		return
-
 	if ( (bullet_type.custom_data["enemy"] && !collided_body.enemy) || (!bullet_type.custom_data["enemy"] && collided_body.enemy)):
 		colliders[0].hit(bullet_type.damage)
-		if (!colliders[0].enemy):
-			emit_signal("hit", colliders[0].health)
-
+		emit_signal("hit", colliders[0].enemy, colliders[0].health)
 		if colliders[0].health <= 0:
 			explodeAudio.play()
 		else:

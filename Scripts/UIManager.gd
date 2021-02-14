@@ -54,6 +54,7 @@ func _ready():
 	rot_tween.interpolate_property(earth_node, "rotation_degrees", 0, 36000, 1500,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	rot_tween.start()
 	
+	#global.purchased_planes = 
 	if global.selected_plane == 1:
 		left_arrow.modulate = Color(0,0.0, 0.75)
 		left_arrow.disabled = true

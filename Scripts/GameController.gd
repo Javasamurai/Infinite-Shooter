@@ -605,7 +605,6 @@ func save_score():
 	var curr_score = load_score()
 	var f = File.new()
 	f.open(global.save_file_path, File.WRITE)
-	
 
 	if score > curr_score:
 		f.store_string(to_json(global.saved_data))

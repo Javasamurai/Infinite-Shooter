@@ -369,7 +369,6 @@ tracks/0/keys = {
 font_data = ExtResource( 25 )
 
 [sub_resource type="DynamicFont" id=25]
-use_mipmaps = true
 font_data = ExtResource( 25 )
 
 [node name="MainMenu" type="Control"]
@@ -848,6 +847,7 @@ margin_right = 226.0
 margin_bottom = 34.0
 size_flags_horizontal = 4
 custom_constants/separation = 175
+alignment = 1
 
 [node name="inventory" type="TextureButton" parent="Container/HBoxContainer"]
 margin_right = 31.0
@@ -1023,7 +1023,7 @@ __meta__ = {
 margin_right = 80.0
 margin_bottom = 25.0
 custom_fonts/font = SubResource( 25 )
-custom_colors/font_color = Color( 0.537255, 0.537255, 0.537255, 1 )
+custom_colors/font_color = Color( 0.494118, 0.494118, 0.494118, 1 )
 text = "PLAY"
 align = 1
 valign = 1

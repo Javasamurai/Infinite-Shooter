@@ -20,12 +20,11 @@ curve = SubResource( 4 )
 [sub_resource type="ParticlesMaterial" id=6]
 flag_disable_z = true
 direction = Vector3( 0, 0, 0 )
-spread = 5.0
+spread = 2.0
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 50.0
+initial_velocity = 20.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-radial_accel = 7.77
 scale_curve = SubResource( 5 )
 color_ramp = SubResource( 3 )
 
@@ -44,7 +43,6 @@ _data = [ Vector2( 0.0028777, 1.96836 ), 0.0, 4.25174, 0, 0, Vector2( 1, 1 ), 0.
 curve = SubResource( 9 )
 
 [sub_resource type="Curve" id=11]
-min_value = 1.0
 max_value = 3.0
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 3 ), 0.0, 0.0, 0, 0 ]
 
@@ -54,9 +52,9 @@ curve = SubResource( 11 )
 [sub_resource type="ParticlesMaterial" id=13]
 trail_size_modifier = SubResource( 12 )
 emission_shape = 1
-emission_sphere_radius = 1.0
+emission_sphere_radius = 0.01
 flag_disable_z = true
-spread = 180.0
+spread = 60.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 4.0
 orbit_velocity = 0.0
@@ -78,5 +76,5 @@ self_modulate = Color( 2, 2, 2, 1 )
 amount = 16
 lifetime = 2.0
 speed_scale = 4.0
-explosiveness = 1.0
+explosiveness = 0.39
 process_material = SubResource( 13 )

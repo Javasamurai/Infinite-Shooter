@@ -16,6 +16,8 @@ var saved_data = {
 	"coins": 0
 }
 
+var purchased_planes = []
+
 func _ready():
 	#var _file = File.new()
 	#var current_data = null
