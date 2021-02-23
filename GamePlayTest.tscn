@@ -1,10 +1,10 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://Revamp/Nodes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Images/Players/New Enemies/New_Enemy_01.png" type="Texture" id=2]
 [ext_resource path="res://Revamp/Scripts/Enemy.gd" type="Script" id=3]
 [ext_resource path="res://Revamp/Scripts/Spawner.gd" type="Script" id=4]
-[ext_resource path="res://Revamp/Images/bg-back.png" type="Texture" id=5]
+[ext_resource path="res://Images/NewAssets/space.png" type="Texture" id=5]
 [ext_resource path="res://Revamp/Scripts/Parallax.gd" type="Script" id=6]
 [ext_resource path="res://Music/Interstellar Odyssey.ogg" type="AudioStream" id=7]
 [ext_resource path="res://Revamp/Audio/SFX/laserRetro_001.ogg" type="AudioStream" id=8]
@@ -31,6 +31,9 @@
 [ext_resource path="res://Revamp/Nodes/Enemy.tscn" type="PackedScene" id=29]
 [ext_resource path="res://Revamp/Images/bg-planet.png" type="Texture" id=30]
 [ext_resource path="res://Revamp/Images/bg-stars.png" type="Texture" id=31]
+[ext_resource path="res://Revamp/Nodes/explosion.tres" type="SpriteFrames" id=32]
+[ext_resource path="res://Revamp/Scripts/AudioManager.gd" type="Script" id=33]
+[ext_resource path="res://Images/Bullet_purple.png" type="Texture" id=34]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 14 )
@@ -57,20 +60,11 @@ use_filter = true
 font_data = ExtResource( 27 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 5.037, 16.881 )
+resource_local_to_scene = true
+extents = Vector2( 12.246, 8 )
 
-[sub_resource type="SpriteFrames" id=8]
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "1",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 23 ), ExtResource( 22 ), ExtResource( 21 ), ExtResource( 24 ) ],
-"loop": true,
-"name": "2",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 17 ) ],
 "loop": true,
 "name": "1_hit",
@@ -80,26 +74,51 @@ animations = [ {
 "loop": true,
 "name": "2_hit",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 23 ), ExtResource( 22 ), ExtResource( 21 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "1",
+"speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 2, 2 )
 
-[sub_resource type="BulletType" id=7]
-damage = 2.0
+[sub_resource type="BulletType" id=8]
+speed = 200.0
+damage = 10.0
 texture = ExtResource( 11 )
-collision_shape = SubResource( 6 )
-linear_acceleration = 100.0
+collision_shape = SubResource( 7 )
+linear_acceleration = 35.0
 v_wave_amplitude = 8.7
 custom_data = {
 "enemy": true
 }
 
-[sub_resource type="BulletType" id=9]
-damage = 10.0
-texture = ExtResource( 25 )
+[sub_resource type="BulletType" id=11]
+texture = ExtResource( 34 )
 custom_data = {
 
+}
+
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 22.338
+height = 0.0
+
+[sub_resource type="RectangleShape2D" id=9]
+
+[sub_resource type="BulletType" id=10]
+speed = 200.0
+damage = 10.0
+texture = ExtResource( 25 )
+collision_shape = SubResource( 9 )
+custom_data = {
+"enemy": true
 }
 
 [node name="Node2D" type="Camera2D"]
@@ -112,15 +131,13 @@ max_lifetime = -1.84578e-22
 play_area_allow_incoming = true
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-active = true
-fire_delay = 0.1
+health = 2000
 
 [node name="BulletSpawner" parent="Player" index="1"]
-position = Vector2( -16, -17 )
-preview_visible_in_game = false
+position = Vector2( -16, 0 )
 
 [node name="BulletSpawner2" parent="Player" index="2"]
-position = Vector2( 0, -18 )
+position = Vector2( 0, 0 )
 
 [node name="Tween" type="Tween" parent="Player"]
 
@@ -170,6 +187,10 @@ __meta__ = {
 }
 
 [node name="AudioManager" type="Node" parent="."]
+script = ExtResource( 33 )
+fireAudioPath = NodePath("fire")
+hitAudioPath = NodePath("hit")
+blastAudioPath = NodePath("blast")
 
 [node name="fire" type="AudioStreamPlayer2D" parent="AudioManager"]
 stream = ExtResource( 8 )
@@ -183,6 +204,7 @@ stream = ExtResource( 10 )
 
 [node name="bgm" type="AudioStreamPlayer2D" parent="AudioManager"]
 stream = ExtResource( 7 )
+volume_db = -26.0
 autoplay = true
 
 [node name="Control" type="Control" parent="."]
@@ -221,13 +243,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Control"]
+[node name="coins" type="Label" parent="Control"]
 margin_left = 184.0
 margin_top = 4.0
 margin_right = 240.0
 margin_bottom = 21.0
 custom_fonts/font = SubResource( 4 )
-text = "Coin:: 100"
+text = "Coin: 100"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -235,26 +257,86 @@ __meta__ = {
 
 [node name="SmartHerd" type="Node2D" parent="."]
 script = ExtResource( 4 )
-spawnDelay = 2
+spawnDelay = 10000
 
 [node name="Enemy" parent="SmartHerd" instance=ExtResource( 29 )]
 position = Vector2( 222, 50 )
+health = 1000
+speed_max = 450
 
 [node name="Enemy2" parent="SmartHerd" instance=ExtResource( 29 )]
+health = 1000
+speed_max = 1000
 
 [node name="Enemy3" parent="SmartHerd" instance=ExtResource( 29 )]
 position = Vector2( 35, 50 )
+health = 1000
+speed_max = 1000
+
+[node name="Boss2" type="KinematicBody2D" parent="."]
+position = Vector2( 125, 101 )
+collision_layer = 2
+script = ExtResource( 3 )
+health = 150
+enemy = true
+active = true
+explosionPath = NodePath("explosion")
+speed_max = 1000
+acc_max = 400
+angular_speed_max = 400
+angular_acc_max = 500
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boss2"]
+shape = SubResource( 5 )
+one_way_collision = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="bg" type="AnimatedSprite" parent="Boss2"]
+frames = SubResource( 6 )
+animation = "2"
+flip_v = true
+
+[node name="BulletSpawner" type="BulletSpawner" parent="Boss2"]
+position = Vector2( -1, 0 )
+autofire = true
+interval_frames = 25
+radius = 1.0
+bullet_type = SubResource( 8 )
+aim_mode = 1
+aim_angle = -1.5708
+scatter_mode = 1
+preview_visible_in_game = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BulletSpawner2" type="BulletSpawner" parent="Boss2"]
+position = Vector2( 0, -8 )
+rotation = -1.5708
+autofire = true
+interval_frames = 100
+shot_count = 3
+radius = 20.0
+arc_width = 1.17635
+bullet_type = SubResource( 11 )
+preview_visible_in_game = true
+
+[node name="explosion" type="AnimatedSprite" parent="Boss2"]
+visible = false
+frames = ExtResource( 32 )
+animation = "4_explosion"
 
 [node name="DumbHerd" type="Node2D" parent="."]
 position = Vector2( 0, -52 )
 script = ExtResource( 4 )
-spawnDelay = 10000
+spawnDelay = 20000
 
 [node name="Enemy5" type="KinematicBody2D" parent="DumbHerd"]
 position = Vector2( 32, -73 )
 script = ExtResource( 3 )
 enemy = true
-smart = false
 speed_max = 1000
 acc_max = 400
 angular_speed_max = 300
@@ -267,16 +349,15 @@ __meta__ = {
 }
 
 [node name="bg" type="AnimatedSprite" parent="DumbHerd/Enemy5"]
-frames = SubResource( 8 )
+frames = SubResource( 6 )
 animation = "1"
 
 [node name="BulletSpawner" type="BulletSpawner" parent="DumbHerd/Enemy5"]
 position = Vector2( -1, 0 )
 autofire = true
-interval_frames = 300
 radius = 0.0
 arc_width = 6.28319
-bullet_type = SubResource( 7 )
+bullet_type = SubResource( 8 )
 aim_angle = 1.5708
 scatter_mode = 1
 __meta__ = {
@@ -286,8 +367,8 @@ __meta__ = {
 [node name="Enemy6" type="KinematicBody2D" parent="DumbHerd"]
 position = Vector2( 32, -20 )
 script = ExtResource( 3 )
+health = 5000
 enemy = true
-smart = false
 speed_max = 1000
 acc_max = 400
 angular_speed_max = 300
@@ -300,7 +381,7 @@ __meta__ = {
 }
 
 [node name="bg" type="AnimatedSprite" parent="DumbHerd/Enemy6"]
-frames = SubResource( 8 )
+frames = SubResource( 6 )
 animation = "1"
 
 [node name="BulletSpawner" type="BulletSpawner" parent="DumbHerd/Enemy6"]
@@ -309,7 +390,7 @@ autofire = true
 interval_frames = 300
 radius = 0.0
 arc_width = 6.28319
-bullet_type = SubResource( 7 )
+bullet_type = SubResource( 8 )
 aim_angle = 1.5708
 scatter_mode = 1
 __meta__ = {
@@ -319,8 +400,8 @@ __meta__ = {
 [node name="Enemy7" type="KinematicBody2D" parent="DumbHerd"]
 position = Vector2( 226, -138 )
 script = ExtResource( 3 )
+health = 5000
 enemy = true
-smart = false
 speed_max = 1000
 acc_max = 400
 angular_speed_max = 300
@@ -333,7 +414,7 @@ __meta__ = {
 }
 
 [node name="bg" type="AnimatedSprite" parent="DumbHerd/Enemy7"]
-frames = SubResource( 8 )
+frames = SubResource( 6 )
 animation = "1"
 
 [node name="BulletSpawner" type="BulletSpawner" parent="DumbHerd/Enemy7"]
@@ -342,7 +423,7 @@ autofire = true
 interval_frames = 300
 radius = 0.0
 arc_width = 6.28319
-bullet_type = SubResource( 7 )
+bullet_type = SubResource( 8 )
 aim_angle = 1.5708
 scatter_mode = 1
 __meta__ = {
@@ -352,8 +433,8 @@ __meta__ = {
 [node name="Enemy8" type="KinematicBody2D" parent="DumbHerd"]
 position = Vector2( 226, -73 )
 script = ExtResource( 3 )
+health = 5000
 enemy = true
-smart = false
 speed_max = 1000
 acc_max = 400
 angular_speed_max = 300
@@ -366,7 +447,7 @@ __meta__ = {
 }
 
 [node name="bg" type="AnimatedSprite" parent="DumbHerd/Enemy8"]
-frames = SubResource( 8 )
+frames = SubResource( 6 )
 animation = "1"
 
 [node name="BulletSpawner" type="BulletSpawner" parent="DumbHerd/Enemy8"]
@@ -375,7 +456,7 @@ autofire = true
 interval_frames = 300
 radius = 0.0
 arc_width = 6.28319
-bullet_type = SubResource( 7 )
+bullet_type = SubResource( 8 )
 aim_angle = 1.5708
 scatter_mode = 1
 __meta__ = {
@@ -385,8 +466,8 @@ __meta__ = {
 [node name="Enemy9" type="KinematicBody2D" parent="DumbHerd"]
 position = Vector2( 226, -20 )
 script = ExtResource( 3 )
+health = 5000
 enemy = true
-smart = false
 speed_max = 1000
 acc_max = 400
 angular_speed_max = 300
@@ -399,7 +480,7 @@ __meta__ = {
 }
 
 [node name="bg" type="AnimatedSprite" parent="DumbHerd/Enemy9"]
-frames = SubResource( 8 )
+frames = SubResource( 6 )
 animation = "1"
 
 [node name="BulletSpawner" type="BulletSpawner" parent="DumbHerd/Enemy9"]
@@ -408,7 +489,7 @@ autofire = true
 interval_frames = 300
 radius = 0.0
 arc_width = 6.28319
-bullet_type = SubResource( 7 )
+bullet_type = SubResource( 8 )
 aim_angle = 1.5708
 scatter_mode = 1
 __meta__ = {
@@ -418,8 +499,8 @@ __meta__ = {
 [node name="Enemy4" type="KinematicBody2D" parent="DumbHerd"]
 position = Vector2( 32, -138 )
 script = ExtResource( 3 )
+health = 5000
 enemy = true
-smart = false
 speed_max = 1000
 acc_max = 400
 angular_speed_max = 300
@@ -433,7 +514,7 @@ __meta__ = {
 
 [node name="bg" type="AnimatedSprite" parent="DumbHerd/Enemy4"]
 rotation = -0.0174015
-frames = SubResource( 8 )
+frames = SubResource( 6 )
 animation = "1"
 
 [node name="BulletSpawner" type="BulletSpawner" parent="DumbHerd/Enemy4"]
@@ -442,7 +523,7 @@ autofire = true
 interval_frames = 300
 radius = 0.0
 arc_width = 6.28319
-bullet_type = SubResource( 7 )
+bullet_type = SubResource( 8 )
 aim_angle = 1.5708
 scatter_mode = 1
 __meta__ = {
@@ -450,44 +531,79 @@ __meta__ = {
 }
 
 [node name="Boss" type="Node2D" parent="."]
-visible = false
 script = ExtResource( 4 )
-spawnDelay = 10
+spawnDelay = 2
 
-[node name="Enemy4" type="KinematicBody2D" parent="Boss"]
+[node name="Boss1" type="KinematicBody2D" parent="Boss"]
 position = Vector2( 138, -132 )
+rotation = -3.14159
+collision_layer = 2147483650
 script = ExtResource( 3 )
+health = 5000
 enemy = true
-smart = false
+explosionPath = NodePath("explosion")
+chase_type = 1
 speed_max = 1000
 acc_max = 400
 angular_speed_max = 300
 angular_acc_max = 250
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boss/Enemy4"]
-shape = SubResource( 5 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boss/Boss1"]
+shape = SubResource( 12 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="bg" type="AnimatedSprite" parent="Boss/Enemy4"]
-frames = SubResource( 8 )
+[node name="bg" type="AnimatedSprite" parent="Boss/Boss1"]
+frames = SubResource( 6 )
 animation = "2"
+frame = 2
+playing = true
+flip_v = true
 
-[node name="BulletSpawner" type="BulletSpawner" parent="Boss/Enemy4"]
+[node name="BulletSpawner" type="BulletSpawner" parent="Boss/Boss1"]
 position = Vector2( -1, 0 )
+rotation = -1.5708
 autofire = true
 interval_frames = 300
-radius = 0.0
+shot_count = 14
+radius = 30.09
 arc_width = 6.28319
-bullet_type = SubResource( 9 )
+bullet_type = SubResource( 10 )
 aim_angle = 1.5708
-scatter_mode = 1
+scatter_mode = 2
 __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="BulletSpawner2" type="BulletSpawner" parent="Boss/Boss1"]
+position = Vector2( -1, 0 )
+rotation = -1.5708
+autofire = true
+interval_frames = 750
+shot_count = 8
+radius = 61.34
+arc_width = 6.28319
+bullet_type = SubResource( 10 )
+aim_angle = 1.5708
+scatter_mode = 2
+preview_color = Color( 1, 0, 0.156863, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="explosion" type="AnimatedSprite" parent="Boss/Boss1"]
+visible = false
+show_behind_parent = true
+position = Vector2( -2, -4 )
+frames = ExtResource( 32 )
+animation = "2_explosion"
+frame = 7
+playing = true
+
 [node name="ScreenShake" parent="." instance=ExtResource( 26 )]
+
+[node name="Spawners" type="Node2D" parent="."]
 [connection signal="collision_detected" from="BulletServer" to="Player" method="_on_BulletServer_collision_detected"]
 [connection signal="hit" from="Player" to="." method="_on_Player_hit"]
 

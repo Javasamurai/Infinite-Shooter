@@ -403,6 +403,7 @@ __meta__ = {
 
 [node name="bgm" type="AudioStreamPlayer2D" parent="AudioManager"]
 stream = ExtResource( 18 )
+volume_db = -28.955
 pitch_scale = 2.0
 
 [node name="anim" type="AnimationPlayer" parent="."]
@@ -574,7 +575,7 @@ __meta__ = {
 position = Vector2( 31, 0 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 11 )
-frame = 16
+frame = 26
 playing = true
 centered = false
 

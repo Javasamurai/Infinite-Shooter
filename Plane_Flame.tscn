@@ -69,6 +69,7 @@ rotation = 1.5708
 [node name="Particles2D" type="Particles2D" parent="."]
 modulate = Color( 1.5, 1, 1, 1 )
 amount = 64
+visibility_rect = Rect2( -10, -10, 10, 10 )
 process_material = SubResource( 6 )
 
 [node name="Particles2D" type="Particles2D" parent="Particles2D"]
@@ -77,4 +78,5 @@ amount = 16
 lifetime = 2.0
 speed_scale = 4.0
 explosiveness = 0.39
+visibility_rect = Rect2( -50, -50, 50, 50 )
 process_material = SubResource( 13 )
