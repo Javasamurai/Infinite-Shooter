@@ -1,0 +1,125 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://Images/Players/NPC_B_01.png" type="Texture" id=1]
+[ext_resource path="res://Images/Players/BIG_UFO_03.png" type="Texture" id=2]
+[ext_resource path="res://Images/Players/BIG_UFO_02.png" type="Texture" id=3]
+[ext_resource path="res://Images/Players/BIG_UFO_04.png" type="Texture" id=4]
+[ext_resource path="res://Images/Players/New Enemies/New_Enemy_01.png" type="Texture" id=5]
+[ext_resource path="res://Images/Players/New Enemies/New_Enemy__HIT.png" type="Texture" id=6]
+[ext_resource path="res://Images/Players/BIG_UFO_01.png" type="Texture" id=7]
+[ext_resource path="res://Revamp/Scripts/Enemy.gd" type="Script" id=8]
+[ext_resource path="res://Images/Bullet_green.png" type="Texture" id=9]
+[ext_resource path="res://Images/Players/BIG_UFO_HIT_Frame.png" type="Texture" id=10]
+[ext_resource path="res://Images/Bullet_purple.png" type="Texture" id=11]
+[ext_resource path="res://Images/Players/NPC_B_HIT.png" type="Texture" id=12]
+[ext_resource path="res://Revamp/Nodes/explosion.tres" type="SpriteFrames" id=13]
+
+[sub_resource type="RectangleShape2D" id=1]
+resource_local_to_scene = true
+extents = Vector2( 12.246, 8 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "1",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "3",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "1_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "2_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "3_hit",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 2, 2 )
+
+[sub_resource type="BulletType" id=4]
+speed = 200.0
+damage = 10.0
+texture = ExtResource( 9 )
+collision_shape = SubResource( 3 )
+linear_acceleration = 35.0
+v_wave_amplitude = 8.7
+custom_data = {
+"enemy": true
+}
+
+[sub_resource type="BulletType" id=5]
+texture = ExtResource( 11 )
+custom_data = {
+
+}
+
+[node name="Turret" type="KinematicBody2D"]
+position = Vector2( 126, 101 )
+collision_layer = 2
+script = ExtResource( 8 )
+health = 200
+enemy = true
+active = true
+speed_max = 2000
+angular_speed_max = 662
+angular_acc_max = 500
+explosionPath = NodePath("../Turret/explosion")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="bg" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+animation = "3"
+flip_v = true
+
+[node name="BulletSpawner" type="BulletSpawner" parent="."]
+position = Vector2( -1, 0 )
+autofire = true
+interval_frames = 25
+radius = 1.0
+bullet_type = SubResource( 4 )
+aim_mode = 1
+aim_angle = -1.5708
+scatter_mode = 1
+preview_visible_in_game = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BulletSpawner2" type="BulletSpawner" parent="."]
+position = Vector2( 0, -8 )
+rotation = -1.5708
+autofire = true
+interval_frames = 100
+shot_count = 3
+radius = 20.0
+arc_width = 1.17635
+bullet_type = SubResource( 5 )
+preview_visible_in_game = true
+
+[node name="explosion" type="AnimatedSprite" parent="."]
+visible = false
+frames = ExtResource( 13 )
+animation = "4_explosion"

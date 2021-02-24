@@ -27,19 +27,20 @@ speed = 400.0
 damage = 20.0
 texture = ExtResource( 2 )
 collision_shape = SubResource( 2 )
-collision_mask = 2
+collision_mask = 6
 linear_acceleration = 100.0
 custom_data = {
 "enemy": false
 }
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 4, 4.61899 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "Player",
 ]]
 position = Vector2( 130.963, 364.668 )
+collision_mask = 6
 script = ExtResource( 1 )
 active = true
 serverPath = NodePath("../BulletServer")
@@ -77,7 +78,7 @@ position = Vector2( 1, 21 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 7.951 )
 scale = Vector2( 1.28, 1 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 __meta__ = {
 "_edit_lock_": true
 }

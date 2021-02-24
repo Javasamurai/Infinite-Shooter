@@ -7,11 +7,7 @@
 [ext_resource path="res://coin.gd" type="Script" id=5]
 [ext_resource path="res://SFX/coin.wav" type="AudioStream" id=6]
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 6.0
-height = 4.0
-
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 1 ), ExtResource( 2 ) ],
 "loop": true,
@@ -19,21 +15,29 @@ animations = [ {
 "speed": 10.0
 } ]
 
-[node name="coin" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 6.0
+height = 4.0
+
+[node name="coin" type="KinematicBody2D"]
+collision_layer = 4
 script = ExtResource( 5 )
+active = true
+speed_max = 3100
+acc_max = 8100
+chase_type = 4
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 2 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="bg" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.5, 1.5 )
-frames = SubResource( 1 )
-frame = 3
+frames = SubResource( 2 )
+frame = 1
 playing = true
 
 [node name="audio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
-[connection signal="area_entered" from="Area2D" to="." method="on_got_coin"]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_coin_body_entered"]

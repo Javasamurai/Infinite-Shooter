@@ -67,11 +67,11 @@ animations = [ {
 position = Vector2( 140, 50 )
 script = ExtResource( 10 )
 enemy = true
-explosionPath = NodePath("explosion")
 speed_max = 2000
 acc_max = 500
 angular_speed_max = 400
 angular_acc_max = 250
+explosionPath = NodePath("explosion")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

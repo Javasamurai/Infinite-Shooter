@@ -24,8 +24,8 @@ func _ready():
 	server = get_node(serverPath)
 	$bg.animation = selected_plane
 	canFire = true
-	var centerX = (OS.get_real_window_size().x / 2) - 30
-	tween.interpolate_property(self, "position", Vector2( centerX, OS.get_real_window_size().y), Vector2( centerX, OS.get_real_window_size().y - 175), 1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	var centerX = (bounds.x / 2) - 30
+	tween.interpolate_property(self, "position", Vector2( centerX, bounds.y), Vector2( centerX, bounds.y - 50), 0.5,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 	set_physics_process(true)
 	pass
@@ -45,10 +45,18 @@ func _physics_process(delta):
 	update_agent()
 	for i in get_slide_count():
 		var collidedBodies = get_slide_collision(i)
-		
+
+		print(collidedBodies.collider)
+		if collidedBodies.collider == null:
+			return
+
 		if collidedBodies.collider.has_meta("enemy"):
 			if collidedBodies.collider.enemy:
 				hit(10)
+		if collidedBodies.collider.name == "coin":
+			EventBus.emit_signal("playAudio", "coin")
+			EventBus.emit_signal("got_coin")
+			collidedBodies.collider.queue_free()
 	pass
 
 func _input(event):
@@ -70,6 +78,7 @@ func fire():
 		return
 	move_and_slide(Vector2(0, 10))
 	time_elapsed = 0
+
 	$BulletSpawner.fire()
 	$BulletSpawner2.fire()
 	EventBus.emit_signal("playAudio", "fire")
@@ -87,15 +96,17 @@ func update_agent() -> void:
 
 func _on_BulletServer_collision_detected(bullet, colliders):
 	var bullet_type = bullet.get_type()
-	var collided_body = colliders[0]
-	
-	if !collided_body.active:
-		return
-	if ( (bullet_type.custom_data["enemy"] && !collided_body.enemy) || (!bullet_type.custom_data["enemy"] && collided_body.enemy)):
-		colliders[0].hit(bullet_type.damage)
-		emit_signal("hit", colliders[0].enemy, colliders[0].health)
-		if colliders[0].health <= 0:
-			EventBus.emit_signal("playAudio", "explode")
-		else:
-			EventBus.emit_signal("playAudio", "hit")
+
+	for collided_body in colliders:
+		if !"active" in collided_body:
+			return
+		if !collided_body.active:
+			return
+		if ( (bullet_type.custom_data["enemy"] && !collided_body.enemy) || (!bullet_type.custom_data["enemy"] && collided_body.enemy)):
+			colliders[0].hit(bullet_type.damage)
+			emit_signal("hit", colliders[0].enemy, colliders[0].health)
+			if colliders[0].health <= 0:
+				EventBus.emit_signal("playAudio", "explode")
+			else:
+				EventBus.emit_signal("playAudio", "hit")
 	pass

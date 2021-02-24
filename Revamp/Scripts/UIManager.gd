@@ -10,5 +10,5 @@ func _ready():
 
 func increaseCoin():
 	coinValue = coinValue + 1
-	$coins.text = coinValue
+	$coins.text = "Coins:" + str(coinValue)
 	pass
