@@ -69,24 +69,14 @@ extents = Vector2( 12.246, 8 )
 
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "1",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 23 ), ExtResource( 22 ), ExtResource( 21 ), ExtResource( 24 ) ],
-"loop": true,
-"name": "2",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 37 ) ],
-"loop": true,
-"name": "3",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 17 ) ],
 "loop": true,
 "name": "1_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 38 ) ],
+"loop": true,
+"name": "3_hit",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 28 ) ],
@@ -94,9 +84,19 @@ animations = [ {
 "name": "2_hit",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 38 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "3_hit",
+"name": "1",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 37 ) ],
+"loop": true,
+"name": "3",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 23 ), ExtResource( 22 ), ExtResource( 21 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "2",
 "speed": 5.0
 } ]
 
@@ -114,17 +114,17 @@ custom_data = {
 "enemy": true
 }
 
-[sub_resource type="CapsuleShape2D" id=10]
+[sub_resource type="CapsuleShape2D" id=9]
 radius = 22.338
 height = 0.0
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=10]
 
-[sub_resource type="BulletType" id=12]
+[sub_resource type="BulletType" id=11]
 speed = 200.0
 damage = 10.0
 texture = ExtResource( 25 )
-collision_shape = SubResource( 11 )
+collision_shape = SubResource( 10 )
 custom_data = {
 "enemy": true
 }
@@ -272,21 +272,24 @@ __meta__ = {
 
 [node name="SmartHerd" type="Node2D" parent="."]
 script = ExtResource( 4 )
-spawnDelay = 10000
+spawnDelay = 10
 
 [node name="Enemy" parent="SmartHerd" instance=ExtResource( 29 )]
 position = Vector2( 222, 50 )
-health = 1000
+collision_layer = 2
 speed_max = 450
+chase_type = 1
 
 [node name="Enemy2" parent="SmartHerd" instance=ExtResource( 29 )]
-health = 1000
+collision_layer = 2
 speed_max = 1000
+chase_type = 1
 
 [node name="Enemy3" parent="SmartHerd" instance=ExtResource( 29 )]
 position = Vector2( 35, 50 )
-health = 1000
+collision_layer = 2
 speed_max = 1000
+chase_type = 1
 
 [node name="Turret" parent="." instance=ExtResource( 34 )]
 
@@ -334,13 +337,14 @@ animation = "1_explosion"
 
 [node name="Boss" type="Node2D" parent="."]
 script = ExtResource( 4 )
-spawnDelay = 10000
+spawnDelay = 5
 
 [node name="Boss1" type="KinematicBody2D" parent="Boss"]
 position = Vector2( 138, -132 )
 rotation = -3.14159
 collision_layer = 2147483650
 script = ExtResource( 3 )
+health = 250
 enemy = true
 speed_max = 1000
 angular_speed_max = 300
@@ -349,7 +353,7 @@ explosionPath = NodePath("explosion")
 chase_type = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boss/Boss1"]
-shape = SubResource( 10 )
+shape = SubResource( 9 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -357,6 +361,7 @@ __meta__ = {
 [node name="bg" type="AnimatedSprite" parent="Boss/Boss1"]
 frames = SubResource( 6 )
 animation = "2"
+frame = 1
 playing = true
 flip_v = true
 
@@ -368,7 +373,7 @@ interval_frames = 300
 shot_count = 14
 radius = 30.09
 arc_width = 6.28319
-bullet_type = SubResource( 12 )
+bullet_type = SubResource( 11 )
 aim_angle = 1.5708
 scatter_mode = 2
 __meta__ = {
@@ -383,7 +388,7 @@ interval_frames = 750
 shot_count = 8
 radius = 61.34
 arc_width = 6.28319
-bullet_type = SubResource( 12 )
+bullet_type = SubResource( 11 )
 aim_angle = 1.5708
 scatter_mode = 2
 preview_color = Color( 1, 0, 0.156863, 1 )
@@ -393,11 +398,10 @@ __meta__ = {
 
 [node name="explosion" type="AnimatedSprite" parent="Boss/Boss1"]
 visible = false
-show_behind_parent = true
 position = Vector2( -2, -4 )
 frames = ExtResource( 32 )
 animation = "2_explosion"
-frame = 7
+frame = 2
 playing = true
 
 [node name="ScreenShake" parent="." instance=ExtResource( 26 )]

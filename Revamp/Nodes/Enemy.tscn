@@ -37,19 +37,19 @@ animations = [ {
 "name": "1_hit",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "2_hit",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 13 ) ],
 "loop": true,
 "name": "3_hit",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 1 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 4 ) ],
+"frames": [ ExtResource( 8 ) ],
 "loop": true,
-"name": "2",
+"name": "2_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "1",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 11 ), ExtResource( 12 ) ],
@@ -57,15 +57,17 @@ animations = [ {
 "name": "3",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 1 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 4 ) ],
 "loop": true,
-"name": "1",
+"name": "2",
 "speed": 5.0
 } ]
 
 [node name="Enemy" type="KinematicBody2D"]
 position = Vector2( 140, 50 )
+rotation = -3.14159
 script = ExtResource( 10 )
+health = 150
 enemy = true
 speed_max = 2000
 acc_max = 500
@@ -80,15 +82,16 @@ __meta__ = {
 }
 
 [node name="BulletSpawner" type="BulletSpawner" parent="."]
-position = Vector2( -1, 0 )
+position = Vector2( 0, -10 )
 interval_frames = 40
-radius = 13.49
 arc_width = 6.28319
 arc_rotation = 1.5708
 bullet_type = SubResource( 3 )
+aim_angle = -3.14159
 scatter_mode = 1
 
 [node name="bg" type="AnimatedSprite" parent="."]
+rotation = 3.14159
 frames = SubResource( 4 )
 animation = "1"
 playing = true

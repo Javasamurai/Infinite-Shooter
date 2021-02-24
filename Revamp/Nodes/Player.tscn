@@ -1,39 +1,25 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Revamp/Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Images/player_bullet.png" type="Texture" id=2]
-[ext_resource path="res://Images/New-Planes/Type_A_Level_01_Plane/Level_01_Plane.png" type="Texture" id=3]
-[ext_resource path="res://Images/New-Planes/Type_A_Level_01_Plane/Level_01_Plane_Muzzle.png" type="Texture" id=4]
+[ext_resource path="res://Revamp/Nodes/PlayerBackgrounds.tres" type="SpriteFrames" id=3]
 [ext_resource path="res://Plane_Flame.tscn" type="PackedScene" id=5]
 
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "1",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "1_muzzle",
-"speed": 5.0
-} ]
-
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1, 1 )
 
-[sub_resource type="BulletType" id=3]
+[sub_resource type="BulletType" id=2]
 speed = 400.0
 damage = 20.0
 texture = ExtResource( 2 )
-collision_shape = SubResource( 2 )
+collision_shape = SubResource( 1 )
 collision_mask = 6
 linear_acceleration = 100.0
 custom_data = {
 "enemy": false
 }
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 4, 4.61899 )
 
 [node name="Player" type="KinematicBody2D" groups=[
@@ -48,15 +34,15 @@ spawnerPath = NodePath("BulletSpawner")
 fire_delay = 0.1
 
 [node name="bg" type="AnimatedSprite" parent="."]
-frames = SubResource( 1 )
-animation = "1_muzzle"
+frames = ExtResource( 3 )
+animation = "1"
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="BulletSpawner" type="BulletSpawner" parent="."]
 position = Vector2( -15, -2.87 )
-bullet_type = SubResource( 3 )
+bullet_type = SubResource( 2 )
 aim_mode = 1
 aim_angle = -1.5708
 scatter_mode = 1
@@ -64,7 +50,7 @@ preview_visible_in_game = true
 
 [node name="BulletSpawner2" type="BulletSpawner" parent="."]
 position = Vector2( -3, -2.87 )
-bullet_type = SubResource( 3 )
+bullet_type = SubResource( 2 )
 aim_mode = 1
 aim_angle = -1.5708
 scatter_mode = 1
@@ -78,7 +64,7 @@ position = Vector2( 1, 21 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 7.951 )
 scale = Vector2( 1.28, 1 )
-shape = SubResource( 5 )
+shape = SubResource( 3 )
 __meta__ = {
 "_edit_lock_": true
 }
