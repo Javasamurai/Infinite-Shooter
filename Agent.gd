@@ -40,9 +40,6 @@ func _ready():
 	default_animation = $bg.animation
 
 	agent.orientation = rotation
-	agent.linear_velocity.x = velocity.x
-	agent.linear_velocity.y = velocity.y
-	agent.angular_velocity = angular_velocity
 	pass
 
 func update_agent():
@@ -51,6 +48,9 @@ func update_agent():
 	agent.position.x =  global_position.x
 	agent.position.y = global_position.y
 	agent.orientation = rotation
+	agent.linear_velocity.x = velocity.x
+	agent.linear_velocity.y = velocity.y
+	agent.angular_velocity = angular_velocity	
 	pass
 
 func hit(damage):

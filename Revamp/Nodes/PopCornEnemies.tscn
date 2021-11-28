@@ -1,0 +1,105 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Images/Players/NPC_B_01.png" type="Texture" id=1]
+[ext_resource path="res://Images/Players/BIG_UFO_01.png" type="Texture" id=2]
+[ext_resource path="res://Images/Players/BIG_UFO_02.png" type="Texture" id=3]
+[ext_resource path="res://Images/Players/BIG_UFO_03.png" type="Texture" id=4]
+[ext_resource path="res://Images/Players/New Enemies/New_Enemy_01.png" type="Texture" id=5]
+[ext_resource path="res://Images/Players/BIG_UFO_04.png" type="Texture" id=6]
+[ext_resource path="res://Images/Players/New Enemies/New_Enemy__HIT.png" type="Texture" id=7]
+[ext_resource path="res://Images/Bullet_green.png" type="Texture" id=8]
+[ext_resource path="res://Images/Players/BIG_UFO_HIT_Frame.png" type="Texture" id=9]
+[ext_resource path="res://Images/Players/NPC_B_HIT.png" type="Texture" id=10]
+[ext_resource path="res://Revamp/Nodes/explosion.tres" type="SpriteFrames" id=11]
+[ext_resource path="res://Revamp/Scripts/Enemy.gd" type="Script" id=12]
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 8, 7 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "1",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "3",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "3_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "1_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "2_hit",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 2, 2 )
+
+[sub_resource type="BulletType" id=4]
+speed = 200.0
+damage = 10.0
+texture = ExtResource( 8 )
+collision_shape = SubResource( 3 )
+linear_acceleration = 35.0
+v_wave_amplitude = 8.7
+custom_data = {
+"enemy": true
+}
+
+[node name="PopCornEnemies" type="KinematicBody2D" groups=[
+"enemy",
+]]
+position = Vector2( 32, -73 )
+collision_layer = 2
+script = ExtResource( 12 )
+enemy = true
+speed_max = 750
+angular_speed_max = 300
+angular_acc_max = 250
+explosionPath = NodePath("explosion")
+chase_type = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="bg" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+animation = "1"
+
+[node name="BulletSpawner" type="BulletSpawner" parent="."]
+position = Vector2( -1, 0 )
+autofire = true
+interval_frames = 250
+radius = 0.0
+arc_width = 6.28319
+bullet_type = SubResource( 4 )
+aim_angle = 1.5708
+scatter_mode = 1
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="explosion" type="AnimatedSprite" parent="."]
+visible = false
+frames = ExtResource( 11 )
+animation = "1_explosion"

@@ -1,20 +1,20 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Revamp/Scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://Images/player_bullet.png" type="Texture" id=2]
+[ext_resource path="res://Images/Bullet_01.png" type="Texture" id=2]
 [ext_resource path="res://Revamp/Nodes/PlayerBackgrounds.tres" type="SpriteFrames" id=3]
 [ext_resource path="res://Plane_Flame.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 1, 1 )
+extents = Vector2( 2, 2 )
 
 [sub_resource type="BulletType" id=2]
-speed = 400.0
-damage = 20.0
+speed = 250.0
+damage = 10.0
 texture = ExtResource( 2 )
 collision_shape = SubResource( 1 )
 collision_mask = 6
-linear_acceleration = 100.0
+linear_acceleration = 1000.0
 custom_data = {
 "enemy": false
 }
@@ -41,15 +41,14 @@ __meta__ = {
 }
 
 [node name="BulletSpawner" type="BulletSpawner" parent="."]
-position = Vector2( -15, -2.87 )
+position = Vector2( -16, 1 )
 bullet_type = SubResource( 2 )
 aim_mode = 1
 aim_angle = -1.5708
 scatter_mode = 1
-preview_visible_in_game = true
 
 [node name="BulletSpawner2" type="BulletSpawner" parent="."]
-position = Vector2( -3, -2.87 )
+position = Vector2( -2, 1 )
 bullet_type = SubResource( 2 )
 aim_mode = 1
 aim_angle = -1.5708

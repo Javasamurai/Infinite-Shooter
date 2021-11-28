@@ -1,0 +1,17 @@
+[gd_resource type="BulletType" load_steps=3 format=2]
+
+[ext_resource path="res://Images/Bullet_01.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1, 1 )
+
+[resource]
+speed = 400.0
+damage = 20.0
+texture = ExtResource( 1 )
+collision_shape = SubResource( 1 )
+collision_mask = 6
+linear_acceleration = 100.0
+custom_data = {
+"enemy": false
+}

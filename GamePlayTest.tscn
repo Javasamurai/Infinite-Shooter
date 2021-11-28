@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://Revamp/Nodes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Images/Players/New Enemies/New_Enemy_01.png" type="Texture" id=2]
@@ -10,7 +10,7 @@
 [ext_resource path="res://Revamp/Audio/SFX/laserRetro_001.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Revamp/Audio/SFX/impactMetal_000.ogg" type="AudioStream" id=9]
 [ext_resource path="res://Revamp/Audio/SFX/explosionCrunch_000.ogg" type="AudioStream" id=10]
-[ext_resource path="res://Images/Bullet_green.png" type="Texture" id=11]
+[ext_resource path="res://Revamp/Nodes/PopCornEnemies.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Revamp/Scripts/GameManager.gd" type="Script" id=12]
 [ext_resource path="res://Images/UI/Empty_Health.png" type="Texture" id=13]
 [ext_resource path="res://Images/UI/Full_Health.png" type="Texture" id=14]
@@ -38,6 +38,10 @@
 [ext_resource path="res://SFX/coin.wav" type="AudioStream" id=36]
 [ext_resource path="res://Images/Players/NPC_B_01.png" type="Texture" id=37]
 [ext_resource path="res://Images/Players/NPC_B_HIT.png" type="Texture" id=38]
+[ext_resource path="res://Images/UI/Coin_02.png" type="Texture" id=39]
+[ext_resource path="res://Images/UI/Coin_01.png" type="Texture" id=40]
+[ext_resource path="res://Images/UI/Coin_04.png" type="Texture" id=41]
+[ext_resource path="res://Images/UI/Coin_03.png" type="Texture" id=42]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 14 )
@@ -58,30 +62,30 @@ frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 20 )
 frame_3/delay_sec = 0.0
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="AnimatedTexture" id=4]
+frames = 4
+frame_0/texture = ExtResource( 40 )
+frame_1/texture = ExtResource( 39 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 42 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 41 )
+frame_3/delay_sec = 0.0
+
+[sub_resource type="DynamicFont" id=5]
 size = 15
 use_filter = true
 font_data = ExtResource( 27 )
 
-[sub_resource type="RectangleShape2D" id=5]
-resource_local_to_scene = true
-extents = Vector2( 12.246, 8 )
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 22.338
+height = 0.0
 
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=7]
 animations = [ {
-"frames": [ ExtResource( 17 ) ],
+"frames": [ ExtResource( 37 ) ],
 "loop": true,
-"name": "1_hit",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 38 ) ],
-"loop": true,
-"name": "3_hit",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 28 ) ],
-"loop": true,
-"name": "2_hit",
+"name": "3",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 2 ) ],
@@ -89,42 +93,34 @@ animations = [ {
 "name": "1",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 37 ) ],
-"loop": true,
-"name": "3",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 23 ), ExtResource( 22 ), ExtResource( 21 ), ExtResource( 24 ) ],
 "loop": true,
 "name": "2",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 38 ) ],
+"loop": true,
+"name": "3_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 17 ) ],
+"loop": true,
+"name": "1_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 28 ) ],
+"loop": true,
+"name": "2_hit",
+"speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 2, 2 )
+[sub_resource type="RectangleShape2D" id=8]
 
-[sub_resource type="BulletType" id=8]
-speed = 200.0
-damage = 10.0
-texture = ExtResource( 11 )
-collision_shape = SubResource( 7 )
-linear_acceleration = 35.0
-v_wave_amplitude = 8.7
-custom_data = {
-"enemy": true
-}
-
-[sub_resource type="CapsuleShape2D" id=9]
-radius = 22.338
-height = 0.0
-
-[sub_resource type="RectangleShape2D" id=10]
-
-[sub_resource type="BulletType" id=11]
+[sub_resource type="BulletType" id=9]
 speed = 200.0
 damage = 10.0
 texture = ExtResource( 25 )
-collision_shape = SubResource( 10 )
+collision_shape = SubResource( 8 )
 custom_data = {
 "enemy": true
 }
@@ -140,14 +136,16 @@ play_area_allow_incoming = true
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 health = 2000
+fire_delay = 0.15
 
 [node name="BulletSpawner" parent="Player" index="1"]
 position = Vector2( -16, 0 )
-interval_frames = 100
+interval_frames = 250
 
 [node name="BulletSpawner2" parent="Player" index="2"]
 position = Vector2( 0, 0 )
 interval_frames = 100
+preview_visible_in_game = false
 
 [node name="Tween" type="Tween" parent="Player"]
 
@@ -258,93 +256,89 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="coins" type="Label" parent="Control"]
-margin_left = 184.0
+[node name="coinIcon" type="TextureRect" parent="Control"]
+margin_left = 211.0
 margin_top = 4.0
 margin_right = 240.0
-margin_bottom = 21.0
-custom_fonts/font = SubResource( 4 )
-text = "Coin: 100"
-align = 2
+margin_bottom = 32.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="coins" type="Label" parent="Control"]
+margin_left = 226.0
+margin_top = 4.0
+margin_right = 242.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 5 )
+text = "0"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="SmartHerd" type="Node2D" parent="."]
 script = ExtResource( 4 )
-spawnDelay = 10
+spawnDelay = 3
 
 [node name="Enemy" parent="SmartHerd" instance=ExtResource( 29 )]
 position = Vector2( 222, 50 )
-collision_layer = 2
 speed_max = 450
+angular_acc_max = 500
 chase_type = 1
 
 [node name="Enemy2" parent="SmartHerd" instance=ExtResource( 29 )]
-collision_layer = 2
+position = Vector2( 127, 51 )
 speed_max = 1000
+angular_acc_max = 750
 chase_type = 1
 
 [node name="Enemy3" parent="SmartHerd" instance=ExtResource( 29 )]
-position = Vector2( 35, 50 )
-collision_layer = 2
+position = Vector2( 32, 48 )
 speed_max = 1000
+angular_acc_max = 750
 chase_type = 1
 
 [node name="Turret" parent="." instance=ExtResource( 34 )]
+position = Vector2( 128, 144 )
+collision/safe_margin = 0.001
 
 [node name="DumbHerd" type="Node2D" parent="."]
 position = Vector2( 0, -52 )
 script = ExtResource( 4 )
+spawnDelay = 5
 
-[node name="PopCornEnemies" type="KinematicBody2D" parent="DumbHerd"]
-position = Vector2( 32, -73 )
-collision_layer = 2
-script = ExtResource( 3 )
-enemy = true
-speed_max = 750
-angular_speed_max = 300
-angular_acc_max = 250
-explosionPath = NodePath("explosion")
-chase_type = 2
+[node name="PopCornEnemies" parent="DumbHerd" instance=ExtResource( 11 )]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DumbHerd/PopCornEnemies"]
-shape = SubResource( 5 )
-__meta__ = {
-"_edit_lock_": true
-}
+[node name="PopCornEnemies2" parent="DumbHerd" instance=ExtResource( 11 )]
+position = Vector2( 32, 53 )
 
-[node name="bg" type="AnimatedSprite" parent="DumbHerd/PopCornEnemies"]
-frames = SubResource( 6 )
-animation = "1"
+[node name="PopCornEnemies3" parent="DumbHerd" instance=ExtResource( 11 )]
+position = Vector2( 32, -6 )
 
-[node name="BulletSpawner" type="BulletSpawner" parent="DumbHerd/PopCornEnemies"]
-position = Vector2( -1, 0 )
-autofire = true
-interval_frames = 20
-radius = 0.0
-arc_width = 6.28319
-bullet_type = SubResource( 8 )
-aim_angle = 1.5708
-scatter_mode = 1
-__meta__ = {
-"_edit_lock_": true
-}
+[node name="PopCornEnemies4" parent="DumbHerd" instance=ExtResource( 11 )]
+position = Vector2( 225, -73 )
 
-[node name="explosion" type="AnimatedSprite" parent="DumbHerd/PopCornEnemies"]
-frames = ExtResource( 32 )
-animation = "1_explosion"
+[node name="PopCornEnemies5" parent="DumbHerd" instance=ExtResource( 11 )]
+position = Vector2( 225, 53 )
+
+[node name="PopCornEnemies6" parent="DumbHerd" instance=ExtResource( 11 )]
+position = Vector2( 225, -6 )
 
 [node name="Boss" type="Node2D" parent="."]
 script = ExtResource( 4 )
-spawnDelay = 5
+spawnDelay = 10
 
-[node name="Boss1" type="KinematicBody2D" parent="Boss"]
+[node name="Boss1" type="KinematicBody2D" parent="Boss" groups=[
+"enemy",
+]]
 position = Vector2( 138, -132 )
 rotation = -3.14159
 collision_layer = 2147483650
 script = ExtResource( 3 )
-health = 250
+health = 500
 enemy = true
 speed_max = 1000
 angular_speed_max = 300
@@ -353,15 +347,15 @@ explosionPath = NodePath("explosion")
 chase_type = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boss/Boss1"]
-shape = SubResource( 9 )
+shape = SubResource( 6 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="bg" type="AnimatedSprite" parent="Boss/Boss1"]
-frames = SubResource( 6 )
+frames = SubResource( 7 )
 animation = "2"
-frame = 1
+frame = 3
 playing = true
 flip_v = true
 
@@ -373,7 +367,7 @@ interval_frames = 300
 shot_count = 14
 radius = 30.09
 arc_width = 6.28319
-bullet_type = SubResource( 11 )
+bullet_type = SubResource( 9 )
 aim_angle = 1.5708
 scatter_mode = 2
 __meta__ = {
@@ -388,7 +382,7 @@ interval_frames = 750
 shot_count = 8
 radius = 61.34
 arc_width = 6.28319
-bullet_type = SubResource( 11 )
+bullet_type = SubResource( 9 )
 aim_angle = 1.5708
 scatter_mode = 2
 preview_color = Color( 1, 0, 0.156863, 1 )
@@ -401,7 +395,7 @@ visible = false
 position = Vector2( -2, -4 )
 frames = ExtResource( 32 )
 animation = "2_explosion"
-frame = 2
+frame = 7
 playing = true
 
 [node name="ScreenShake" parent="." instance=ExtResource( 26 )]

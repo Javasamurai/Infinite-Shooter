@@ -20,21 +20,6 @@ extents = Vector2( 12.246, 8 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 6 ) ],
-"loop": true,
-"name": "1_hit",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 12 ) ],
-"loop": true,
-"name": "3_hit",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "2_hit",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "1",
@@ -48,6 +33,21 @@ animations = [ {
 "frames": [ ExtResource( 7 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "3_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "1_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "2_hit",
 "speed": 5.0
 } ]
 
@@ -72,7 +72,7 @@ custom_data = {
 }
 
 [node name="Turret" type="KinematicBody2D"]
-position = Vector2( 126, 101 )
+rotation = 3.14159
 collision_layer = 2
 script = ExtResource( 8 )
 health = 200
@@ -102,7 +102,6 @@ bullet_type = SubResource( 4 )
 aim_mode = 1
 aim_angle = -1.5708
 scatter_mode = 1
-preview_visible_in_game = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -116,9 +115,9 @@ shot_count = 3
 radius = 20.0
 arc_width = 1.17635
 bullet_type = SubResource( 5 )
-preview_visible_in_game = true
 
 [node name="explosion" type="AnimatedSprite" parent="."]
 visible = false
+position = Vector2( 0, -37 )
 frames = ExtResource( 13 )
 animation = "4_explosion"

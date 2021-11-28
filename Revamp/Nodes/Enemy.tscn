@@ -6,7 +6,7 @@
 [ext_resource path="res://Images/Players/BIG_UFO_04.png" type="Texture" id=4]
 [ext_resource path="res://Images/Players/BIG_UFO_03.png" type="Texture" id=5]
 [ext_resource path="res://Images/Players/BIG_UFO_02.png" type="Texture" id=6]
-[ext_resource path="res://Images/Bullet_green.png" type="Texture" id=7]
+[ext_resource path="res://Images/Enemy_Bullet_01.png" type="Texture" id=7]
 [ext_resource path="res://Images/Players/BIG_UFO_HIT_Frame.png" type="Texture" id=8]
 [ext_resource path="res://Revamp/Nodes/explosion.tres" type="SpriteFrames" id=9]
 [ext_resource path="res://Revamp/Scripts/Enemy.gd" type="Script" id=10]
@@ -15,7 +15,7 @@
 [ext_resource path="res://Images/Players/NPC_A_HIT.png" type="Texture" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 5.037, 10 )
+extents = Vector2( 8.702, 5 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 2, 2 )
@@ -32,19 +32,9 @@ custom_data = {
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ ExtResource( 3 ) ],
+"frames": [ ExtResource( 11 ), ExtResource( 12 ) ],
 "loop": true,
-"name": "1_hit",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 13 ) ],
-"loop": true,
-"name": "3_hit",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "2_hit",
+"name": "3",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 2 ) ],
@@ -52,34 +42,44 @@ animations = [ {
 "name": "1",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 11 ), ExtResource( 12 ) ],
-"loop": true,
-"name": "3",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 1 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "2",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "1_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "2_hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 13 ) ],
+"loop": true,
+"name": "3_hit",
+"speed": 5.0
 } ]
 
-[node name="Enemy" type="KinematicBody2D"]
+[node name="Enemy" type="KinematicBody2D" groups=[
+"enemy",
+]]
 position = Vector2( 140, 50 )
 rotation = -3.14159
+collision_layer = 2
 script = ExtResource( 10 )
 health = 150
 enemy = true
 speed_max = 2000
 acc_max = 500
 angular_speed_max = 400
-angular_acc_max = 250
+angular_acc_max = 259
 explosionPath = NodePath("explosion")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="BulletSpawner" type="BulletSpawner" parent="."]
 position = Vector2( 0, -10 )
@@ -100,3 +100,4 @@ playing = true
 visible = false
 frames = ExtResource( 9 )
 animation = "1_explosion"
+frame = 6

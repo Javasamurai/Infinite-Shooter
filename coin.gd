@@ -4,7 +4,7 @@ signal got_coin(current_count)
 
 var global
 var coin_got = false
-var magnet_radius = 75
+var magnet_radius = 50
 
 var _acc := GSAITargetAcceleration.new()
 var target := GSAIAgentLocation.new()
@@ -21,7 +21,7 @@ func _ready():
 	kinematic_agent.linear_acceleration_max = acc_max
 	kinematic_agent.linear_drag_percentage = 0.1
 	arrive.arrival_tolerance = 0
-	arrive.deceleration_radius = 420
+	arrive.deceleration_radius = 50
 	
 	arrive.is_enabled = false
 	pass

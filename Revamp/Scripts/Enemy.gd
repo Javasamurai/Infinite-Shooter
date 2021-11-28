@@ -21,7 +21,7 @@ onready var pursue_blend := GSAIBlend.new(agent)
 onready var flee_blend := GSAIBlend.new(agent)
 
 onready var player_agent : GSAISteeringAgent = player.agent
-onready var proximity := GSAIRadiusProximity.new(agent, [player_agent], 2)
+onready var proximity := GSAIRadiusProximity.new(agent, [player_agent], 25)
 onready var avoid := GSAIAvoidCollisions.new(agent, proximity)
 
 var bulletSpawners = []
@@ -30,10 +30,16 @@ func _ready():
 	$BulletSpawner.autofire = active
 	enemy = true
 	set_physics_process(true)
+	
+	for enemy in get_tree().get_nodes_in_group("enemy"): 
+		if enemy.agent:
+			proximity.agents.append(enemy.agent)
 
 	for n in range(0, get_child_count()):
 		if get_child(n) is BulletSpawner:
 			bulletSpawners.append(get_child(n))
+			
+
 	if active:
 		setup()
 		setBulletSpawners(true)
@@ -63,7 +69,7 @@ func setup():
 	#var shape = $CollisionShape2D.shape as RectangleShape2D
 	#agent.bounding_radius = shape.extents.x
 	
-	agent.bounding_radius = 4
+	agent.bounding_radius = 50
 
 	var look := GSAILookWhereYouGo.new(agent)
 	look.alignment_tolerance = deg2rad(0)
@@ -84,21 +90,11 @@ func setup():
 	pursue_blend.add(orient_behavior, 1)
 	if chase_type == CHASE_TYPES.FACE_CHASE:
 		pursue_blend.add(persue, 1)
-	priority.add(avoid)
+		priority.add(avoid)
 	priority.add(flee_blend)
 	priority.add(pursue_blend)
 	pass
 
-#func update_agent():
-#	global_position.x = clamp(global_position.x, 0, bounds.x)
-#	global_position.y = clamp(global_position.y, 0,bounds.y)
-#	agent.position.x =  global_position.x
-#	agent.position.y = global_position.y
-#	agent.orientation = rotation
-#	agent.linear_velocity.x = velocity.x
-#	agent.linear_velocity.y = velocity.y
-#	agent.angular_velocity = angular_velocity
-#	pass
 
 func _physics_process(delta):
 	if !active:

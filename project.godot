@@ -220,7 +220,7 @@ _global_script_class_icons={
 
 config/name="Galaxy Gladiator"
 config/description="A Space shooter game"
-run/main_scene="res://Nodes/MainMenu.tscn"
+run/main_scene="res://GamePlayTest.tscn"
 boot_splash/image="res://Images/splash.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://Images/Players/Level_03_1.png"

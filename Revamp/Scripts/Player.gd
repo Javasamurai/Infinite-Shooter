@@ -18,7 +18,7 @@ signal hit(health)
 
 func _ready():
 	enemy = false
-	agent.bounding_radius = 100
+	agent.bounding_radius = 30
 	set_process_input(true)
 	spawner = get_node(spawnerPath)
 	server = get_node(serverPath)
@@ -46,7 +46,6 @@ func _physics_process(delta):
 	for i in get_slide_count():
 		var collidedBodies = get_slide_collision(i)
 
-		print(collidedBodies.collider)
 		if collidedBodies.collider == null:
 			return
 
